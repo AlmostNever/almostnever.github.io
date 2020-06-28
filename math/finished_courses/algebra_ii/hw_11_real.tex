@@ -1,0 +1,73 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem,tikz-cd}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 11}
+\author{Andrew Tindall\\
+Algebra II}
+ 
+\maketitle
+\begin{problem}{1}
+	Dummit \& Foote, 10.5.5: Let $A_1$ and $A_2$ be $R$-modules. Prove that $A_1 \oplus A_2$ is a flat $R$-module if and only if both $A_1$ and $A_2$ are flat. More generally, prove that an arbitrary direct sum $\sum A_i$ of $R$-modules is flat if and only if each $A_i$ is flat.
+	\begin{proof}
+		We use the following fact: the tensor product commutes with arbitrary direct sums. This follows immediately from the fact that the tensor product is left-adjoint to the Hom functor, and the fact that the direct sum is a colimit in the category $R$-mod, since left-adjoints commute with colimits.
+		\par Let 
+		\[\begin{tikzcd}&0 \arrow[r,""]  &L \arrow[r, " \psi"]&M \arrow[r, " \phi"] &N \arrow[r,""] & 0\end{tikzcd}\]
+		be an exact sequence of $R$-modules. We wish to show that the direct sum $\bigoplus_{i \in I} A_i$ is exact; it suffices to show that the sequence
+		\[\begin{tikzcd}&0 \arrow[r] & L \otimes \left( \bigoplus_{i\in I}A_i \right) \arrow[r, "\psi \otimes \text{Id}"] &M \otimes \left( \bigoplus_{i\in I}A_i \right) \arrow[r, "\phi \otimes \text{Id}"] & N\otimes (\bigoplus_{i\in I} A_i) \arrow[r] &0 \end{tikzcd}\]
+		is exact. By the fact that $\otimes$ commutes with $\oplus$, this sequence is equivalent to
+		\[\begin{tikzcd}&0 \arrow[r] &\bigoplus_{i\in I}(L \otimes A_i) \arrow[r, "\bigoplus(\psi \otimes \text{Id})"] &\bigoplus_{i\in I}(M \otimes A_i)\arrow[r, "\bigoplus(\phi \otimes \text{Id})"]&\bigoplus_{i\in I}(N \otimes A_i)\arrow[r]&0.\end{tikzcd}\]
+		We want to see that $\text{Im}(\bigoplus(\psi \otimes \text{Id})) = \text{Ker}(\bigoplus(\phi \otimes \text{Id}))$. This holds, at least in the finite case, but I will not prove it here.	
+		\end{proof}
+\end{problem}
+\begin{problem}{2}
+	10.5.7: Let $A$ be a nonzero finite abelian group.
+	\begin{enumerate}[https://en.wikipedia.org/wiki/Deadmau5#2017%E2%80%93present:_Stuff_I_Used_to_Do,_Where's_the_Drop?,_Polar_soundtrack_and_Mau5villelabel=\alph*.]
+		\item Prove that $A$ is not a projective $\Z$-module.
+		\item Prove that $A$ is not an injective $\Z$-module.
+			\begin{proof}
+				\begin{enumerate}[label=\alph*.]
+					\item We know that $A$ is a finite product of cyclic abelian groups:
+						\[A \cong \Z/a_1\Z \oplus \dots \oplus \Z/a_n\Z\]
+						However, by Corrolary 10.5.31, A finitely generated module is projective if and only if it is a direct summand of a finitely generated free module. However, if $A$ were a submodule of a free $\Z$-module, it could not have any elements of finite order. Every element of $A$ has finite order (at most $\text{lcm}(a_1, \dots , a_n)$), so $A$ cannot be projective.
+					\item By $10.5.26$, a module $A$ over a P.I.D. is injective if and only if $rA = A$ for every nonzero $r \in R$. In this case, this requirement means that there can be no torsion. Since any finite abelian group is torsion, $A$ cannot be injective.
+				\end{enumerate}
+			\end{proof}
+	\end{enumerate}
+\end{problem}
+\end{document}

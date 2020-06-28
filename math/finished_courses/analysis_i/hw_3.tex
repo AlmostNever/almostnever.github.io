@@ -1,0 +1,267 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 3}
+\author{Andrew Tindall\\
+Analysis I}
+ 
+\maketitle
+\begin{problem}{1}
+	Prove that every metric space is paracompact; that is, every open covering admits a locally finite refinement.
+\end{problem}
+\begin{proof}
+	This was proven first by A.H. Stone in 1948, in \cite{stone}. The following proof follows a 2010 proof by Akhil Mathew, from \cite{mathew}, which in turn adapts a 1968 proof by M. H. Rudin in \cite{rudin}.
+	\par Let $(E, d)$ be a metric space, and let $\left\{ U_i \right\}_{i \in I}$ be an open covering of $E$ in the metric topology. We show that there is a covering $\left\{ V_j \right\}_{j \in J}$, such that 
+	\begin{itemize}
+		\item $\bigcup_{j \in J} V_j = E$
+		\item For each $j \in J$, there is some $i \in I$ such that $V_j \subset U_i$
+		\item For each $x \in E$, the collection of all $V_j$ such that $x \in V_j$ is finite.
+	\end{itemize}
+	Our open cover $\left\{ U_i \right\}_{i\in I}$ is not necessarily countable, as our metric space is not necessarily second countable (on a metric space, this is equivalent with being separable). However, by taking the axiom of choice, we may assume that the set $I$ is well-ordered. 
+	\par Now, for each $U_i$ we define a sequence of sets $V_i^n = \left\{ x \in U_i\mid d(x, E \bs U_i) \geq 2^-n \right\}$. A point in $V_i^n$ is a point of $U_i$ which is not too close to the boundary of $U_i$. Taking the union of $V_i^n$ over all $n \in \N$ gives us $U_i$ again. 
+	\par Now, for each $i \in I$, define the set
+	\[ W_i^n = V_i^n - \bigcup_{j < i}V_j^{n+1}\]
+	This gets rid of redundancies while still covering $E$: For each point $x$, there is some $U_i$ which contains $x$. Because $U_i$ is open, the distance from $x$ to the exterior of $U_i$ must be positive, so it must be greater than some $2^{-n}$. Therefore, $x$ is contained in $V_i^m$ for all $m \geq n$, and not in any $V_j^{m+1}$ for any $j < i$. Therefore, $x \in W_i^m$ for all $m \geq n$. It is also not in any $W_k^m$ for $k > i$, $m \geq n$. 
+	\par However, the $W_i^m$ are not necessarily open. We can take a small neighborhood of each; 
+	\[ Z_i^n = \left\{ x \in E \mid d(x, W_i^{n}) < 2^{-n-3} \right\} \]
+	These are open sets, and like the $W_i^n$s, each $x$ is contained in only one $Z_i^n$ for large enough $n$. Further, because the radius $2^{-n-3}$ around $W_i^n$ is strictly smaller than $2^{-n}$, each $Z_i^n$ is contained in $U_i$, so the collection $\{\left\{ Z_i^n \right\}_{i\in I}\}_{n=1}^\infty$ is a refinement of $\left\{ U_i \right\}$.
+	\par Now, it is in fact true that this cover is locally finite - this construction follows closely the construction done by M. E. Rudin in \cite{rudin}. The proof, which I do not understand well enough to reproduce here, shows that for any $x$, after choosing some $Z_i^n \ni x$, and $j$ such that the open ball $B_{2^{-j}}(x) \subset Z_i^n$, there are \textit{no} $Z_i^k \supset B_{2^{-j}}(x)$ for $k \geq n + j$, and that for $k < n + j$, there is only one such $Z_i^k$; therefore any open ball around $x$ is contaned in finitely many of the open sets $Z_i^n$, and it is a locally finite cover.
+\end{proof}
+\begin{problem}{2}
+Recall that a metric space $Y$ is an extensor, if for every continuous function $f: A \to Y$ defined on a close dsubset $A$ of a metric space $Z$, there exists a continuous function $\tilde f: X \to Y$ such that $\tilde f (x) = f(x)$ for every $x \in A$.   
+Prove that:
+\begin{enumerate}[label=(\roman*)]
+    \item A space homeomorphic to an extensor is also an extensor.
+    \item A retract of an extensor is an extensor.
+    \item if $Y_1$ and $Y_2$ are extensors, then $Y_1 \times Y_2$ is an extensor.
+\end{enumerate}
+\end{problem}
+\begin{proof}
+    \begin{enumerate}[label=(\roman*)]
+        \item Let $Y$ be an extensor, and let $Z$ be homeomophic to $Y$ along the homeomorphism $\varphi: Y \to Z$. Now, take some closed subspace $A$ of a metric space $X$, and let $f : A \to Z$ be a continuous function. 
+        \par We see then that $\varphi^{-1} \circ f$ is a continuous function $A \to Y$, and thus that there is a continuous function $\widetilde {\varphi^{-1}\circ  f} : X \to Y$ which agrees with $\varphi^{-1} \circ f$ on $A$. Composing with $\varphi$, we see that $\varphi \circ \widetilde{\varphi^{-1} \circ f}$ is a continuous function $X \to Z$, such that for any $x \in A$,
+        \begin{align*}
+        \varphi \circ \widetilde {\varphi^{-1} \circ f} (x) &= \varphi \circ \varphi^{-1} \circ f(x)\\ &= f(x),
+        \end{align*}as desired. 
+        \item Let $Y$ be an extensor, and let $Z \subset Y$ be a retract of $Y$, with $\iota : Z \to Y$ be the inclusion map, and $ \pi : Y \to Z$ a continuous projection such that $\pi \circ \iota = \text{id}_Z$. Let $A$ be a closed subset of a metric space $X$, and let $f: A \to Z$ be a continuous map.
+        \par  Then $\iota \circ f$ is a continuous map $A \to Y$, and there exists some map $\widetilde {\iota \circ f} : X \to Y$ which agrees with $\iota \circ f$ on $A$. Then, composing with $\pi$, we see that for any $x \in A$,
+        \begin{align*}
+            \pi \circ \widetilde {\iota \circ f} (x) &= \pi \circ \iota \circ f (x) \\
+            &= f(x)
+        \end{align*}
+        So $Z$ is an extensor.
+        \item Let $Y_1$, $Y_2$ be extensors, and let $A$ be a closed subset of a metric space $X$, with map $f : A \to Y_1 \times Y_2$. By the universal property of the product, $f$ is determined by two continuous maps $f_1 : A \to Y_1$, and $f_2 : A \to Y_2$. Because these two target spaces are extensors, we have two maps $\tilde f_1 : X \to Y_1$, and $\tilde f_2 : X \to Y_2$, which agree with $f_1$ and $f_2$, respectively, on $A$. Again, by the mapping property of the product, together these give us a map $\tilde f_1 \times \tilde f_2$, such that for any $x \in A$,\
+        \begin{align*}
+            \tilde f_1 \times \tilde f_2 (x) &= (\tilde f_1(x), \tilde f_2(x))\\
+            &= (f_1(x), f_2(x))\\
+            &= f(x)
+        \end{align*}
+        So the product space is also an extensor.
+    \end{enumerate}
+\end{proof}
+\begin{problem}{3}
+Find the norms of the following linear functionals on $\mathcal{C}[-1,1]$:\
+\begin{enumerate}[label=(\roman*)]
+    \item $T(f) := \int_0^1 f(x) dx$,
+    \item $T(f) := \int_{-1}^1 (\text{sgn}(x)) f(x) dx$,
+    \item $T(f) := \int_{-1}^1 f(x) dx - f(0)$,
+    \item $T(f) := \frac{f(\varepsilon) + f(-\varepsilon) - 2f(x)}{\varepsilon^2}$,
+    \item $T(f) := \sum_{n=1}^\infty \frac{(-1)^n}{n^2} f(1/n)$
+\end{enumerate}
+\end{problem}
+\begin{proof}
+    \begin{enumerate}[label=(\roman*)]
+        \item We show that $\lVert T \rVert = 1$. It is clear that it is at most one, as for any $f$ with $\sup \{ \lvert f(x) \rvert; x \in [-1,1]\} = 1$, the value of $\lvert T(f) \rvert$ is at most $1$:
+        \begin{align*}
+            \lvert T(f) \rvert &= \left \lvert \int_0^1 f(x) dx \right \rvert \\
+            &\leq \int_0^1 \lvert f(x) \rvert dx\\
+            &\leq \int_0^1 dx\\
+            &= 1
+        \end{align*}
+        This bound is attained, at for example the function 
+        \[
+            f(x) = \begin{cases}
+                -\text{erf}(1/x) & 1 \leq x < 0\\
+		1 & 0 \leq x \leq 1.
+            \end{cases}
+        \]
+	Where $\text{erf}$ is the real error function, $\text{erf}(x) = \frac{1}{\sqrt{\pi}}\int_0^x e^{-t^2}dt$.
+	\footnote{I'm kidding - just take $f(x) = 1$.}
+        \item The value of $\lVert T \rVert$ is bounded above in this case by $2$, as for any $f$ such that $\lvert f \rvert = 1$, the value of $\lvert \text{sgn} (f(x)) \rvert$ is bounded by $1$, giving us
+        \begin{align*}
+            \lvert T(f) \rvert &= \left \lvert \int_{-1}^1 \text{sgn}(f(x)) dx \right \rvert \\
+            & \leq \int_{-1}^1 \lvert \text{sgn}(f(x)) \rvert dx \\
+            &\leq \int_{-1}^1 2dx\\
+            &= 2
+        \end{align*}
+        This bound is not attained, but we may approach it with a sequence such as $\{f_n\}_{n \geq 1}$, where $f_n$ is defined as:
+        \[
+        f_n(x) = \begin{cases}
+        -1 & x < -\frac{1}{n}\\
+        nx & -\frac{1}{n} \leq x \leq \frac{1}{n}\\
+        1 & \frac{1}{n} < x
+        \end{cases}
+        \]
+	The integral on the region $[-\frac{1}{n}, \frac{1}{n}]$ is $0$, so the value of $\lvert T(f_n) \rvert$ is $2 - \frac{2}{n}$, which approaches $2$ as $n \to \infty$. Therefore the value of $\lVert T \rVert $ is $2$.\
+        \item The value of $\lVert T \rVert$ in this case is $3$. It is bounded above by this value; for $f$ such that $\lvert f \rvert = 1$, it is true that $\lvert f(x) \rvert \leq 1$, and that $\lvert f(0) \rvert \leq 1$, so
+        \begin{align*}
+            \lvert T(f) \rvert &= \left \lvert \int_{-1}^1 f(x)dx - f(0) \right \rvert\\
+            &\leq \int_{-1}^1 \lvert f(x)\rvert dx + \lvert f(x) \rvert\\
+            &\leq 2 + 1
+        \end{align*}
+        
+        This value is not attained at any function in $\mathcal{C}[-1,1]$, but we may approach it with a sequence of functions $\{f_n\}$ like the following:
+        \[
+        f_n(x) = \begin{cases}
+        1 & -1 \leq x < -\frac{1}{n}\\
+        -2nx -1 & -\frac{1}{n} \leq x \leq 0\\
+        2nx - 1 & 0 < x \leq \frac{1}{n}\\
+        1 & \frac{1}{n} < x
+        \end{cases}
+        \]
+	Again, the intregral of such a function is $0$ on $[-\frac{1}{n}, \frac{1}{n}]$. The value of $\lvert T(f_n) \rvert$ is $2 - \frac{2}{n} + 1$, which approaches $3$ as $n \to \infty$.
+        \item The value of $\lVert T \rVert$ can be bounded above by $4/\varepsilon^2$, since $\lvert f(\varepsilon) \rvert \leq 1$, and the same for $\lvert f(-\varepsilon) \rvert$ and $\lvert f(0) \rvert$. In fact, the value $\lvert T(f) \rvert = 4/\varepsilon^2$ is attained, at any function where $f(\varepsilon) = f(-\varepsilon) = -f(0) = 1$, or at the negative of such a function. A continuous, norm-1 example is
+        \[
+        f(x) = \begin{cases}
+        1 & -1 \leq x \leq -\varepsilon\\
+        -2x/\varepsilon - 1 & -\varepsilon < x \leq 0\\
+        2x/\varepsilon - 1 & 0 < x \leq \varepsilon \\
+        1 & \varepsilon < x \leq 1
+        \end{cases}
+        \]
+        The value of $f(\varepsilon)$ and $f(-\varepsilon)$ is $1$, and the value of $f(0)$ is $-1$, so $\lvert T(f) \rvert = (1 + 1 - (-2))/\varepsilon^2 = 4/\varepsilon^2$. 
+        \item The value of $\lVert T \rVert$ is $\pi^2/6$. We can bound by this value, because, given some $f$ such that $\lvert f \rvert = 1$,
+        \begin{align*}
+            \lvert T(f) \rvert &= \left \lvert \sum_{n=1}^\infty \frac{(-1)^n}{n^2} f(1/n)\right \rvert \\
+            &\leq \sum_{n = 1}^\infty \left \lvert \frac{(-1)^n}{n^2} f(1/n) \right \rvert \\
+            &\leq \sum_{n=1}^\infty \frac{1}{n^2}\\
+            &= \frac{\pi^2}{6}
+        \end{align*}
+        This value is not attained, as $f$ would need to oscillate infinitely often between $-1$ and $1$ as $1/n \to 0$. However, we can approximate such a function with the following sequence $\{f_m\}$:
+        \[
+        f_m(x) = \begin{cases}
+        0 & -1 \leq x < \frac{2}{2m + 1}\\
+        \cos(\pi/x) & \frac{2}{2m + 1} \leq x \leq 1
+        \end{cases}
+        \]
+        This function is continuous, since $f(2/(2m+1)) = \cos((2m+1)\pi/2) = 0$, and also $\cos(1/x)$ is continuous away from $0$. For any $n \leq m$, 
+        \begin{align*}
+            f_m(1/n) &= \cos(n\pi)\\ &= (-1)^n
+        \end{align*}
+        And, for any $n \geq m+1$, $f_m(1/n) = 0$. Therefore, the value of $\lvert T(f_m) \rvert$ is $\sum_{n=1}^m \frac{1}{n^2}$, which approaches $\frac{\pi^2}{6}$ as $m \to \infty$.
+    \end{enumerate}
+\end{proof}
+\begin{problem}{4}
+Prove that the space $\mathcal{C}_b(\R^N)$ of bounded continuous functions on $\R^N$, with the supremum norm $\lVert \cdot \rVert_\infty$, is not separable.
+\end{problem}
+\begin{proof}
+    We exhibit an uncountable set $\Omega$ of elements of $\mathcal{C}_b(\R^N)$, such that each element of $\Omega$ is distance $1$ from each other element. Let $\Omega' = 2^\N$, the uncountable power set of the natural numbers, and let $\Omega = \{f_U\}_{U \in \Omega'}$ be the set of functions $f_U$ indexed by subsets $U$ of the naturals, defined as follows.
+    \par Let $B_n$, for $n \in \N$, be the following bump function on $\R$:
+    \[
+    B_n(x) = \begin{cases}
+    0 & x \notin [n, n+1]\\
+    1 - 2\lvert (x-n - 1/2) \rvert & x \in [n, n+1]
+    \end{cases}
+    \]
+    The maximum value of $B_n(x)$ on $[n,n+1]$ is $1$, it is $0$ elsewhere, and it is continuous. Then, for any subset $U$ of $\N$, let $f'_U : \R \to \R$ be defined as follows:
+    \[
+    f'_U(x) = \begin{cases}
+    0 & \lfloor x \rfloor \notin U\\
+    B_{\lfloor x \rfloor}(x) & \lfloor x \rfloor \in U
+    \end{cases}
+    \]
+    So, if the nearest integer below $x$ is in $U$, we take $x$ to a bump function; otherwise, to zero. This is like the sum of the bump functions $B_n$ over $n \in U$, but $U$ might be infinite.
+    \par This defines an uncountable set of functions $f'_U$ on $\R$; we now define $\{f_U\}$ as the function sending $\{x_1, ... x_N\}$ to $f'_U(x_1)$. This set $\{f_U\}_{U \in 2^\N}$ is an uncountable set of functions which are all distance $1$ from each other.
+    \par The fact that two $f_U$, $f_{U'}$ are distance $1$ apart for distinct $U$, $U'$ follows from the fact that there must be some $n \in U \bs U' \cup U' \bs U$. Assume without loss of generality that $n \in U \bs U'$; then 
+    \begin{align*}
+        \lvert f_U(n+1/2, 0, \dots 0) - f_{U'}(n+1/2, 0, \dots 0) \rvert &= \lvert 1 - 0 \rvert\\
+        &= 1
+    \end{align*}
+    This contradicts separability, because any countable  subset could only intersect a countable number of balls of radius $\frac{1}{2}$ around these elements, meaning it could not be dense.
+\end{proof}
+\begin{problem}
+Let $(X,d)$ be a metric space. Fix a reference point $x_0 \in X$ and let $E$ be the vector space of all the Lipschitz continuous functions $f : X \to \R$ such that $f(x_0) = 0$. Define $\lVert f \rVert$ to be the smallest Lipschitz constant of $f$, that is:
+\[
+\lVert f \rVert = \sup_{x \neq y} \frac{\lvert f(x) - f(y) \rvert}{d(x,y)}.
+\]
+Prove that $(E,\lVert \cdot \rVert)$ is a Banach space.
+\end{problem}
+\begin{proof}
+    We first show that $\lVert \cdot \rVert$ is a norm.
+    \begin{itemize}
+	    \item $\left \lVert { x } \right \lVert  \geq 0$, and $\left \lVert { x } \right \lVert  = 0$ if and only if $x = 0$:
+		    \par It is clear that the norm of $x$ is nonnegative, because it is the supremum of a set of ratios of nonnegative numbers $\left \lvert { f(x) - f(y) } \right \lvert $ with positive numbers $d(x,y)$. Now, if $\left \lVert { x } \right \lVert  = 0$, then the value of $\\frac{\left \lvert { f(x)- f(y) } \right \lvert }{d(x,y)}$ must be zero for each pair $y\neq x$, meaning $\left \lvert { f(x) - f(y) } \right \lvert $ is always zero, and that $f$ is constant. Because $f(x_0)$ is required to be zero, this implies that $f$ can only be the zero function.
+	    \item $\left \lVert { \alpha f } \right \lVert  = \left \lvert { \alpha } \right \lvert \left \lVert { f } \right \lVert $: This follows from the fact that $\left \lvert { \alpha f(x) - \alpha f(y) } \right \lvert  = \left \lvert { \alpha } \right \lvert \left \lvert { f(x) - f(y) } \right \lvert $, and that a nonnegative constant can be factored out of a supremum.
+	    \item $\left \lVert { f + g } \right \lVert \leq \left \lVert { f } \right \lVert  + \left \lVert {  g } \right \lVert $: Pointwise, we see that
+		    \begin{align*}
+			    \frac{\left \lvert { (f+g)(x) - (f+g)(y) } \right \lvert }{d(x,y)} &= \frac{\left \lvert { f(x) - f(y) + g(x) - g(y) } \right \lvert }{d(x,y)}\\
+			    &\leq \frac{\left \lvert { f(x) - f(y) } \right \lvert }{d(x,y)} + \frac{\left \lvert { g(x) - g(y) } \right \lvert }{d(x,y)}
+		    \end{align*}
+		    Taking the supremum over all $x \neq y$, we see that indeed $\left \lVert { f + g } \right \lVert  \leq \left \lVert { f } \right \lVert  + \left \lVert { g } \right \lVert $.
+    \end{itemize}
+    \par We now need to show that the space is Banach with respect to the norm $\left \lVert {  \cdot } \right \lVert $. Let $f^k$ be a Cauchy sequence in this space; we need to construct a function $f$ and then show that it lies in $E$ and that it is the limit of the $f^k$s with respect to $\left \lVert { \cdot } \right \lVert $.
+    \par We first see that the Lipschitz constants of $f^k$ must converge, as in any normed space the convergence of a sequence in $\left \lVert { \cdot } \right \lVert $ implies that the norms of the elements $\left \lVert { f^k } \right \lVert $ themselves converge, say to a value $L \in R$. 
+    \par Fix $x \neq x_0 \in X$; we wish to calculate $f(x)$. We will see that the values $f^k(x)$ themselves converge as $k \to \infty$: Let $\varepsilon > 0$. By convergence of $\left \lVert { f^k } \right \lVert $ to $L$, we can find $n \in \N$ such that, for $k, l \geq n$, $ \sup_{z \neq y}\frac{\left \lvert { (f^k - f^j)(z) - (f^k - f^j)(y) } \right \lvert }{d(z,y)} < \varepsilon/d(x,x_0)$. In particular, 
+    \[\frac{\left \lvert { (f^k - f^j)(x) - (f^k - f^j)(x_0) } \right \lvert }{d(x,x_0)} < \frac{\varepsilon}{d(x,x_0)}\]
+    Since $f^k(x_0) = f^j(x_0) = 0$, this shows that $f^j(x) - f^k(x)$ converges to $0$ as $j$ and $k$ go to $\infty$, so this is a Cauchy sequence of real numbers and has a limit in $\R$, which we call $f(x)$. If $x = x_0$, define $f(x) = 0$.
+    \par We now show that the function $x \mapsto f(x)$ is Lipschitz. Since the Lipschitz constants of the $f^k$ converge to $L$, and the value of $f^k(x)$ converges pointwise to $f(x)$, this means that we may bound the Lipschitz constant of $f$ as follows:
+    \begin{align*}
+	    \sup_{x \neq y}\frac{\left \lvert { f(x) - f(y) } \right \lvert }{d(x,y)} &= \sup_{x \neq y}\frac{\left \lvert { \lim_{n \to \infty}(f^n(x)) - \lim_{m \to \infty}(f^m(y)) } \right \lvert }{d(x,y)}\\
+	    &= \sup_{x \neq y} \frac{\left \lvert { \lim_{n \to \infty}(f^n(x) - f^n(y)) } \right \lvert }{d(x,y)}\\
+	    &= \sup_{x \neq y}\lim_{n \to \infty}\frac{\left \lvert { f^n(x) - f^n(y) } \right \lvert }{d(x,y)}\\
+	    &\leq \lim_{n \to \infty} \sup_{x \neq y} \frac{\left \lvert { f^n(x) - f^n(y) } \right \lvert }{d(x,y)}\\
+	    &= L.
+    \end{align*}
+    Thus $f$ is Lipschitz, with Lipschitz constant no greater than $L$. 
+    \par Finally, we show that the functions $f^n$ converge in Lipschitz norm to $f$ - we wish to show that, as $n$ goes to $\infty$, the quantity
+    \[\sup_{x \neq y} \frac{\left \lvert { (f^n(x) - f(x)) - (f^n(y) - f(y)) } \right \lvert }{d(x, y)} \]
+    goes to $0$. Calculating:
+    \begin{align*}
+	    \lim_{n \to \infty}\sup_{x \neq y} \frac{\left \lvert { (f^n(x) - f(x)) - (f^n(y) - f(y)) } \right \lvert }{d(x,y)} &= \lim_{n \to \infty} \sup_{x \neq y} \lim_{m \to \infty} \frac{\left \lvert { (f^n(x) - f^m(x)) - (f^n(y) - f^m(y)) } \right \lvert }{d(x,y)}\\ 
+	    &\leq \lim_{n \to \infty} \lim_{m \to \infty} \sup_{x \neq y} \frac{\left \lvert { (f^n(x) - f^m(x)) - (f^n(y) - f^m(y))} \right \lvert}{d(x,y)}
+    \end{align*}
+    By Cauchy-ness of the sequence $f^n$ in this norm, the last limit is equal to $0$; therefore, the sequence converges to the limit $f$.
+    
+\end{proof}
+\begin{thebibliography}{}
+	\bibitem{mathew}{Mathew, Akhil. A Metric Space is Paracompact. Climbing Mount Bourbaki https://amathew.wordpress.com/2010/08/19/a-metric-space-is-paracompact/  August 19, 2010.}
+	\bibitem{rudin}{Rudin, Mary Ellen. A new proof that metric spaces are paracompact. Proceedings of the American Mathematical Society, Vol. 20, No. 2. (Feb., 1969), p. 603.}
+	\bibitem{stone}{Stone, A.H. Paracompactness and Product Spaces. Bulletin of the AMS, Vol 54, Number 10, 1948.}
+\end{thebibliography}
+\end{document}

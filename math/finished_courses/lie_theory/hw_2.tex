@@ -1,0 +1,556 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem, tikz-cd}
+\usepackage{enumitem}
+\setlist{  
+  listparindent=\parindent,
+  parsep=0pt,
+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 2}
+\author{Andrew Tindall\\
+Lie Theory}
+ 
+\maketitle
+\begin{section}{Book Problems}
+	\begin{problem}{1}
+		Br\"ocker \& tom Dieck, I.2.22.5: Check that the Lie algebras of $\text{SO}(n)$, $\text{U}(n)$, $\text{SL}(n,\R)$, $\text{SL}(n,\C)$, and $\text{Sp}(n)$ are, in fact, closed under the Lie product of matrices and invariant under conjugation by elements of their corrusponding groups. 
+		\begin{proof}
+			\begin{enumerate}[label=(\alph*)]
+				\item $\text{SO}(n)$: Let $A, B$ be elements of $\mathfrak{so}(n)$, i.e. skew-symmetric $n\times n$ real matrices, and let $C \in \text{SO}(n)$. 
+					\begin{itemize}
+						\item Closed under Lie product: we show that $AB - BA$ is skew-symmetric. 
+							\begin{align*}
+								(AB - BA)^t &= (AB)^t - (BA)^t\\
+								&= B^tA^t - A^tB^t\\
+								&= (-B)(-A) - (-A)(-B)\\
+								&= BA - AB\\
+								&= -(AB - BA)
+							\end{align*}
+							So $(AB - BA)^t = -(AB - BA)$; it is skew-symmetric. Thus the space is closed under the Lie product.
+						\item Closed under conjugation by elements of $\text{SO}(n)$: We show that $CAC^{-1}$ is skey-symmetric.
+							\begin{align*}
+								(CAC^{-1})^t &= (C^{-1})^tA^tC^t\\
+								&= CA^tC^{-1}\\
+								&= C(-A)C^{-1}\\
+								&= -CAC^{-1}
+							\end{align*}
+							Therefore $(CAC^{-1})^t = -CAC^{-1}$, so the space of skew-symmetric matrices is closed under conjugation by orthogonal matrices.
+					\end{itemize}
+				\item $\text{U}(n)$: Let $A, B$ be elements of $\mathfrak{u}(n)$, i.e. skew-Hermitian matrices, and $C \in \text{U}(n)$.
+					\begin{itemize}
+						\item Closed under Lie product: we show that $AB - BA$ is skew-Hermitian.
+							\begin{align*}
+								(AB - BA)^{\dagger} &= (AB)^\dagger - (BA)^\dagger\\
+								&= B^\dagger A^\dagger - A^\dagger B^\dagger\\
+								&= (-B)(-A) - (-A)(-B)\\
+								&= BA - AB\\
+								&= -(AB - BA)
+							\end{align*}
+							So $(AB - BA)^\dagger = -(AB - BA)$. Therefore, the space of skew-Hermitian matrices is closed under the Lie product.
+						\item Closed under conjugation by $\text{U}(n)$: We show that $CAC^{-1}$ is skew-Hermitian.
+							\begin{align*}
+								(CAC^{-1})^\dagger &= (C^{-1})^\dagger A^\dagger C^\dagger\\
+								&= CA^\dagger C^{-1}\\
+								&= C(-A)C^{-1}\\
+								&= -CAC^{-1}
+							\end{align*}
+							Therefore $CAC^{-1}$ is skew-Hermitian, so the space of skew-Hermitian matrices is closed under conjugation by unitary matrices.
+					\end{itemize}
+				\item $\text{SL}(n, \R)$: Let $A, B \in \mathfrak{sl}(n, \R)$, i.e. arbitrary trace-zero matrices, and let $C \in \text{SL}(n, \R)$.
+					\begin{itemize}
+						\item Closed under Lie product: we show that $AB - BA$ has trace zero. 
+							\begin{align*}
+								\text{tr}(AB - BA) &= \text{tr}(AB) - \text{tr}(BA)\\
+								&= \text{tr}(AB) - \text{tr}(AB)\\
+								&= 0
+							\end{align*}
+							Therefore the lie product of any two trace-zero matrices has trace zero. 
+							\par In fact, the above calculation shows that the Lie product of \textit{any} two matrices has trace zero; this leads to the result that the derived algebra of $\mathfrak{gl}(n, \R)$ is $\mathfrak{sl}(n, \R)$. To show this, we would also need to show that any trace-zero matrix is the sum of commutators of $n\times n$ matrices; a sketch of this proof is that each element of the basis $E_{ij}, i \neq j$ of $\mathfrak sl (n, \R)$ which consists of matrices with a $1$ in the $i, j$th spot and $0$s elsewhere, is equal to the commutator of two matrices.
+						\item Closed under conjugation by matrices in $\text{SL}(n, \C)$: We show that $\text{tr}(CAC^{-1}) = 0$:
+							\begin{align*}
+								\text{tr}(CAC^{-1}) &= \text{tr}(AC^{-1}C)\\
+								&= \text{tr}(A)\\
+								&= 0
+							\end{align*}
+							Therefore, the group is closed under conjugation by elements of $\text{SL}(n, \R)$. The proof does not hinge on the fact that $C$ has determinant $1$, so it works for any element of $\text{GL}(n, \R)$; this shows that the derived algebra $\mathfrak{sl}(n, \R) \subset \mathfrak{gl}(n, \R)$ is invariant under the action of $\text{GL}(n, \R)$.
+					\end{itemize}
+				\item $\text{SL}(n, \C)$: Let $A, B \in \mathfrak{sl}(n, \C)$, and $C \in \text{SL}(n, \C)$. 
+					\begin{itemize}
+						\item Closed under Lie product:
+							\begin{align*}
+								\text{tr}(AB - BA) &= \text{tr}(AB) - \text{tr}(BA)\\
+								&= \text{tr}(AB) - \text{tr}(AB)\\
+								&= 0
+							\end{align*}
+						\item Closed under conjugation by elements of $\text{SL}(n, \C)$:
+							\begin{align*}
+								\text{tr}(CAC^{-1}) &= \text{tr}(AC^{-1}C)\\
+								&= \text{tr}(A)\\
+								&= 0
+							\end{align*}
+					\end{itemize}
+					Again, both proofs work in more generality. In this case, we see that the derived algebra of $\mathfrak{gl}(n, \C)$ is equal to $\mathfrak{sl}(n, \C)$, and that $\mathfrak{sl}(n, \C)$ is closed under conjugation by any invertible complex matrix.
+				\item $\text{Sp}(n)$: Let $A, B$ be any two elements of $\mathfrak{sp}(n)$, i.e. any two $n \times n$ quaternionic skew-Hermitian matrices (where the conjugate transpose $A^\dagger$ uses the quaternionic conjugate). Let $C$ be an arbitrary element of $\text{Sp}(n)$: a quaternionic unitary matrix, which perserves the inner product $\langle Ca, Cb\rangle = \langle a, b\rangle$ for any vectors $a, b \in \mathbb H^n$, with inner product $\langle a, b\rangle = \sum_{i} a_i\overline{b_i}$.
+					\begin{itemize}
+						\item Closed under Lie product: We show that $(AB - BA)^\dagger = -(AB - BA)$:
+							\begin{align*}
+								(AB - BA)^\dagger &= (AB)^\dagger - (BA)^\dagger\\
+								&= B^\dagger A^\dagger - A^\dagger B^\dagger \\
+								&= (-B)(-A) - (-A)(-B)\\
+								&= BA - AB\\
+								&= -(AB - BA)
+							\end{align*}
+							Note that the identity $(AB)^\dagger = B^\dagger A^\dagger$ still holds, despite our matrices not being over a commutative ring, because
+							\[\langle AB x, y \rangle = \langle x, A^\dagger y\rangle = \langle x, B^\dagger A^\dagger y \rangle.\]
+						\item Closed under conjugation by members of $\text{Sp}(n)$:
+							\begin{align*}
+								(CAC^{-1})^\dagger &= (C^{-1})^\dagger A^\dagger C^\dagger\\
+								&= CA^\dagger C^{-1}\\
+								&= -CAC^{-1}
+							\end{align*}
+							Therefore this space is closed under conjugation by arbitrary elements of $\text{Sp}(n)$.
+					\end{itemize}
+			\end{enumerate}
+		\end{proof}
+	\end{problem}
+	\begin{problem}{2}
+		Br\"ocker \& tom Dieck, I.3.13.5: Show that in every Lie group there is a neighborhood of the unit not containing any subgroup other than $e$.	
+		\begin{proof}
+			\par Let $G$ be our Lie group, and $\mathfrak g$ its Lie algebra. Because $\mathfrak g$ is diffeomorphic to $\R^n$ for some $n$, we can assume its topology is generated by some norm $\left \lvert { \cdot } \right \lvert $.
+			\par There must exist some neighborhood $U \subset \mathfrak g$ with $0 \in U$, such that $\exp$ is a local diffeomorphism $U \to \exp(U)$. We know that $U$ must contain some open ball $B_\varepsilon = \{x \in \mathfrak g \,\lvert\, \lvert x \rvert < \varepsilon\}$, for some $\varepsilon > 0$. Let $V = \{x \in \mathfrak g \, \lvert \, \lvert x \rvert < \varepsilon / 2\}$. We show that $\exp(V)$ is a neighborhood of the origin in $G$ which does not contain any nontrivial subgroup.
+			\par Assume for sake of contradiction that $H \subset \exp{V}$ is a subgroup of $G$ with some nonidentity element $g \in H$. Then $g = \exp(v)$ for some $v \in V$. Because $\lvert v \rvert < \varepsilon / 2$, we see that $\lvert 2v \rvert < \varepsilon$, so $2v \in U$. Also, because $g^2 \in H \subset \exp(V)$, we see that $g^2 = \exp(w)$ for some $w \in V$.
+			\par Because it is also true that $g^2 = (\exp(v))^2 = \exp(2v)$, and $\exp$ is a bijection on $U$, it must be true that $w = 2v$, so that $2v \in V$. This argument can be iterated, showing that $v, 2v, 4v, ... 2^nv , ... \in V$. The norms $\lvert 2^n v \rvert$ are unbounded, contradicting the definition of $V$ as $B_{\varepsilon/2}$. Therefore, $\exp(V)$ cannot contain any nontrivial subgroup of $G$.
+			\par \textit{Source: }\cite{devito}
+		\end{proof}
+	\end{problem}
+    \begin{problem}{3}
+	    Br\"ocker \& tom Dieck, I.4.15.7: Show that $\Sp(n)$, $n \geq 1$, and $\text{SU}(n)$, $n \geq 2$, are simply connected.
+    \begin{proof}
+			    \par We use the following lemma: For a principal bundle $F \to X \to B$ with fiber $F$ and base space $B$, if $\pi_1(B) = \pi_2(B) = 0$, then $\pi_1(X) = \pi_1(F)$. This can be seen by using the result from \cite{hall} that a principal bundle induces a long exact sequence of homotopy groups: we need only the last few terms,
+			    \[ \dots \to \pi_2(B) \to \pi_1(F) \to \pi_1(X) \to \pi_1(B).\]
+			    Assuming that $\pi_1(B)$ and $\pi_2(B)$ are trivial, this tells us that the sequence \[0 \to \pi_1(F) \to \pi_1(B) \to 0\] is exact; i.e. that $\pi_1(F) \cong \pi_1(X)$. We use this lemma to show that $\Sp(n)$ and $\text{SU}(n)$ are simply connected.
+	    \begin{itemize}
+		    \item $\Sp(n)$: We induct on $n$. It is clearly true for $\Sp(1) \cong \text{SU}(2)$, as $\text{SU}(2)$ is homeomorphic to the $3$-sphere, which is simply connected.
+			    \par Assume $n \geq 2$. As shown in the text (and later in this problem set), for any $n \geq 2$, we have a principal bundle $\Sp(n-1) \to \Sp(n) \to S^{4n -1}$. Because $4n - 1 \geq 7$, and the $1$st and $2$nd homotopy groups of higher-dimensional spheres are trivial, it is true that $\pi_1(S^{4n-1}) = \pi_2(S^{4n-1}) = 0$. By the above lemma, this implies that $\pi_1(\Sp(n)) \cong \pi_1(\Sp(n-1)$, which by the induction hypothesis is trivial. Thus, for all $n \geq 1$, we see that $\Sp(n)$ is simply connected.
+			    \item $\text{SU}(n)$, $n \geq 2$: We proceed similarly. Our base case is $\text{SU}(2)$, which is again simply connected because it is homeomorphic to the $3$-sphere. 
+				    \par Inductively, assume that $\text{SU}(n-1)$ is simply connected for some $n \geq 3$. As shown in the text, and later in this set, we have a principal bundle $\text{SU}(n-1) \to \text{SU}(n) \to S^{2n-1}$. Because $2n - 1 \geq 5$, $S^{2n-1}$ is a high-dimensional sphere, with trivial first and second homotopy groups: so, we see again that $\pi_1(S^{2n-1}) \cong \pi_2(S^{2n-1}) = 0$, so it is true that $\pi_1(\text{SU}(n)) \cong \pi_1(\text{SU(n-1)}) = 0$. Therefore, $\text{SU}(n)$ is simply connected for $n \geq 2$. 
+				    \par Also, we note that for $n = 1$, $\text{SU}(1) \cong S^1$, which is not simply connected.
+			    \item While $\text{SO}(n)$ is not simply connected for any $n$, this same method of proof does show that $\pi_1(\text{SO}(n)) \cong \pi_1(\text{SO}(n-1))$ for $n \geq 4$.
+	    \end{itemize}
+    \end{proof}
+    \end{problem}
+\end{section}
+\begin{section}{Problems from the Course Website}
+	\begin{problem}{1}
+		Show that a 2-dimensional Lie algebra over a field of characteristic $0$ is either abelian or has a basis $X,Y$ such that $[X,Y] = X$.	
+		\begin{proof}
+			Let $F$ be a field of characteristic $0$, and let $\mathfrak L$ be a 2-dimensional Lie algebra with basis $e,f$, so that $\mathfrak L = Fe + Ff$ as a vector space over $F$. If $[e,f] -[f,e] = 0$, then $\mathfrak L$ is abelian. Otherwise, the derived algebra $\mathfrak L' = F[e,f]$ is nontrivial, making it a one-dimensional Lie algebra.
+			\par Let $X = [e,f] \in \mathfrak L$. Then $\left\{ X \right\}$ may be completed to a basis $\{X, Y'\}$ of $\mathfrak L$. Because $[X, Y'] \in \mathfrak L' = FX$, there is some nonzero $\alpha \in F$ such that $[X,Y'] = \alpha X$. Letting $Y = \alpha^{-1}Y'$, we have a basis $\left\{ X,Y \right\}$ of $\mathfrak L$ such that $[X,Y] = \alpha^{-1}[X,Y'] = \alpha^{-1}\alpha X =  X$.
+		\par			\textit{Source:}\cite{jacobson}
+		\end{proof}
+	\end{problem}
+	\begin{problem}{2}
+		Let $G$ be a Lie group and $H$ a closed subgroup. Show that
+		\begin{enumerate}[label=(\alph*)]
+			\item If $H$ and $G/H$ are connected then $G$ is connected.
+			\item The groups $\text{SO}(n)$ $(n \geq 2)$, $\text{SU}(n)$ $(n \geq 2)$, and $\text{Sp}(n)$ $(n \geq 1)$ act transitively on the spheres $S^{n-1}$, $S^{2n-1}$, and $S^{4n - 1}$, respectively.
+			\item $\text{SO}(n)$, $\text{SU}(n)$, and $\text{Sp}(n)$ are connected.
+		\end{enumerate}
+		\begin{proof}
+			\begin{enumerate}[label=(\alph*)]
+				\item Assume that $H$ and $G/H$ are connected and that $G$ is disconnected; that it may be decomposed as $A \sqcup B$, where $A$ and $B$ are open, and $e \in A$. We see that $H$ is connected and contains $A$, so $H \subset A$. Also, for any $g \in G$, the map $l_g$ is continuous and thus takes connected sets to connected sets, so each of the cosets $\{gH \,\lvert\, g \in G\}$ is contained entirely in either $A$ or $B$. 
+				\par For any closed subgroup $H$ of a Lie group $G$, the quotient map $\pi: G \to G/H$ is open, as shown in \cite{tomDieck}. Because each coset of $H$ lies entirely in $A$ or $B$, the images $\pi(A)$ and $\pi(B)$ are disjoint, open sets, such that $\pi(A) \cup \pi(B) = G/H$. This shows that $G/H$ is disconnected, a contradiction. Therefore, $G$ must be connected. 
+				\par Here is a simpler proof of the same thing: a closed subgroup $H$ of $G$ induces a principal bundle $H \to G \to G/H$. It is not hard to show that if the base space and fiber of a bundle are connected, then the total space is connected - intuitively, two elements $g_1$ and $g_2$ can be connected by lifting a path from $\pi(g_1)$ to $\pi(g_2)$ to a path from $g_1$ to some element $g_2'$ of the fiber above $g_2$, and then from $g_2'$ to $g_2$ inside the local copy of $H$. This shows that $G$ is connected.
+				\item 
+				\begin{itemize}
+				    \item $\text{SO}(n)$ on $S^{n-1}$: We wish to show that, for any two $x, y \in S^{n-1}$, there is some $A \in \text{SO}(n)$ for which $Ax = y$ under the canonical action of $\text{SO}(n)$ on $S^{n-1}$. 
+				    \par It suffices to show that, for any $x \in S^{n-1}$, there is some $A \in \text{SO}(n)$ such that $Au = x$, for a distinguished element $u_1 \in S^{n-1}$, because if $Au_1 = x$ and $Bu_1 = y$, then $(BA^{-1})x = y$. So, let $u_1 = (1, 0, \dots 0) \in S^{n-1}$, and let $x \in S^{n-1}$ be arbitrary. 
+				    \par An element $A \in \text{SO}(n)$ takes $u_1$ to $x$ if and only if the first column of $A$ is equal to the column vector $x$. We thus need to construct a matrix in $\text{SO}(n)$ whose first column is $x$. This is not hard: completing $\{x\}$ to a basis $\{x, e_2, e_3, ... e_n\}$ of $\R^n$ and then using Graham-Schmidt orthogonalization, we attain a set of $n$ orthonormal vectors $\{x, e_2', ... , e_n'\}$. The matrix $A = [x \, e_2' \, ... \, e_n']$ is an element of $\text{O}(n)$; if $\text{det}(A) = -1$, then we may replace the last column $e_n'$ with $-e_n'$ to attain an element of $\text{SO}(n)$ whose first column is $x$. 
+				    \par Note that the last column of $A$ is sure not to be $x$, because the dimension $n$ is at least $2$. 
+				    \par Therefore, the action of $\text{SO}$ on $S^{2n-1}$ is transitive.
+			    \item $\text{SU}(n)$: We wish to show that, for any $x \in S^{2n-1}$, there is a matrix $A \in \text{SU}(n)$ such that $Au_1 = x$. In this case, we consider $S^{2n-1}$ as the set of unit vectors in $\C^n$, and $\text{SU}(n)$ as the set of unitary $n\times n$ complex matrices with determinant $1$. We use the same distinguished element $u_1 = \langle 1, 0, \dots, 0 \rangle$; so we want to find a unitary matrix with first column $u_1$ and determinant $1$. 
+				    \par We proceed in a similar manner; the Graham-Schmidt orthogonalization process works over $\C$ the same way, so by completing $\left\{ x \right\}$ to a basis $\left\{ x, e_2, \dots e_n \right\}$ of $\C^n$, and then using Graham-Schmidt, we obtain an orthonormal set $\left\{ x, e_2', \dots e_n' \right\}$. The matrix $A = \left[ x \; e_2' \; \dots \; e_n' \right]$ is thus a unitary matrix, with the absolute value of its determinant equal to $1$: $\left \lvert { \text{det}(A) } \right \lvert = 1$. By replacing the last column $e_n'$ of $A$ with $ { \text{det}(A) } ^{-1} e_n'$, we obtain a unitary matrix with determinant $1$, which has $x$ as its first column. Note that because $n \geq 2$, the last column of $A$ is distinct from $x$.
+				    \par Therefore, for any $x, y \in S^{2n-1}$, there exists an elements $A, B \in \text{SU}(n)$ such that $Au_1 = x$ and $Bu_1 = y$. Therefore the element $BA^{-1} \in \text{SU}(n)$ takes $x$ to $y$, and so the action of $\text{SU}(n)$ on $S^{2n-1}$ is transitive.
+			    \item $ \text{Sp}(n)$: We consider $\text{Sp}(n)$ as the group of $2n \times 2n$ complex unitary symplectic matrices, and $S^{4n - 1}$ as the set of unit vectors in $\C^{2n}$.
+			    \par An element of $\Sp(n)$ is a unitary matrix of the form
+			    \[
+			    A = \begin{bmatrix}
+                X & -\overline{Y} \\ Y & \overline{X}			    
+			    \end{bmatrix}
+			    \]
+				Let $x \in S^{4n - 1}$ be arbitrary, and let $u_1 = (1,0, .. 0)$. We wish to find an element $A \in \Sp(n)$ such $Au_1 = x$; that is, a unitary symplectic matrix such that the first column of $A$ is $x$.
+				\par For  an element $a = \begin{bmatrix}
+					a_1 \\ a_2
+				\end{bmatrix} \in \C^{2n}$, where $a_1 $ and $a_2$ are length $n$ vectors, let $a' = \begin{bmatrix}
+					-\overline{a_2} \\ \overline{a_1}
+				\end{bmatrix}$. We see that for any two vectors $a = \begin{bmatrix}
+				a_1\\a_2
+			\end{bmatrix}$ and $b = \begin{bmatrix}
+				b_1 \\b_2
+			\end{bmatrix}$, such that $a$ is orthogonal to $b'$, that $a'$ is also orthogonal to $b$: 				
+				\begin{align*}
+					\langle a', b\rangle &= \langle -\overline{a_2}, b_1\rangle + \langle \overline{a_1}, b_2\rangle \\
+					&= -\langle a_2, \overline{b_1}\rangle - \langle a_1, -\overline{b_2}\rangle\\
+					&= - \langle a, b'\rangle \\
+					&= 0
+				\end{align*}
+				\par We want to find an orthonormal basis for $\C^{2n}$ which we will be able to turn into a symplectic matrix. Find some unit vector $e_2$ in the orthogonal complement to the space spanned by $x$ and $x'$; by the above lemma we see that $e_2'$ is also orthogonal to both $x$ and $x'$. Then, find some unit $e_3$ in the orthogonal complement to the space spanned by $x, x', e_2, e_2'$, and so on. We thus obtain a set of $2n$ unit vectors, $x, e_2, \dots e_n, x', e_2', \dots e_n'$, which are pairwise orthogonal. Therefore, the matrix
+				\[A = [x \; e_2 \; \dots \; e_n \; x' \; e_2' \; \dots \; e_n']\]
+				Is an element of $\text{Sp}(n)$, and it takes $u_1$ to $x$. So, we conclude that the action of $\Sp(n)$ on $S^{4n-1}$ is transitive.
+			    \par \textit{Source: }\cite{sepanski}
+				    \end{itemize}
+			    \item We now find the principal bundle induced by each of these actions, by finding the stabilizer of $u_1 \in S^n$. We see that any matrix $A$ takes $u_1$ to $u_1$ if and only if it is of the form 
+				    \[A = \begin{bmatrix}
+						    1 & * & \dots &  *\\
+						    0 & & & \\
+						    \vdots & & A' & \\
+						    0 & & & 
+			    \end{bmatrix}\]
+			    With $A'$ some $n\times n$ matrix. If $A$ is expressed as a matrix $a_{ij}$, this is equivalent to the condition that $a_{11} = 1$, and $a_{ij} = 0$ if $i \neq j$. For each space $\text{SO}(n)$, $\text{SU}(n)$, and $\text{Sp}(n)$, the stabilizer of $u_1$ is the set of all linear operators $A$ in the group which take $u_1$ to $u_1$. Because each group consists of unitary matrices, both the rows and columns of any element must have unit norm; this further restricts the form of $A$ to 
+			    \[A = \begin{bmatrix}
+			    1 & 0 & \dots &  0\\
+			    0 & & & \\
+			    \vdots & & A' & \\
+			    0 & & & 
+	    \end{bmatrix} \]We see that $A$ is unitary if and only if $A'$ is, and $\det(A) = 1 \cdot \det(A')$, so $A \in \text{SO}(n)$ iff $A' \in \text{SO}(n-1)$. Therefore the set of special-orthogonal matrices of dimension $n$ which stabilize $u_1$ may be put in bijection with the set of special-orthogonal matrices of dimension $n-1$. Further, if 
+	    \[A = \begin{bmatrix}
+			    1 & 0 & \dots &  0\\
+			    0 & & & \\
+			    \vdots & & A' & \\
+			    0 & & & 
+	    \end{bmatrix} \text{ and } B = \begin{bmatrix}
+			    1 & 0 & \dots &  0\\
+			    0 & & & \\
+			    \vdots & & B' & \\
+			    0 & & & 
+	    \end{bmatrix}, \]
+	    Then we see that
+	    \[AB = \begin{bmatrix}
+			    1 & 0 & \dots &  0\\
+			    0 & & & \\
+			    \vdots & & A'B' & \\
+			    0 & & & 
+	    \end{bmatrix}, \]
+	    and also that 
+	    \[I_n = \begin{bmatrix}
+			    1 & 0 & \dots &  0\\
+			    0 & & & \\
+			    \vdots & & I_{n-1} & \\
+			    0 & & & 
+	    \end{bmatrix}\]
+	    These two facts show that the stabilizer of $u_1$ in $\text{SO}(n)$ is a subgroup isomorphic to $\text{SO}(n-1)$. The same arguments go to show that the stabilizer of $u_1$ in $\text{SU}(n)$ is a subgroup isomorphic to $\text{SU}(n-1)$. 
+	    \par In the case of the stabilizer of $u_1$ in $\Sp(n)$, for $n \geq 2$, the symplectic condition further restricts the form of matrices fixing $u_1.$ If $A \in \Sp(n)$ takes $u_1$ to $u_1$, then $A$ must have the form
+	    \[A = \begin{bmatrix}
+			    1      & 0 & \dots & 0 & 0      & 0 & \dots & 0\\
+			    0      &   &       &   & 0      &   &       & \\
+			    \vdots &   &  A'   &   & \vdots &   &  -\overline{B'}   & \\ 
+			    0      &   &       &   & 0      &   &       & \\
+			    0 &      0 & \dots & 0 & 1      & 0 & \dots & 0 \\
+			    0      &   &       &   & 0      &   &       & \\
+			    \vdots &   &  B'   &   & \vdots &   &  \overline{A'} & \\
+			    0      &  &        &   & 0      &   &       & 
+    \end{bmatrix}\]
+    Where $A'$ and $B'$ are $2n - 2$-dimensional matrices. We see that the columns of $A$ are orthogonal if and only if the columns of $\begin{bmatrix}
+	    A' & -\overline{B'}\\
+	    B' & \overline{A'}
+    \end{bmatrix}$ are, and that $\det(A)$ = $\det\left( \begin{bmatrix}
+		    A' & -\overline{B'}\\
+		    B' & \overline{A'}
+    \end{bmatrix}\right)$, so the stabilizer of $u_1$ can be put in bijection with $\Sp(n-1)$. Further, the stabilizer is isomorphic to $\Sp(n-1)$ as a subgroup of $\Sp(n)$, for $n \geq 2$.
+    \par In the case $n = 1$, $\Sp(n) = \text{SU}(2)$, which we have already shown stabilizes the space $S^3$.
+    \par As shown in Br\"ocker and tom Dieck, for any Lie group $G$ which acts transitively on a space $K$, the stabilizer of an arbitrary point $p \in L$ is a closed subgroup $H$ of $G$, and $K$ can be identified diffeomorphically with $G/H$ in the principal bundle $H \to G \to G/H$. The above arguments therefore give three principal bundles:
+    \begin{align*}
+	    \text{SO}(n-1) &\to \text{SO}(n) \to S^{n-1}\\
+	    \text{SU}(n-1) &\to \text{SU}(n) \to S^{2n-1}\\
+	    \Sp(n-1) & \to \Sp(n) \to S^{4n - 1}
+    \end{align*} Where $n \geq 2$ in each case. Because the spheres $S^{n-1}$, $S^{2n-1}$, and $S^{4n - 1}$ are connected, we see that $\text{SO}(n)$ is connected if $\text{SO}(n-1)$ is, and so on for the other groups. So, to show connectivity for all $n$, we need only show connectivity in the base case $n = 1$.
+    \begin{itemize}
+	    \item $\text{SO}(1)$ is the trivial group $\left\{ I \right\}$, which is connected.
+	    \item $\text{SU}(1)$ is isomorphic to $S^1$, which is connected.
+	    \item $\text{Sp}(1)$ is isomorphic to $\text{SU}(2)$, which we have shown to be connected.
+    \end{itemize}
+    Therefore $\text{SO}(n)$, $\text{SU}(n)$, and $\Sp(n)$ are connected for all $n$.
+
+			\end{enumerate}
+		\end{proof}
+	\end{problem}
+	\begin{problem}{3}
+		Let $G$ be the group of unit quaternions and $V$ be the linear subspace of purely imaginary quaternions. Show that 
+		\begin{enumerate}[label=(\alph*)]
+			\item $G$ acts on $V$ by conjugation.
+			\item $G$ is a Lie group isomorphic to $SU(2)$.
+			\item The adjoint representation of $G$ and the representation on $V$ are isomorphic.
+			\item $\text{Ad}(G)\leq \text{GL}(\mathfrak g)$ is isomorphic to $\text{SO}(3, \R)$.
+			\item Describe topologically $G$, the adjoint orbits of $G$, the stabilizers $G_X$ of the adjoint action on $X \in \mathfrak g$, and the fibration $G \to \text{Ad}(G)X$.
+		\end{enumerate}
+		\begin{proof}
+			\begin{enumerate}[label=(\alph*)]
+				\item We show that an arbitrary unit quaternion (in fact, any quaternion) acts on the group of imaginary quaternions by conjugation. For ease of computation we use the complex-matrix representation of the quaternions: let $x = \begin{bmatrix}
+						\alpha & \beta \\
+						 -\overline \beta & \overline \alpha
+					\end{bmatrix}$ be an arbitrary quaternion (corresponding to the quaternion $\alpha + \beta j$ in $i$,  $j$, $k$ basis), and let $u = \begin{bmatrix}
+						\gamma & \delta \\
+						-\overline \delta & \overline \gamma
+					\end{bmatrix}$, where $\text{re}(\gamma) = 0$, be an arbitrary imaginary quaternion. Then
+					\begin{align*}
+						xu\overline x &= \begin{bmatrix}
+						\alpha & \beta \\
+						 -\overline \beta & \overline \alpha
+					\end{bmatrix}\begin{bmatrix}
+						\gamma & \delta \\
+						-\overline \delta & \overline \gamma
+					\end{bmatrix}\begin{bmatrix}
+						\overline \alpha & -\beta \\
+						 \overline \beta & \alpha
+					\end{bmatrix}\\
+					&= \begin{bmatrix}
+					(\alpha \gamma - \beta \overline \delta) & (\alpha \delta + \beta \overline \gamma)\\
+					(-\overline \beta \gamma - \overline \alpha  \overline {\delta}) & (-\overline \beta \delta + \overline\alpha \, \overline{ \gamma})
+					\end{bmatrix}\begin{bmatrix}
+						\overline \alpha & -\beta \\
+						 \overline \beta & \alpha
+					\end{bmatrix}\\
+					&= \begin{bmatrix}
+					(\alpha \gamma \overline \alpha - \beta \overline \delta \overline { \alpha}) + (\alpha \delta \overline \beta + \beta \overline \gamma \overline{  \beta}) & * \\
+					* & * 
+					\end{bmatrix}
+					\end{align*}
+					We see that $xu\overline x$ is a pure imaginary quaternion if and only if the diagonal entries of the corresponding matrix are pure imaginay complex numbers. Because the lower right entry of the matrix is the conjugate of the upper left, we need only check that
+					\[
+                        \text{re}(\alpha \gamma \overline \alpha - \beta \overline \delta \overline{ \alpha} + \alpha \delta \overline \beta + \beta \overline \gamma \overline {  \beta}) = 0					
+					\]
+					The term $\alpha \gamma \overline \alpha = \gamma \alpha \overline \alpha$ must be pure imaginary, because $\gamma$ is imaginary, and $\alpha \overline \alpha$ is real. The same holds for $\beta \overline \gamma \overline{ \beta} = \overline \gamma \beta \overline \beta$. Finally, the term $- \beta \overline \delta \overline{ \alpha} + \alpha \delta \overline \beta = \alpha \delta \overline \beta - \overline{ \alpha  \delta \overline \beta} = 2 \,\text{im}(\alpha \delta \overline \beta)i$ must be imaginary. Therefore, the function $\rho_x : u \mapsto xu\overline x$ takes imaginary quaternions to imaginary quaternions.
+					\par We can also show that this function is a left group action of the unit quaternions on the imaginary quaternions. There are two things to check: First, that $\rho_1 = \text{Id}$, which is clear: $1 u \overline 1 = u$. Next, that $\rho_{xy} = \rho_x \circ \rho_y$. Note that the conjugate here is the quaternionic conjugate, which reverses the order of multiplication:
+					\begin{align*}
+					    \rho_{xy}(u) &= (xy) u \overline{xy}\\
+					    &= x y u (\overline{y}) (\overline{x})\\
+					    &= x (y u \overline y) \overline x\\
+					    &= x (\rho_y(u) ) \overline x\\
+					    &= \rho_x(\rho_y(u))\\
+					    &= (\rho_{x} \circ \rho_y)(u)
+					\end{align*}
+					Therefore, the group of unit quaternions acts on the group of imaginary quaternions by conjugation.
+				\item Our representation of quaternions as $2\times 2$ complex matrices is really an isomorphism with a subgroup of $M_{2 \times 2}(\C)$, which we used implicitly in the last problem. To make this isomorphism precise, let $\varphi: \mathbb H \to M_{2 \times 2}(\C)$ be the function taking quaternions to their representation:
+				\[
+                    a + bi + cj + dk \mapsto \begin{bmatrix}
+                    (a + bi) & c + di \\
+                    -c + di & a - bi
+                    \end{bmatrix}
+				\]
+				Or, writing $a + bi + cj + dk$ as $\alpha + \beta j$, where $\alpha = a + bi$ and $\beta = c + di$, 
+				\[
+				\alpha + \beta j \mapsto \begin{bmatrix}
+				\alpha & \beta \\
+				- \overline \beta & \overline \alpha
+				\end{bmatrix}
+				\]
+				It is immediate that this map is injective. It is also a group homomorphism: it takes the identity $1$ to $I_2$, and it preserves multiplication. Therefore, it is an isomorphism onto its image, and we may identify $\mathbb H$ with the set of all matrices of this form, as we did in the last
+				problem.
+				\par The set of unit quaternions is a subgroup of $\mathbb H$, so it can be identified with a $2 \times 2$ complex matrix group. The set of unit quaternions is the set of all quaternions $a + bi + cj + dk$ such that $a^1 + b^2 + c^2 + d^2 = 1$; written as $\alpha + \beta j$, this is equivalent to the condition that $\lvert \alpha \rvert^2 + \lvert \beta \rvert^2 = 1$. And the set of all complex matrices $\begin{bmatrix} \alpha  & \beta \\ -\overline \beta & \overline \alpha \end{bmatrix}$ such that $\lvert \alpha \rvert^2 + \lvert \beta \rvert^2 = 1$ is exactly the definition of the matrix group $\text{SU}(2)$. 
+				\par Therefore, we have shown that $V \cong \text{SU}(2)$.
+				\item We wish to show that two representations of $G$ are isomorphic: The adjoint representation of $G$ on $\mathfrak{su}(2)$, where $G$ is thought of as $\text{SU}(2)$, and the representation of $G$ on $V$, where $G$ acts by conjugation.
+				\par Actually, by the map $\mathbb H \to M_{2 \times 2}(\C)$ of the last problem, the representation on $V$ as we have defined it is exactly the same as the adjoint representation of $G$. We see that the group of imaginary quaternions is the group of all $2\times 2$ complex matrices of the form
+				\[
+				\begin{bmatrix}
+				bi & c + di\\
+				-c + di & -bi
+				\end{bmatrix}
+				\]
+				While the group $\mathfrak{su}(2)$ is the group of all $2\times 2$ traceless skew-hermitian matrices, which is exactly the same. The action of $G$ on the imaginary quaternions is by conjugation, and so is its action on $\mathfrak{su}(2)$, so in fact these representations are isomorphic.
+				\item The lie algebra $\mathfrak{su}(2)$ is a real vector space, with one basis
+				\[
+				\sigma_1 = \begin{bmatrix}0 & i \\ i & 0 \end{bmatrix}, \quad \sigma_2 = \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix}, \quad \sigma_3 = \begin{bmatrix} i & 0 \\0 & -i\end{bmatrix}
+				\]
+				This gives us an isomorphism $\mathfrak{su}(2) \to \R^3$, sending
+				\[
+				\begin{bmatrix}
+				ai & b + ci \\-b + ci & -ai
+				\end{bmatrix} \mapsto (c,b,a)
+				\]
+				Now, we want to show that the adjoint action of $G$ on $\R^3$ is isomorphic to the action of $\text{SO}(3,\R)$ on $\R^3$. An arbitrary unit quaternion $x = \begin{bmatrix} \alpha & \beta \\ -\overline \beta & \overline \alpha \end{bmatrix} = \begin{bmatrix} a + bi & c + di \\ -c + di & a - bi \end{bmatrix} $ acts on the basis $\sigma_i$ in the following way:
+				\begin{align*}
+				    x \cdot \sigma_1 &= \begin{bmatrix} a + bi & c + di \\ -c + di & a - bi \end{bmatrix} \begin{bmatrix} 0 & i \\ i & 0 \end{bmatrix} \begin{bmatrix} a - bi & - c - di \\ c - di & a + bi \end{bmatrix} \\
+				    &= \begin{bmatrix} 
+				    -d + ci & -b + ai \\ b + ai & -d - ci
+				    \end{bmatrix}\begin{bmatrix} a - bi & - c - di \\ c - di & a + bi \end{bmatrix}\\
+				    &= \begin{bmatrix}
+				    2(ac+ bd)i, & 2(dc - ab) + (a^2 + b^2  -c^2  - d^2 )i \\ * & * 
+				    \end{bmatrix}
+				    \end{align*}
+				    We know that the bottom two elements are negatives and conjugates of the top two, so we do not need to calculate them. 
+				    \par Since $a^2 + b^2 + c^2 + d^2 = 1$, we can write $a^2 + b^2 - c^2 - d^2$ as $ 1 - 2(c^2 + d^2)$. Therefore, in the basis $\sigma_i$,
+				    \[
+                    x \cdot \sigma_1 = (1 - 2(c^2 + d^2), 2(dc - ab), 2(ac + bd))				    
+				    \]
+				    We repeat this calculation for the next element of the basis:
+				    \begin{align*}
+				        x \cdot \sigma_2 &= \begin{bmatrix} a + bi & c + di \\ -c + di & a - bi \end{bmatrix} \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix} \begin{bmatrix} a - bi & - c - di \\ c - di & a + bi \end{bmatrix}\\
+				        &= \begin{bmatrix}
+				        -c - di & a + bi \\
+				        -a + bi & -c + di
+				        \end{bmatrix}\begin{bmatrix} a - bi & - c - di \\ c - di & a + bi \end{bmatrix}\\
+				        &= \begin{bmatrix}
+				        2(bc - ad)i, (a^2 - b^2  + c^2 - d^2) + 2(ab + cd)i\\
+				        * & *
+				        \end{bmatrix}
+				        \end{align*}
+				        Which shows that
+				        \[
+                            x \cdot \sigma_2 = (2(ab + cd), (1 - 2 (b^2 + d^2)), 2(bc - ad))				        
+				        \]
+				        Finally, for $\sigma_3$:
+				        \begin{align*}
+				            x \cdot \sigma_3 &= \begin{bmatrix} a + bi & c + di \\ -c + di & a - bi \end{bmatrix} \begin{bmatrix} i & 0 \\ 0 & -i \end{bmatrix} \begin{bmatrix} a - bi & - c - di \\ c - di & a + bi \end{bmatrix}\\
+				            &= \begin{bmatrix}
+				            -b + ai & d - ci \\
+				            -d - ci & -b - ai
+				            \end{bmatrix}\begin{bmatrix} a - bi & - c - di \\ c - di & a + bi \end{bmatrix}\\
+				            &= \begin{bmatrix}
+				            (a^2 - b^2 -c^2 + d^2)i, & 2(ad + bc) + 2(bd - ac)i\\
+				            * & * 
+				            \end{bmatrix}
+				            \end{align*}			
+				            So, we see that
+				            \[
+                                x \cdot \sigma_3 = (2(bd - ac), 2(ad + bc), (1 - 2(b^2 + c^2)))				            
+				            \]
+				        Therefore, the representation of $V$ on $\R^3$ is as the set of all matrices
+				        \[
+                            \begin{bmatrix}
+                            (1 - 2(c^2 + d^2)) & 2(ab + cd) & 2(bd - ac)\\
+                            2(dc - ab) & (1 - 2(b^2 + d^2)) & 2(ad + bc)\\
+                            2(ac + bd) & 2(bc - ad) & (1 - 2(b^2 + c^2))
+                            \end{bmatrix},
+				        \]
+				        where $a^2 + b^2 + c^2 + d^2 = 1$. It is not immediately obvious that this set is equal to $\text{SO}(3)$, but it is - this matrix is a rotation of angle $\theta$ around the vector $(b,c,d)$, where $\cos(\theta) = a$ (\cite{shoe}). Also, because each term is a homogeneous polynomial in $a,b,c,d$ of order $2$, the matrix is invariant under the map $(a,b,c,d) \mapsto -(a,b,c,d)$ - the correspondence is $2$-to-$1$.
+				\item $G$, the unit quaternions, is homeomorphic to the $3$-sphere, because it is a subset of a $4$-dimensional vector space defined by $a^2 + b^2 + c^2 + d^2 = 1$. 
+					\par The orbit of any point $x$ in $\R^3$ under the group $\text{SO}(3)$ is the $2$-sphere around the origin containing $x$ - as shown in problem $2$, $\text{SO}(3)$ acts transitively on the $2$-sphere. Thus any orbit is homeomorphic to $S^2$.
+					\par The stabilizer of any point $x$ in $\R^3$ under $\text{SO}(3)$ is the set of all rotations which fix $x$; they must then fix the line through $x$, meaning they act as rotations on the $2$-dimensional orthogonal subspace to this line. The group of all such rotations is isomorphic to $\text{SO}(2)$, which is homeomorphic to the $2$-sphere.
+					\par The fibration $G \to \text{Ad}(G)X$ is a principal bundle 
+					\[G_X \to G \to \text{Ad}(G)X,\]
+					where $G_X$ is the stabilizer of $X$ and $\text{Ad}(G)X$ is the adjoint orbit of $X$ under $G$. As shown, each of these is a topological space homeomorphic to a sphere, so this is a fibration
+					\[S^1 \to S^3 \to S^2.\]
+					We have constructed the Hopf Fibration.
+			\end{enumerate}
+		\end{proof}
+	\end{problem}
+	\begin{problem}{4}
+		Let $(x_1, \dots x_n) \in \R^n$ and $H$ the subgroup generated by $(\bar{x_1}, \dots \bar{x_n}) \in \R^n/\Z^n$. Show that $H$ is dense in $\R^n/\Z^n$ if and only if $1, x_1, \dots x_n$ are linearly independent over $\mathbb Q$.
+		\begin{proof}
+			First, we note that a tuple $1, x_1, \dots x_n$ is linearly dependent over $\Q$ if and only if it is linearly independent over $\Z$, because given a relation
+			\[q_0 + \sum_{i=1}^n q_i x_i,\]
+			Where each $q_i = a_i / b_i$, we may simply multiply by the lowest common multiple of the $b_i$s, $B = \text{lcm}(b_0, \dots b_n)$,  to obtain a linear relation over $\Z$:
+			\[Bq_0 + \sum_{i=1}^n Bq_ix_i\]
+			\par Now, assume the set $x_i$ satisfies the nontrivial linear relation $\sum a_i x_i = a_0$ over $\Z$, and let the homomorphism $g: \R^n \to \R$ be defined by sending
+			\[(r_1, \dots r_n) \mapsto \sum_{i=1}^n a_i r_i.\]
+			As constructed in Br\"ocker and tom Dieck, the exact sequence which defined the torus,
+			\[0 \to \Z^n \to \R^n \to T^n \to 0,\]
+			Identifies $\R^n$ with the lie algebra of the torus, and identifies the projection map $\pi: \R^n \to S^n$ with the exponential map $\exp: \R^n \to T^n$. Because $\R$ is also the lie algebra of $S^1$, we see that the following diagram commutes:
+			\[\begin{tikzcd}
+					&0 \arrow[r, ""] & \Z^n \arrow[r ] \arrow[d,"g \lvert_{\Z^n}"]& \R^n \arrow[r] \arrow[d, "g"] & T^n \arrow[d, "\exp(g)"]\arrow[r] & 0\\
+					&0 \arrow[r]& \Z \arrow[r]& \R \arrow[r]& S^1\arrow[r] & 0
+			\end{tikzcd}\]
+				\par The tuple $(x_1, \dots x_n)$ is in the kernel of $\exp(g)$, which can be seen by some diagram chasing: $g(x_1, \dots x_n) \in \Z$, which is the kernel of the projection map $R \to S^1$. By commutativity, this shows that the elmement $(x_1, \dots x_n) \in T^n$ is in the kernel of $\exp(g)$. Because $g$ is a nontrivial map, so is $\exp(g)$, and so its kernel must be a nontrivial closed subgroup of the torus $T^n$. Therefore, $(x_1, \dots x_n)$ is contained in a closed subgroup of $T^n$ which is not equal to the whole space, and so it cannot topologically generate $T^n$.
+				\par Now, assume that $x \in T^n$ is not a topological generator of $T^n$. Then there must be some closed subgroup $H$ containing $x$, such that $X \neq T^n$. This means that the quotient group $T^n/H$ is a nontrivial compact connected abelian Lie group: a torus $T^k$, and $x$ is in the kernel of the nontrivial homomorphism $T^n \to S^1$ defined by the following composition:
+				\[T^n \to T^n/H \cong S^n \times \dots \times S^n \rightarrow_{\text{pr}_1} S^1.\]
+				We now show that any element $(x_1, \dots x_n)$ in the kernel of a nontrivial homomorphism $f: T^n \to S^1$ must satisfy a nontrivial linear relation over $\Z$. Again, we have a commutative diagram
+				\[\begin{tikzcd}
+					&0 \arrow[r, ""] & \Z^n \arrow[r ] \arrow[d,"Lf \lvert_{\Z^n}"]& \R^n \arrow[r] \arrow[d, "Lf"] & T^n \arrow[d, "f"]\arrow[r] & 0\\
+					&0 \arrow[r]& \Z \arrow[r]& \R \arrow[r]& S^1\arrow[r] & 0
+			\end{tikzcd}\]
+			Because any element of $T^n$ is the projection of an element of $\R^n$, we see that the element $\overline x \in R$ goes to $0$ under the composition of $f$ and the projection to $T^n$. By the commutativity of the diagram, this means that $Lf(\overline x)$ is in the kernel of the projection to $S^1$, i.e. it is in $\Z$. 
+			\par Because the map $Lf$ restricts to a linear map from $\Z^n$ to $\Z$, it must be defined by a sum \[\sum a_i x_i\] with integer coefficients. Thus, $Lf(\overline x) \in \Z$ shows that the coordinates of $x$ satisfy (modulo $\Z$) a nontrivial linear relation over $\Z$, which was to be shown.
+		\end{proof}
+	\end{problem}
+	\begin{problem}{5}
+		Let $G$ be a topological group and $g \in G$. We say that $g$ is a topological generator of $G$ if it generates a dense subgroup of $G$. Show that any torus has a topological generator.
+		\begin{proof}
+			By the previous problem, it suffices to show that there exists a set of $n$ real numbers $x_1, \dots x_n$ such that the set $\left\{ 1, x_1, \dots x_n \right\}$ is linearly independent over $\Q$. The set $\left\{\sqrt{2}, \sqrt{3}, \dots \sqrt{p_n} \right\}$, where $p_i$ is the $i$th positive prime number, suffices, as it is a classical result that the field $\Q[\sqrt{2}, \dots \sqrt{p_n}]$ has degree $2^n$ over $\Q$.
+		\end{proof}
+	\end{problem}
+	\begin{problem}{6}
+		Find the automorphism group of $\R^n/\Z^n$. Show that a continuous action by group automorphisms of $\R^n/\Z^n$ of a connected topological group $G$ on a torus $T$ must be trivial.
+		\begin{proof}
+			We show that the automorphism group of $\R^n/\Z^n$ is equal to $\text{GL}(n,\Z)$, the group of invertible matrices with integer coefficients whose inverses also have integer coefficients.
+			\par First, let $A$ be an element of $\text{GL}(n,\Z)$, and $B$ its inverse, both considered as elements of $\text{Aut}(\R^n)$. Then $A$ ad $B$ map $\Z^n \subset \R^n$ into $\Z^n$.  We have the following commutative diagram:
+			\[\begin{tikzcd}
+					&0 \arrow[r, ""] & \Z^n \arrow[r ] \arrow[d,"A \lvert_{\Z^n}"]& \R^n \arrow[r] \arrow[d, "A"] & T^n \arrow[d, "\text{exp}(A)"]\arrow[r] & 0\\&0 \arrow[r, ""] & \Z^n \arrow[r ] \arrow[d,"B \lvert_{\Z^n}"]& \R^n \arrow[r] \arrow[d, "B"] & T^n \arrow[d, "\text{exp}(B)"]\arrow[r] & 0\\
+					&0 \arrow[r]& \Z^n \arrow[r]& \R^n \arrow[r]& T^n\arrow[r] & 0
+			\end{tikzcd}\]
+			Tracing two paths from $T^n$ to $T^n$, one through a section of $\R^n \to T^n$, then $B \circ A = \text{id}$, then the projection $\R^n \to T^n$; and the other through $\exp(B) \circ \exp(A)$, we see that $\exp(B) \circ \exp(A) = \text{id}$. Therefore, $\exp(A)$ is an endomorphism of $T^n$ which has a left inverse. Through a similar diagram, we see that every such map also has a right inverse, and therefore that it is an automorphism of the torus.
+			\par Now, take any element $g \in \text{Aut}(T^n)$. Construct the following commutative diagram:
+		    \[\begin{tikzcd}
+					&0 \arrow[r, ""] & \Z^n \arrow[r ] \arrow[d,"Lg \rvert_{\Z^n}"]& \R^n \arrow[r] \arrow[d, "Lg"] & T^n \arrow[d, "g"]\arrow[r] & 0\\&0 \arrow[r, ""] & \Z^n \arrow[r ] & \R^n \arrow[r] & T^n \arrow[r] & 0
+			\end{tikzcd}\]
+            By the lifting property of the Lie algebra, $Lg$ is also an automorphism, from $\R^n \to \R^n$, and is therefore an invertible matrix. Because it restricts to a map $\Z^n \to \Z^n$, we see that it must also have integer coefficients (any matrix with a noninteger element $a_{ij}$ will, in particular, map $e_j$ to a vector with the noninteger $a_{ij}$ in the $i$th place). So $Lg$ must have integer coefficients. 
+            \par Finally, because $g^{-1}$ is also in $\text{Aut}(T^n)$, it must also have integer coefficients, and so any element of $\text{Aut}(T^n)$ must be in $\text{GL}(n,\Z)$.
+            \par Now, let some connected group $G$ act via automorphisms of $\R^n/\Z^n$ on the torus, with the map $\rho : G \to \text{Aut}(T^n)$. Let $g,h \in G$ be two elements; because $G$ is connected, there is some path $f : I \to G$ such that $f(0) = g$ and $f(1) = h$. Then the map $\rho \circ f : I \to \text{Aut}(T^n)$ is a homotopy equivalence of the automorphisms $\rho_f$ and $\rho_g$ of the torus. This path may be lifted to $\R^n$, giving us a path between two matrices with integer coefficients, all of whose points are also matrices with integer coefficients. However, this is a discrete space, and so the path must be trivial. Therefore $\rho$ is constant on $G$, and must be the trivial representation.
+		\end{proof}
+	\end{problem}
+	\begin{problem}{7}
+		Let $G$ be a Lie group and let $H$ be a $1$-parameter subgroup. Show that either $H$ is closed or $\bar H$ is a torus.
+		\begin{proof}
+			Because $H$ is the image of a Lie group homomorphism $\R \to G$, it is abelian and connected. We first want to show that the closure $\overline H$ is abelian and connected. Connectedness follows because it is the closure of a connected set, and abelianness is not hard to show: let $a, b \in \overline H$. Then there are sequences of points $a_i \in H$ and $b_j \in H$ such that $a_i \to a$ and $b_j \to b$. Because the multiplication operation is continuous, we see the following:
+			\begin{align*}
+				ab &= (\lim_{i \to \infty} a_i) (\lim_{j \to \infty}b_i)\\
+				&= \lim_{i \to \infty} (a_i b_i)\\
+				&= \lim_{i \to \infty} (b_i a_i)\\
+				&= (\lim_{j \to \infty} b_j) (\lim_{i \to \infty} a_i)\\
+				&= ba
+			\end{align*}
+			Therefore any two elements of $\overline H$ commute. Because $\overline H$ is a connected abelian Lie group, it is the product $V \times T^n$ of a vector space and a torus. We now need only show that, if $H$ is not closed, the vector space $V$ is trivial.
+			Assume for sake of contradiction that $H \neq \overline H$ and that $\overline H \cong V \times T^n$, where $V \not\cong 0$, and let $\gamma : \R \to G$ be the map defining $H = \text{im}(\gamma)$ as a one parameter subgroup. Let $p \in \overline H \backslash H$, written as $(v, t)$. 
+			\par Let $\pi : H \cong V \times T^n \to V$ be the projection onto the first factor. Then the composition $\pi \circ \gamma$ is a Lie group homomorphism of vector spaces $\R \to V$, meaning it must be a linear map: $x \to x w$ for some $w \in V$. We see that $w \neq 0$, because otherwise $\text{im}(\pi \circ \gamma) = \left\{ 0 \right\}$ would not be dense in $\text{im}(\pi)$.
+			\par But then for $\left \lvert {  x } \right \lvert > \left \lvert { \pi(p) } \right \lvert /\left \lvert { w } \right \lvert  + \varepsilon$, we see that $\lvert \pi(\gamma(x)) - \pi(p) \rvert > \varepsilon$; i.e. for $x$ sufficiently far from $0$, the image of each $\gamma(x)$ can be separated from the image of $p$. 
+			\par This means that $p$ is contained in $\overline{(\gamma([-W, W]))}$ for $W = \left \lvert { \pi(\gamma(x)) - \pi(p) } \right \lvert $. The set $\overline{\gamma([-W, W])}$ is the closure of a compact set, so it is equal to $\gamma([-W, W])$, meaning that $p$ is contained in the image of $\gamma$, a contradiction. Therefore $V \cong 0$, meaning that $\overline H$ is a torus.
+			\par \textit{Source: }\cite{peter}
+		\end{proof}
+	\end{problem}
+\end{section}
+\begin{thebibliography}{}
+    \bibitem{tomDieck}{Br\"ocker, T. \& tom Dieck, T., "Representations of Compact Lie Groups," 2nd ed. Springer, 1985.}
+	\bibitem{devito}{DeVito, J., ``No Small Subgroups" Argument, URL: https://mathoverflow.net/q/103906}
+	\bibitem{devito2}{DeVito, J., ``Symplectic group $Sp(n)$ acts transitively on the unit Sphere $S^{4n-1}$'', URL : https://math.stackexchange.com/q/2565771}
+	\bibitem{hall}{Hall, B. Lie Groups, Lie Algebras, and Representations, 2nd ed. Springer, 2015}
+	\bibitem{jacobson}{Jacobson, N., Lie Algebras. Dover, 1962.} 
+	\bibitem{peter}{Peter, A.B. ``Closures of One Parameter Subgroups of Lie Groups,'' URL : https://math.stackexchange.com/q/1582921}
+	\bibitem{sepanski}{Sepanski, M., Compact Lie Groups. Springer, 2007}
+	\bibitem{shoe}{Shoemake, K. "Quaternions." URL: http://www.cs.ucr.edu/\~vbz/resources/quatut.pdf}
+\end{thebibliography}
+\end{document}

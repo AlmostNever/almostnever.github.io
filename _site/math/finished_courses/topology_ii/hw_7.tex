@@ -1,0 +1,85 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem,hyperref,tikz-cd, mathabx}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 7}
+\author{Andrew Tindall\\ Topology II}
+\maketitle
+\begin{problem}{1}
+	Hatcher, 1.2.8: compute the fundamental group of the space obatined from two tori $S^1 \times S^1$ by identifying a circle $S^1\times \left\{ x_0 \right\}$ in one torus with the corresponding circle $S^1 \times \left\{ x_0 \right\}$ in the other torus.
+	\begin{proof}
+		Let $X$ be the space defined above. Then $X$ is the union of two path-connected spaces with path-connected intersection, and we may apply Van Kampen's theorem: the fundamental group of $X$ is defined as the following pushout:
+\[\begin{tikzcd}& \pi_1(S^1) 
+\arrow[r, "i_1"] \arrow[d, "i_2"] & \pi_1(S^1 \times S^1) \arrow[d ]\\& \pi_1(S^1 \times S^1) \arrow[r] & \pi_1(X) \arrow[ul, phantom, "\ulcorner", very near start]\end{tikzcd}\] 
+Where the homomorphisms $i_1$ and $i_2$ are both induced by the injection
+\begin{align*}\iota: S^1 \to S^1\times S^1\\
+x \mapsto (x, x_0)\end{align*}
+This takes the generating loop of $\pi_1(S^1)$ to one of the two generating loops of $S^1 \times S^1$ - say, the first, and so $i_1$ and $i_2$ can both be defined as the injection 
+\begin{align*}i: \Z \hookrightarrow \Z \times \Z\\
+	1 \mapsto (1, 0)
+\end{align*}
+So, our pushout diagram is the following:
+\[\begin{tikzcd}& \Z
+\arrow[r, "i_1"] \arrow[d, "i_2"] & \Z \times \Z  \arrow[d ]\\& \Z \times \Z \arrow[r] & \pi_1(X) \arrow[ul, phantom, "\ulcorner", very near start]\end{tikzcd}\]
+Thereforem, $\pi_1(X)$ is the free product of $\Z \times \Z$ with itself, quotiented by the identification of one copy of $\Z \times \left\{ 0 \right\}$ with the other:
+\[\pi_1(X) \simeq (\Z \times \Z) *_{\Z \times 0} (\Z \times \Z)\]
+Despite the fact that \textbf{Grp} is not in general distributive, the product and coproduct in this case commute, and so 
+\[\pi_1(X) \simeq \Z \times (\Z * \Z) \]
+Explicitly, this follows from the fact that, for any element in $(\Z \times \Z) *_{\Z \times 0} (\Z \times \Z)$, defined as a word formed from elements of $(\Z times \Z)_0$ and $(\Z \times \Z)_1$, the first factors can be ``brought out'' of the word:
+\begin{align*} x &= (a,b)_1 \cdot (c, d)_2 \cdot \cdots \cdot (y, z)_i\\
+&= (a,0)(0,b)_1 \cdot (c, 0)(0, d)_2 \cdot \cdots \cdot (y, 0)(0,z)_i\\
+&= (a + c + \cdots + y, 0) \cdot \left ((0,b)_1 \cdot (0,d)_2 \cdot \cdots \cdot (0,z)_i\right )\end{align*}
+So, every elment of $(\Z \times \Z) *_{\Z \times 0} (\Z \times \Z)$ is determined uniquely by an element of $(\Z \times 0)$ and an element of $(0 \times \Z) * (0 \times \Z)$. After checking that operations behave well and all elements commute that should, and using the identification $\Z \simeq 0 \times \Z \simeq \Z \times 0$, we have
+\[\pi_1(X) \simeq \Z \times (\Z * \Z)\]
+\end{proof}
+\end{problem}
+\begin{problem}{2}
+	Hatcher, 1.2.11: The \textbf{mapping torus} $T_f$ of a map $f : X \to X$ is the quotient of $X\times I$ obtained by identifying each point $(x,0)$ with $(f(x),1)$. In the case $X = S^1 \vee S^1$ with $f$ basepoint-preserving, compute a presentation for $\pi_1(T_f)$ in terms of the induced map $f_*: \pi_1(X) \to \pi_1(X)$. Do the same when $X = S^1 \times S^1$.
+	\begin{proof}
+		One way we may view the mapping torus $T_f$ is as a CW-complex obtained by affixing an $n+1$-cell for each $n$-cell $C$ in $X$, which has as boundary the cell $C$, the product of the boundary of $C$ with $I$,  and its image $f(C)$. 
+	\par In the case of $X = S^1 \vee S^1$, we have one $0$-cell $x_0$, which is mapped to $x_0$ and thus creates a $1$-cell $x_1^0$ with both of its endpoints at $x_0$, and two $1$-cells $x_1^1$ and $x_1^2$, which are mapped to some loops $f(x_1^1)$ and $f(x_1^2)$ in $S^1 \vee S^1$, and which give two $2$-cells in $X$: one, $x_2^1$, has boundary formed from $x_1^1$, $x_1^0$, and a reversed $f(x_1^1)$, and the other, $x_2^2$, has boundary formed from $x_1^2, x_1^0$, and a reversed $f(x_1^2)$. 
+	\par Thus there are $3$ one-cells in $X$, all of which are loops, which give us $3$ generators for the fundamental group, and $2$ two-cells, which give us relations:
+		\[\pi_1(X) = \left\langle [x_1^0], [x_1^1], [x_1^2] \mid \langle [x_1^1 \sqbullet x_1^0 \sqbullet \overline{f(x_1^1)}], [x_1^2 \sqbullet x_1^0 \sqbullet \overline{f(x_1^2)}]\rangle  \right\rangle\]
+
+		\par Next, we look at the case $X = S^1 \times S^1$. In this case, $X$ has one $0$-cell $x_0$, two $1$-cells $x_1^1$ and $x_1^2$, and one $2$-cell $x_2^0$, which has as its boundary the path $x_1^1 \sqbullet x_1^2 \sqbullet \overline{(x_1^1)^{-1}} \sqbullet \overline{(x_1^2)^{-1}}$. The mapping torus $T_f$ adds one $1$-cell $x_1^0$, with both endpoints at $x_0$, two $2$-cells $x_2^1$ and $x_2^2$, with boundaries $x_1^1 \sqbullet x_1^0 \sqbullet \overline{f(x_1^1)}$ and $x_1^2 \sqbullet x_1^0 \sqbullet \overline{f(x_1^2)}$, respectively. There is also a $3$-cell, which does not influence the fundamental group. These three $1$-cells and three $2$-cells give us a presentation of $\pi_1(X)$:
+	\[\pi_1(X) = \langle  [x_1^0], [x_1^1], [x_1^2] \mid \langle [x_1^1 \sqbullet x_1^2 \sqbullet \overline{(x_1^1)^{-1}} \sqbullet \overline{(x_1^2)^{-1}}], [x_1^1 \sqbullet x_1^0 \sqbullet \overline{f(x_1^1)}], [x_1^2 \sqbullet x_1^0 \sqbullet \overline{f(x_1^2)]} \rangle \rangle \]
+	\end{proof}
+\end{problem}
+\maketitle
+\end{document}

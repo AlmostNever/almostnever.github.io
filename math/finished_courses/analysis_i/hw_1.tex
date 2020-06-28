@@ -1,0 +1,360 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+\setlist{
+	listparindent=\parindent,
+parsep=0pt,}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 1}
+\author{Andrew Tindall\\
+	Analysis I}
+ 
+\maketitle
+\begin{problem}{1}
+	Check if the following linear spaces $E$ are normed by the given function $\left \lVert { \cdot } \right \lVert $, and then say if they are Banach or not:	
+	\begin{enumerate}[label=(\roman*)]
+		\item $E = \R^n$, $\left \lVert { x } \right \lVert  = (\sum_{i=1}^n \lvert x_i \rvert^r)^{1/r}$, where $r \geq 1$ is a given number.
+		\item $E = l_2$, which are all sequences $x = \left\{ x_i \right\}_{i=1}^\infty$ of real numbers that are square-summable: $\sum_{i=1}^\infty \lvert x \rvert^2 < \infty$, $\left \lVert { x } \right \lVert  = \left( \sum_{i=1}^\infty \lvert x \rvert^2 \right)^{1/2}$.
+		\item $E = l_2$, but $\left \lVert { f } \right \lVert  = \text{sup}_{i\geq 1} \left \lvert { x_i } \right \lvert $.
+	\end{enumerate}
+\end{problem}
+\begin{proof}
+	\begin{enumerate}[label=(\roman*)]
+		\item We show first that the given function $\left \lVert { \cdot } \right \lVert $ satisfies the axioms of a norm: 
+		\begin{itemize}
+			\item $\left \lVert { x } \right \lVert \geq 0$, and $\left \lVert { x } \right \lVert = 0 $ only if $x = 0$: \par The first part of the axiom can be seen to hold because the absolute value of any number is greater than or equal to zero; then, raising such a number to the $r$th power keeps the result greater than or equal to zero, summing $n$ such numbers makes the sum greater than or equal to zero, and finaly taking the $r$-th root makes the root greater than or equal to zero.
+				\par The second part may be seen by running this argument in reverse: if the $r$-th root of a number is zero, than that number is zero; if the sum of $n$ nonnegative real numbers is itself zero, than each number must be zero. And if a number raised to the $r$th power, for some positive $r$, is zero, than that number is zero. Thus $\left \lVert { x } \right \lVert \geq 0$, with equality holding only if each component of $x$ is itself zero, making $x$ the zero vector.
+			\item For a scalar $\alpha $ and a vector $x$, $\left \lVert { \alpha x } \right \lVert = \left \lvert { \alpha } \right \lvert \left \lVert { x } \right \lVert $: \par Fix some scalar $\alpha$ and vector $x$. Then calculating the norm of $x$ from our definition, we have \[ \left \lVert { \alpha x } \right \lVert = \left (\sum_{i=1}^n \left \lvert { \alpha x_i } \right \lvert^r \right )^{1/r}.\] Then, using the norm property of $\lvert \cdot \rvert$ that for any real numbers $a, b$, $\left \lvert { ab } \right \lvert = \left \lvert { a } \right \lvert \left \lvert { b } \right \lvert $, we have:
+				\begin{align*}
+				\left( \sum_{i=1}^n \left \lvert { \alpha x_i } \right \lvert^r \right)^{1/r} &= \left( \sum_{i=1}^n \left ( \left \lvert { \alpha } \right \lvert \left \lvert { x_i } \right \lvert \right )^r \right)^{1/r}  \\
+				&= \left( \sum_{i=1}^n \left \lvert { \alpha } \right \lvert^r \left \lvert { x_i } \right \lvert^r \right)^{1/r} \\
+				&= \left( \left \lvert { \alpha } \right \lvert^r \sum_{i=1}^n \left \lvert { x_i } \right \lvert ^r \right)^{1/r}\\
+				&= \left( \left \lvert { \alpha } \right \lvert^r \right)^{1/r} \left( \sum_{i=1}^n \left \lvert { x } \right \lvert ^r \right)^{1/r}\\
+				&= \left \lvert { \alpha } \right \lvert \left( \sum_{i=1}^n \left \lvert { x_i } \right \lvert ^r \right)^{1/r}\\
+				&= \left \lvert { \alpha } \right \lvert \left \lVert { x } \right \lVert 
+			\end{align*}
+		\item The triangle inequality holds: $\left \lVert { x + y } \right \lVert  \leq \left \lVert { x } \right \lVert  + \left \lVert {  y } \right \lVert $: 
+			\par The triangle inequality for this space is the finite-dimensional form of the Minkowski inequality. Our proof rests on the fact that the function $\lvert x \rvert^r$ is convex. (The following proof is relatively standard, but doesn't seem too common in textbooks; I found it in \cite{convex} and in a few class notes online, but all of the texts I have do the H\"older inequality first, even in the finite-dimensional case).
+			\par It is a fact of elementary calculus that the function $x \mapsto \lvert x\rvert ^r$, for any real $r \geq 1$, is convex on the whole real line: that is, given $x, y\in \R$, and $t \in [0,1]$, 
+			\[\lvert tx + (1-t)y \rvert \leq t\lvert x\rvert^r + (1-t)\lvert y \rvert ^r.\]
+			Now, let $a = \lVert x \rVert$ and $b = \lVert y \rVert$, so that $x' = \frac{1}{a} x$ and $y' = \frac{1}{b} y$ have norm $1$. We can use the convexity of $\lvert \cdot \rvert^r$ to see that, for all $1 \leq i \leq n$,
+			\[
+			    \lvert t x'_i + (1 - t) y'_i \rvert^r \leq t \lvert x'_i \rvert^r + (1-t) \lvert y'_i \rvert^r
+			\]
+			Fixing t and taking the sum of these terms over $i$, we have
+			\[
+			 \sum_{i=1}^n \lvert t x'_i + (1 - t) y'_i \rvert^r \leq t\left ( \sum_{i=1}^n \lvert x'_i \rvert^r \right ) + (1-t) \left ( \sum_{i=1}^n\lvert y'_i \rvert^r \right )
+			\]
+			Now, the two sums on the right are simply $\lVert x' \rVert^r$ and $\lVert y' \rVert^r$, which were chosen to both be $1$. Therefore we see
+			\[
+			\sum_{i=1}^n \lvert t x'_i + (1 - t) y'_i \rvert^r \leq t + (1-t) = 1
+			\]
+			We recall that $x'_i = x_i/a$ and $y'_i = y_i/b$, and choose $t = a/(a+b) \in [0,1]$, making our inequality
+			\begin{align*}
+				\sum_{i=1}^n \left \lvert { \frac{x_i}{a+b} + \frac{y_i}{a+b} } \right \lvert^r &\leq 1\\
+				\sum_{i=1}^n \left \lvert { x_i + y_i } \right \lvert^r &\leq \left \lvert { a+b } \right \lvert^r 
+			\end{align*}
+			The left side is simply $\left \lVert { x+y } \right \lVert^r $. And, because $a$ and $b$ were chosen to be $\left \lVert { x } \right \lVert $ and $\left \lVert { y } \right \lVert $, respectively, by the triangle inequality on $\R$ we see that $\left \lvert {  a+b} \right \lvert \leq \left \lVert { x } \right \lVert  + \left \lVert { y } \right \lVert $. Therefore, we have:
+			\begin{align*}
+				\left \lVert { x+y } \right \lVert^r \leq \left( \left \lVert { x } \right \lVert +\left \lVert { y } \right \lVert  \right)^r\\
+				\left \lVert { x+y } \right \lVert \leq \left \lVert { x } \right \lVert +\left \lVert { y } \right \lVert 
+			\end{align*}Which was to be shown. Therefore, this function is indeed a norm.
+		\end{itemize}
+		We now show that the space $\R^n$ is Banach under the given norm. Take a Cauchy sequence of terms $\left\{ x^i \right\}_{i\geq 1}$; we show that this sequence converges to a limit in $\R^n$. 
+		\par The proof is based on the fact that the components of these vectors form $n$ individual Cauchy sequences, and that the vector formed by the limit of each component sequence is itself the limit of the original sequence. To see that the components form Cauchy sequences, fix some index $j$. We wish to show that, given any $\varepsilon > 0$, there exists some $N \in \N$ such that, for all $k, l \geq N$, 
+		\begin{align*}
+			\left \lvert { {x^k}_j } - {x^l}_j \right \lvert &< \varepsilon
+		\end{align*}
+		That is, the differences in the $j$-th components of the $k$th and $l$th elements in the Cauchy sequence are themselves bounded as $k$ and $l$ go to $\infty$. This fact is implied by the fact that the norm of any component of a vector is bounded by the norm of the vector:
+		\begin{align*}
+			\left \lvert { x_i } \right \lvert^r &\leq \sum_{i=1}^n \left \lvert { x_i } \right \lvert^r\\
+			&= \left \lVert { x } \right \lVert^r
+		\end{align*}
+		Since $x^r$ is monotonic, this shows that $\left \lvert { x_i } \right \lvert \leq \left \lVert { x } \right \lVert $ for any vector $x$ and component $x_i$. So, in particular, if $\left \lVert { x^k - x^j } \right \lVert < \varepsilon$, then $\left \lvert { {x^k}_i - {x^j}_i } \right \lvert < \varepsilon$. Since the sequence $\left\{ x_i \right\}_{i\geq 0}$ is Cauchy in $\R^n$ with the norm $\left \lVert { - } \right \lVert $, the components of the vectors in the sequence form $n$ Cauchy sequences in $\R$ with the norm $\left \lvert {  - } \right \lvert $. Because $\R$ is complete, we may take the $n$ limits of these sequences, $x'_1, x'_2, \dots, x'_n$. Then the vector $\langle x'_1, x'_2, \dots, x'_n\rangle $ is an element of $\R^n$, and we finally need only check that the Cauchy sequence $\left\{ x^i \right\}_{i\geq 0}$ converges to $x'$ in the norm $\left \lVert { - } \right \lVert $.
+		\par Take some $\varepsilon > 0$. We wish to find an $N \in \N$ such that, for all $k \geq N$, $\left \lVert { x^k - x' } \right \lVert < \varepsilon$. Based on the convergence of the components of the sequence $x^i$, to the components $x'_j$, we can find $N_1, N_2, \dots N_n$, such that for all $j > N_i$, $\left \lvert { {x^j}_i - x'_i } \right \lvert < \frac{\varepsilon}{n}$. Take $N$ to be the maximum of these $N_i$, and let $k\geq N$ be arbitrary. Then we see, by $n$ applications of the triangle inequality, that 
+		\begin{align*}
+		\left \lVert { x^k - x' } \right \lVert &= \left \lVert { \langle {x^k}_1 - x'_1, {x^k}_2 - x'_2, \dots {x^k}_n - x'_n\rangle } \right \lVert \\
+		&\leq \left \lVert { \langle {x^k}_1 - x'_1, 0, \dots, 0\rangle } \right \lVert + \left \lVert { \langle 0, {x^k}_2 - x'_2, \dots 0 \rangle } \right \lVert + \dots + \left \lVert { \langle 0, 0, \dots {x^k}_n - x'_n\rangle } \right \lVert \\
+		&= \left \lvert { {x^k}_1 - x'_1 } \right \lvert + \left \lvert { {x^k}_2 - x'_2 } \right \lvert + \dots + \left \lvert { {x^k}_n - x'_n } \right \lvert \\
+		&< \frac{\varepsilon}{n} + \frac{\varepsilon}{n} + \dots + \frac{\varepsilon}{n}\\
+		&= \varepsilon
+		\end{align*}
+		So an arbitrary Cauchy sequence in the norm $\left \lVert { - } \right \lVert $ converges to an element of $\R^n$, meaning that the normed space is Banach.
+	\item $E = l_2$, all square-summable sequences $\left\{ x_i \right\}_{i=1}^\infty$ of real numbers such that $\sum_{i=1}^\infty \left \lvert { x_i } \right \lvert^2 < \infty$, with the norm function $\left \lVert { x } \right \lVert = \left( \sum_{i=1}^\infty \left \lvert { x_i } \right \lvert ^2\right)^{1/2} $.
+		\par We first show that this is a norm. This is a similar norm to part (i), just with infinite components:
+		\begin{itemize}
+			\item $\left \lVert { x } \right \lVert \geq 0$, and $\left \lVert { x } \right \lVert = 0$ only if $x = 0$:
+				\par Just as with the $l_p$ norm on $\R^n$, we see that the norm of any vector is the principal square root of a sum of nonnegative numbers, which must itself be nonnegative. Further, because $\sqrt{x} = 0$ if and only if $x=0$, and the infinite sum $\sum_{i=1}^\infty \left \lvert { x_i } \right \lvert^2$ of nonnegative numbers is zero if and only if each term is zero, and finally that the square of a number is zero if and only if that number is zero, we see that the $l_p$ norm of a sequence is zero if and only if each term in the sequence is zero, making it the zero vector in the real sequence space.
+			\item $\left \lVert { \alpha x } \right \lVert  = \left \lvert { \alpha } \right \lvert \left \lVert { x } \right \lVert $: This, too, is the same argument as with the finite case. The only new step in the following calculation is that a constant can be factored out of an infinite series.
+				\begin{align*}
+					\left \lVert { \alpha x } \right \lVert &= \left ( \sum_{i=1}^\infty \left \lvert { \alpha x_i } \right \lvert^2 \right )^{1/2}\\
+					&= \left( \sum_{i=1}^\infty \left \lvert { \alpha } \right \lvert ^2 \left \lvert { x_i } \right \lvert ^2 \right)^{1/2}\\
+					&= \left( \left \lvert { \alpha } \right \lvert ^2 \sum_{i=1}^\infty \left \lvert { x_i } \right \lvert ^2\right)^{1/2}\\
+					&= \left \lvert { \alpha } \right \lvert \left( \sum_{i=1}^\infty \left \lvert { x_i } \right \lvert ^2 \right)^{1/2}\\
+					&= \left \lvert {  \alpha } \right \lvert \left \lVert { x } \right \lVert 
+				\end{align*}
+			\item $\left \lVert { x + y } \right \lVert \leq \left \lVert { x } \right \lVert + \left \lVert { y } \right \lVert $: Again, this is the Minkowski inequality for $p=2$, this time with infinite terms. Let $a = \left \lVert { x } \right \lVert $ and $b = \left \lVert {  y } \right \lVert $, so that $x' = \frac{1}{a}x$ and $y' = \frac{1}{b}y$ are unit vectors. Using the fact that $f(x) = x^2$ is convex, we see that, for any $t \in [0,1]$ and any terms $x'_i$ and $y'_i$ in the sequences,
+				\[\left \lvert { tx'_i + (1-t)y'_i } \right \lvert^2 \leq t\left \lvert { x'_i } \right \lvert ^2 + (1-t)\left \lvert { y'_i } \right \lvert ^2\]
+			Since the term on the left is nonnegative and bounded by the sum of the terms on the right, and the terms on the right are both summable series, the following inequality is both well-formed (all series converge) and true:
+			\[\sum_{i=1}^\infty \left \lvert { tx'_i + (1-t)y'_i } \right \lvert ^2 \leq t\sum_{i=1}^\infty \left \lvert { x'_i } \right \lvert  + (1-t)\sum_{i=1}^\infty \left \lvert { y'_i } \right \lvert ^2\]
+			The two series on the right were chosen to sum to 1, so we have
+			\[\sum_{i=1}^\infty \left \lvert { tx'_i + (1-t)y'_i } \right \lvert^2 \leq t + (1-t) = 1\]
+			Choosing $ t = \frac{a}{a+b}$, which is in $[0,1]$ because both $a = \left \lVert { x } \right \lVert $ and $b = \left \lVert { y } \right \lVert $ are nonnegative, we get
+			\begin{align*}
+				\sum_{i=1}^\infty \frac{\left \lvert ax'_i + by'_i\right \rvert^2}{\left \lvert { a + b } \right \lvert^2} \leq 1\\
+				\sum_{i=1}^\infty \left \lvert { x_i + y_i } \right \lvert ^2 \leq \left \lvert { a + b } \right \lvert ^2
+			\end{align*}
+			The left side is simply $\left \lVert { x+y } \right \lVert ^2$, and the right is $(\left \lVert { x } \right \lVert + \left \lVert { y } \right \lVert )^2$:
+			\[\left \lVert { x+y } \right \lVert ^2 \leq (\left \lVert { x } \right \lVert + \left \lVert { y } \right \lVert )^2\]
+			Because $f(x) = x^2$ is monotonic, we may drop the exponents, which gives us
+			\[ \left \lVert { x+y } \right \lVert \leq \left \lVert { x } \right \lVert + \left \lVert { y } \right \lVert \]
+			Which was to be shown. So the $l_2$ norm on the space of square-summable real sequences is a norm.
+		\end{itemize}
+		Now we show that $l_2$ is a Banach space. Let $\{x^i\}_{i=1}^\infty$ be a sequence of elements of $l_2$ that is Cauchy with respect to the norm $\left \lVert - \right \rVert$; we construct an element $x$ of $l_2$ such that the elements $x^i$ converge to $x$.
+		\par We first show that the $j$th components of each sequence converge to some element $x_j$, for each $j \in \N$. This is implied by the fact that the norm of an element of a sequence is bounded by the norm of the sequence:
+		\begin{align*}
+		    \left \lvert x_i \right \rvert^2 \leq \sum_{i=1}^\infty \left \lvert x_i \right \rvert^2
+		    = \left \lVert x \right \rVert^2
+		\end{align*}
+		Therefore, $\left \lvert x_i \right \rvert \leq \left \lVert x \right \rVert$ for any sequence $x$ and component $x_i$. In particular, if the distance between two sequences is bounded, then the distance between any of their components is also bounded - if, say, $\left \lVert { x^j - x^k } \right \lVert < \varepsilon$, then
+		\[\left \lvert { x^j_i - x^k_i} \right \lvert ^2 \leq \sum_{i=1}^\infty \left \lvert { x^j_i - x^k_i } \right \lvert ^2 < \varepsilon^2 \]
+		Therefore, fixing any $i$, the $i$th components of the sequences $\left\{ x^j \right\}$ are Cauchy, as we may bound the distances between the components by bounding the distances between the sequences themselves. As Cauchy sequences of real numbers, each $i$th component converges to a unique real number $x'_i$, and the sequence $\left\{ x'_i \right\}_{i=1}^\infty$ is therefore well-defined. 
+		\par We now show that the sequence $x'$ lies in $l_2$, and that the sequences $x^k$ converge in $l_2$ norm to $x'$ as $k \to \infty$. We show the convergence of $x^k$ to $x'$ first. Fix $\varepsilon > 0$; we want to find an $N$ such that, for $k \geq N$,
+		\[\left \lVert {  x' - x^k } \right \lVert^2 < \varepsilon. \]
+		By Cauchy-ness of the sequence $x^k$ of sequences, there is some $N$ such that, for all $j,k \geq N$, $\left \lVert x^j - x^k \right \rVert < \sqrt{\varepsilon/2}$. Now, we set $k \geq N$, and we wish to show:
+		\begin{align*} \sum_{i=1}^\infty \left \lvert { (\lim_{j \to \infty} x^j_i) - x^k_i  } \right \lvert ^2  &< \varepsilon
+		\end{align*}
+		By the continuity of the functions $\lvert - \rvert$ and $(-)^2$, we can say that
+		\[
+		 \sum_{i=1}^\infty \left \lvert { (\lim_{j \to \infty} x^j_i) - x^k_i  } \right \lvert ^2 = \sum_{i=1}^\infty \lim_{j\to \infty} \left \lvert x^j_i - x^k_i \right \rvert^2 
+		\]
+		Now, by Fatou's lemma for infinite sums, we may take the limit outside of the sum, turning it into a $\liminf$:
+		\[
+		\sum_{i=1}^\infty \lim_{j\to \infty} \left \lvert x^j_i - x^k_i \right \rvert^2 \leq \liminf_{j \to \infty} \sum_{i=1}^\infty \left \lvert x^j_i - x^k_i \right \rvert^2
+		\]
+		Now, by taking $j \geq k \geq N$, we can certainly bound the term inside the $\liminf$ by $\sqrt{\varepsilon/2}^2 = \epsilon/2$, meaning that 
+		\[
+		    \left \lVert x' - x^k \right \rvert^2 \leq \varepsilon/2 < \epsilon.
+		\]
+		$\varepsilon$ was arbitrary, so the $l_2$ distance between $x'$ and the elements $x^k$ of our Cauchy sequence grows arbitrarily small - $x'$ is indeed the limit of the sequence. We now need only show that the $l_2$ norm of $x'$ exists, making it an element of the $l_2$ sequence space. But we have this immediately from the triangle inequality, as
+		\[
+		    \left \lVert x' \right \rVert \leq \left \lVert x' - x^k \right \rVert + \left \lVert x^l \right \rVert
+		\]
+		We have seen that, for large $k$, the two norms on the right exist, so the norm of $x'$ does as well. Therefore our Cauchy sequence of $l_2$ sequences converges to an $l_2$ sequence, making the space Banach.
+		\item The same space $l_2$ of square-summable sequences, but the norm is $\left \lVert x \right \rVert = \sup_{i\geq 1} \left \lvert x_i \right \rvert$.
+		\par We first show that this (the $l_\infty$ norm) is in fact a norm. We verify the three axioms:
+		\begin{itemize}
+		    \item $\left \lVert x \right \rVert \geq 0$ and $\left \lVert x \right \rVert = 0$ if and only if $x$ is the zero vector:
+		    \par This is clearly true from the definition of supremum; the supremum of a set of nonnegative numbers is nonnegative, and the supremum of a set of nonnegative numbers is zero if and only if each element of the set is zero. So the norm of any sequence is $\geq 0$, and the norm is zero if and only if the sequence is all zeroes.
+		\item $\left \lVert \alpha x \right \rVert = \left \lvert \alpha \right \rvert \left \lVert x \right \rVert$:
+		\par This is also a property of the supremum: you can factor out a constant, nonnegative factor from each element in the set that a supremum is over.
+        \begin{align*}
+            \left \lVert \alpha x \right \rVert &= \sup_{i \geq 1} \left \lvert \alpha x_i \right \rvert\\
+            &= \sup_{i\geq 1} \left \lvert \alpha \right \rvert  \left \lvert x_i \right \rvert\\
+            &= \left \lvert \alpha \right \rvert \sup_{i\geq 1} \left \lvert x_i \right \rvert\\
+            &= \left \lvert \alpha \right \rvert \left \lVert x \right \rVert
+        \end{align*}
+        \item The triangle inequality, $\left \lVert x + y \right \rVert \leq \left \lVert x \right \rVert + \left \lVert y \right \rVert$:
+        This, too, is a property of the supremum: The $\sup$ of a sum is bounded by the sum of the $\sup$s.
+        \begin{align*}
+            \left \lVert x + y \right \rVert &= \sup_{i \geq 1} \left \lvert x_i + y_i \right \rvert\\
+            &\leq \sup_{i \geq 1} \left ( \left \lvert x_i \right \rvert + \left \lvert y_i \right \rvert \right )\\
+            &\leq \left ( \sup_{i \geq 1} \left \lvert x_i \right \rvert \right ) + \left ( \sup_{i \geq 1} \left \lvert y_i \right \rvert \right )\\
+            &= \left \lVert x \right \rVert + \left \lVert y \right \rVert
+        \end{align*}
+        Therefore, the triangle inequality is satisfied.
+        \end{itemize}   
+        So we see that the $l_\infty$ norm is a valid norm on the space $l_2$ of square-summable sequences. However, $l_2$ is not Banach under this norm - this is because we can construct a sequence $\{x^j\}_{j \geq 1}$ of elements in $l_2$ which diverge in $l_2$ norm but converge in $l_\infty$. For example, let $\{x_j\}_{j \geq 1}$ be defined by
+        \[
+        x^j_i = \begin{cases}
+        \frac{1}{\sqrt{i}} & i \leq j\\
+        0 & i > j
+        \end{cases}
+        \]
+        Because each $x^j$ has a finite number of nonzero terms, each is square-summable. Further, because the maximum value of $\left \lvert x^j_i \right \rvert$ for any $j$ is $1$, the $l_\infty$ norm of each sequence is $1$. The sequence is also Cauchy in $l_\infty$, because if we let $\varepsilon > 0$, then for $j \neq k > \left \lceil \frac{1}{\varepsilon^2} \right \rceil$, the distance between $x^j$ and $x^k$ is equal to $\frac{1}{\sqrt{\min(j,k)+1}}$, which is bounded by  $\varepsilon$. 
+        \par However, despite being Cauchy in $l_\infty$, the sequence cannot converge to one with finite $l_2$ norm, because the norm of the $l_\infty$ limit of the sequence is unbounded - calculating the norm would give us
+        \[
+		\left \lVert x' \right \rVert^2 = \sum_{i=1}^\infty \frac{1}{i}
+        \]
+	This is the harmonic sum, which is known to be divergent. Therefore the sequence does not converge to any element of $l_2$.
+	\end{enumerate}
+\end{proof}
+\begin{problem}{2}
+	\begin{enumerate}[label=(\roman*)]
+		\item $E = B(X)$, all bounded functions $f$ from a set $X$ to $\R$;
+			\\$\left \lVert { f } \right \lVert = \sup \left\{ \left \lvert { f(x) } \right \lvert ; x \in X \right\}$.
+		\item $E = l_\infty$, which are all bounded sequences $x = \left\{ x_n \right\}_{n=1}^\infty$ of real numbers. $\left \lVert {  x  } \right \lVert  = \sup_{n\geq 1}\left\{ x_n \right\}$.
+		\item $E = C(\left[ -1,1 \right]) \cap C^1\left( \left( -1,1 \right) \right)$, which are all continuous real functions $f$ on the interval $\left[ -1,1 \right]$ that are continuously differentiable in $\left( -1,1 \right)$. $\left \lVert {  f } \right \lVert  = \sup\left\{ \left \lvert { f(x) } \right \lvert ; x \in \left[ -1,1 \right] \right\}$.
+	\end{enumerate}
+\end{problem}
+\begin{proof}
+	\begin{enumerate}[label=(\roman*)]
+		\item We first check that the $\sup$ norm is indeed a norm on the space of bounded real-valued functions on a set $X$. We check the axioms:
+			\begin{itemize}
+				\item $\left \lVert { f } \right \lVert \geq 0$, and $\left \lVert {  f } \right \lVert = 0 $ if and only if $f$ is the zero vector;
+					\par The value of $\left \lvert { f(x) } \right \lvert $ at every $x$ is nonnegative, so the supremum of these values is also nonnegative; the supremum is zero if and only if $\left \lvert { f(x) } \right \lvert $ is zero for every $x$, which makes $f$ the constant zero function, which is the zero vector in this space.
+				\item $\left \lVert { \alpha f } \right \lVert = \left \lvert { \alpha } \right \lvert \left \lVert { f } \right \lVert $: 
+					\par Because $(\alpha f)(x) = \alpha (f(x))$ by definition, we can again factor out a nonnegative constant factor from the set that the supremum is over:
+					\begin{align*}
+						\left \lVert { \alpha f } \right \lVert &= \sup\left\{ \left \lvert { (\alpha f)(x) } \right \lvert ; x \in X \right\}\\
+						&= \sup\left\{ \left \lvert { \alpha f(x) } \right \lvert ; x \in X \right\}\\
+						&= \sup\left\{ \left \lvert { \alpha } \right \lvert \left \lvert { f(x) } \right \lvert ; x \in X \right\}\\
+						&= \left \lvert { \alpha } \right \lvert \sup\left\{ \left \lvert { f(x) } \right \lvert ;x \in X \right\}\\
+						&= \left \lvert { \alpha } \right \lvert \left \lVert { f } \right \lVert 
+					\end{align*}
+				\item $\left \lVert { f + g } \right \lVert \leq \left \lVert {  f } \right \lVert  + \left \lVert { g } \right \lVert $:
+					\par This is the same argument as for the $l_\infty$ norm; the supremum of a sum is less than or equal to the sum of the supremums, so that we can see that
+					\begin{align*}
+						\left \lVert { f + g } \right \lVert &= \sup\left\{ \left \lvert { (f+g)(x) } \right \lvert ;x \in X \right\}\\
+						&= \sup\left\{ \left \lvert { f(x) + g(x) } \right \lvert ; x\in X \right\}\\
+						&\leq \sup\left\{ \left \lvert { f(x) } \right \lvert +\left \lvert { g(x) } \right \lvert ;x \in X \right\}\\
+						&\leq \sup\left\{ \left \lvert { f(x) } \right \lvert ;x \in X \right\} + \sup\left\{ \left \lvert { g(x) } \right \lvert ; x \in X \right\}\\
+						&= \left \lVert { f } \right \lVert  + \left \lVert { g } \right \lVert 
+					\end{align*}
+			\end{itemize}
+			So this function is indeed a norm. We now show that the space of functions is Banach under the norm. 
+			\par Let $\left\{ f_i \right\}_{i \geq 1}$ be an arbitrary sequence of bounded functions on a nonempty space $X$ which is Cauchy under the $\sup$ norm. Then for a fixed $x\in X$, $\left\{ f_i(x) \right\}$ is also a Cauchy sequence, as $\left \lvert { f_i(x) - f_j(x) } \right \lvert \leq \sup\left\{\left \lvert { f_i(x) - f_j(x) } \right \lvert ; x \in X \right\} = \left \lVert { f_i - f_j } \right \lVert $. For every $x \in X$, we may find the limit of this Cauchy sequence, and call this $f(x)$; we need only show that the function $x \mapsto f(x)$ is a member of $B(X)$, and that $\left\{ f_i \right\}_{i \geq 1}$ converges to it in the $\sup$ norm.
+			\par Boundedness is not hard to show. By Cauchy-ness of $\left\{ f_i \right\}_{i\geq 1}$, there is some $N \in \N$ such that, for all $j,k \geq N$, $\sup\left\{ \left \lvert { f_j(x) - f_k(x) } \right \lvert ; x \in X \right\} \leq 1$. Then, if the maximum value of the bounded function $f_N$ on $X$ is $M$, the value of any $f_j(x)$, for any $x \in X$ and any $j \geq N$, is bounded as follows:
+			\begin{align*}
+				\left \lvert { f_j(x) } \right \lvert  &\leq \left \lVert { f_j } \right \lVert \\
+				&\leq \left \lVert { f_N } \right \lVert + \left \lVert { f_N - f_j } \right \lVert \\
+				&\leq M + 1
+			\end{align*}
+			Therefore the value of $\left \lvert { f(x) } \right \lvert $ at any $x$ must be bounded as well:
+			\begin{align*}
+				\left \lvert { f(x) } \right \lvert &= \left \lvert { \lim_{j \to \infty} f_j(x) } \right \lvert \\
+				&= \lim_{j\to \infty}\left \lvert { f_j(x) } \right \lvert \\
+				&\leq \lim_{j \to \infty} (M + 1)\\
+				&= M + 1
+			\end{align*}
+			So the function $f$ is bounded on $X$, and is therefore a member of $B(X)$.
+			\par We now show that the functions $f_j$ do indeed converge to $f$ in the $\sup$ norm. Let $\varepsilon > 0$; we want to find an $N \in \N$ such that for all $j \geq N$, $\left \lVert {  f_j - f } \right \lVert < \varepsilon$. It is enough to show that, for any $x \in X$, $\left \lvert { f_j(x) - f(x) } \right \lvert \leq \varepsilon/2$. Therefore, we find an $N$ from the original Cauchy sequence such that, for all $j, k \geq N$, $\left \lVert { f_j - f_k } \right \lVert < \varepsilon/2$. In particular, this means that, for any $x$, $\left \lvert { f_j(x) - f_k(x) } \right \lvert \leq \varepsilon/2$. Since $f(x) = \lim_{k\to \infty} f_k(x)$, 
+			\begin{align*}
+				\left \lvert { f_j(x) - f(x) } \right \lvert &= \left \lvert { f_j(x) - \lim_{k \to \infty} f_k(x) } \right \lvert \\
+				&= \lim_{k \to \infty} \left \lvert { f_j(x) - f_k(x) } \right \lvert \\
+				&\leq \varepsilon/2
+				&<\varepsilon
+			\end{align*}
+			So this sequence does in fact converge to an element of $B(X)$.
+		\item We now look at the space $l_\infty$, all bounded sequences of real numbers, with the sup norm. In fact, this is a special case of the first part of this question. Letting the space be $\N$, this is exactly the space $B(\N)$, with the same norm, so we can immediately say that the function is a norm, and that every Cauchy sequence converges to a bounded function on $\N$, which is the same as a bounded sequence of real numbers.
+		\item Again, looking at the space $C([-1, 1]) \cap C^1( (-1, 1))$ of continuous functions on $[-1,1]$ with continous first derivative on the interior, we see that every function in this space must be bounded (because $[-1,1]$ is compact), and so this is a vector subspace of the space of bounded functions $B([-1,1])$, with the same norm as before. Therefore, the function is a norm.
+			\par However, this does not guarantee that the space is Banach, and in fact it is not. The sequence of functions $x \mapsto \left \lvert { x } \right \lvert ^(1 + 1/n)$ converges in $L_\infty$ norm to $\left \lvert { x } \right \lvert $, but this function is not $C^1( (-1, 1))$, as it is not differentiable at $0$.
+
+	\end{enumerate}
+\end{proof}
+\begin{problem}
+	Let $E$ be a linear space and let $\left \lVert {  \cdot } \right \lVert $ and $\left \lVert { \cdot } \right \lVert _1$ be two norms on $E$.
+	\begin{enumerate}[label=(\roman*)]
+		\item Assume that $\left \lVert { \cdot } \right \lVert $ and $\left \lVert { \cdot } \right \lVert _1$ are equivalent, and prove that $(E, \left \lVert { \cdot } \right \lVert )$ is a Banach space if and only if $(E, \left \lVert { \cdot } \right \lVert _1)$ is a Banach space.
+		\item Give an example of $E$, $\left \lVert { \cdot } \right \lVert$, and $\left \lVert {  \cdot } \right \lVert _1$ such that $(E, \left \lVert {  \cdot } \right \lVert )$ is a Banach space but $(E, \left \lVert {  \cdot } \right \lVert _1)$ is not.
+		\item Prove that the function $\left \lVert {  \cdot } \right \lVert  : E \to \R$ is continuous on $(E, \left \lVert { \cdot } \right \lVert )$. Must it be continous on $(E, \left \lVert { \cdot } \right \lVert _2)$ as well?
+
+	\end{enumerate}
+
+\end{problem}
+\begin{proof}
+	\begin{enumerate}[label=(\roman*)]
+		\item We first show that equivalence of norms means that one space being Banach implies that the other is. We recall that two norms are equivalent if and only if there are positive constants $c, C$ such that for all $x \in E$, $c \left \lVert { x } \right \lVert  \leq \left \lVert { x } \right \lVert _1 \leq C\left \lVert { x } \right \lVert $
+			\par Now, we show that $E$ being Banach under the first norm implies that it is Banach under the second (by symmetry of the hypotheses, this is all we need to check). Let $\left\{ x_n \right\}_{n \geq 1}$ be some sequence of elements which is Cauchy in $\left \lVert { \cdot } \right \lVert _1$. We show that this sequence is also Cauchy in $\left \lVert { \cdot } \right \lVert $.
+			\par Let $\varepsilon > 0$. Then $c\varepsilon > 0$, and there exists some $N$ such that, for $j, k \geq N$, $\left \lVert { x_j - x_k } \right \lVert_1 < c\varepsilon$. By the fact that $c\left \lVert { x_j - x_k } \right \lVert \ leq  \left \lVert { x_j - x_k } \right \lVert_1 < c \varepsilon$, we see that $\left \lVert { x_j - x_k } \right \lVert < \varepsilon$ for all $j, k \geq N$, and so the sequence is also Cauchy in $\left \lVert {  \cdot } \right \lVert $. Because the space $(E, \left \lVert { \cdot } \right \lVert )$ is Banach, this Cauchy sequence converges in the $\left \lVert {  \cdot } \right \lVert $ norm to an element $x \in E$. We now need only show that the sequence also converges to this element $x$ in the $\left \lVert { \cdot } \right \lVert_1$ norm.
+			\par Let $\varepsilon > 0$. We wish to show that there exists some $N \in \N$ such that, for $n \geq N$, $\left \lVert { x_n - x } \right \lVert _1 < \epsilon$. By the fact that the sequence converges to $x$ in the $\left \lVert { \cdot } \right \lVert $ norm, we know that we can choose $N$ such that, for $n \geq N$, $\left \lVert { x_n - x } \right \lVert < \varepsilon/C$. Then, because of the equivalence of the norms,
+			\[\left \lVert { x_n - x } \right \lVert _1 \leq C\left \lVert { x_n - x } \right \lVert < C\varepsilon/C = \varepsilon\]
+			Therefore the sequence converges in $\left \lVert { \cdot } \right \lVert _1$, and the space is Banach under this norm as well. 
+		\item An example of a space with nonequivalent norms that is Banach under one but not under the other is $L_2(\R)$, the space of all square-summable real functions on the real line. As with the example given above, this space is Banach under the appropriate norm, 
+			\[ \left \lVert { f } \right \lVert_2  = \int_\R f^2 dx\]
+		But it is not Banach under the $L_\infty$ norm:
+		\[ \left \lVert { f } \right \lVert _\infty = \sup{\left \lvert { f(x) } \right \lvert ; x \in \R}\]			We see that the sequence of functions
+		\[f_n(x) = \begin{cases}
+				\frac{1}{\sqrt{x}} & 1 \leq x \leq n\\
+				0 & x < 1 \text{ or } n < x
+	\end{cases}\]
+	Since each function is bounded and defined only on a compact set, it is square-summable; also the functions are Cauchy in the $L_\infty$ norm, because $\left \lVert { f_j - f_k } \right \lVert _\infty = \frac{1}{\min(j, k) + 1}$ for $j \neq k$. However, the sequence diverges in the $L_2$ norm, because the function that they converge to is
+	\[f(x) = \begin{cases}
+			\frac{1}{\sqrt{x}} & 1 \leq x\\
+			0 & x < 1
+	\end{cases}
+\]
+The integral of the square of this function is $\int_1^\infty \frac{1}{x} dx$, which diverges.
+	\item We show that the function $\left \lVert {  \cdot } \right \lVert $ is continuous on the space $(E, \left \lVert {  \cdot } \right \lVert )$.
+		\par We wish to show that the inverse map of the function takes open sets to open sets; it suffices to do this for the basis sets of the target space, which are open intervals in $\R$. Let $f$ be the function taking $x \mapsto \left \lVert { x } \right \lVert $, and let $(a, b)$ be an arbitrary interval in $\R$.
+		\par Because the norm is nonnegative, we may assume that our interval is $[0,b)$ and that $0 < b$, or that $0 < a < b$. In the first case, $f^{-1}([0,b)) = B_b(0)$, the open ball of radius $b$ around the origin - this is a basis set in the topology of $(E, \left \lVert { \cdot } \right \lVert )$, so it is open. In the second case, $f^{-1}( (a,b)) = \left\{ x \in E \; \lvert \;  a < \left \lVert { x } \right \lVert < b \right\}$. This is the intersection of $\overline{B_a(0)}^c$ with $B_b(0)$ - the complement of the closure of the open ball of radius $a$ around $0$, which is open, with the open ball of radius $b$ around $0$, which is also open. Thus the inverse image of any basis set in $\R$ under this map is open, so the map is continuous.
+	\par	It does not have to be true that one norm is continuous under the topology induced by another norm. In fact, if two norms are inequivalent, this is always the case. For instance, in the example given earlier, the $l_\infty$ norm and $l_2$ norm are inequivalent on $l_2$ - this is clear from the fact that we constructed a sequence which converges in one but not in the other, meaning that their induced topologies cannot be equivalent.
+	\end{enumerate}
+\end{proof}
+\begin{problem}{4}
+	Let $E$ be a normed space and let $T \in E^*$. Does there necessarily exist $x \in E$ such that $\left \lVert {  x } \right \lVert = 1$ and $\left \lvert { T(x) } \right \lvert = \left \lVert { T } \right \lVert $?
+\end{problem}
+\begin{proof}
+		No, there does not necessarily exist such an $x$. In a \textit{finite}-dimensional space there is such an $x$, as in a finite dimensional normed vector space, the unit sphere is compact, and thus the function $\left \lvert { T(x)} \right \lvert $ must attain its supremum on this set. However, the sphere is not compact in any infinite dimensional space, and indeed in any such space we can find a $T$ which does not attain its norm for any $x$ on the unit sphere.
+		\par Let $E$ be an infinte-dimensional normed vector space, and let $\left\{ e_i \right\}_{i \geq 1}$ be an infinite sequence of basis vectors in this space. Let $T$ be defined by taking any basis vector in this sequence $e_i$ to $T(e_i) = \frac{i}{i+1} e_i$, and taking any other basis vector of the space to $0$. Then the supremum of $\frac{\left \lvert { T(x) } \right \lvert}{\left \lvert { x } \right \lvert }$ is $1$, but $\left \lvert { T(x) } \right \lvert < 1$ for any $x$ in the unit sphere.
+\end{proof}
+\begin{problem}{5}
+	\begin{enumerate}[label=(\roman*)]
+		\item  Let $E$ be a normed space and $E_0$ a linear subspace. Let $T_0: E_0 \to \R$ be a linear functional. Show that there exists a linear functional $T: E \to \R$ such that $T\lvert_{E_0} = T_0$.
+		\item Let $E$ be an infinitely dimensional normed space. Use part (i) to prove that there exists a discontinuous linear functional $T : E \to \R$.
+	\end{enumerate}
+\end{problem}
+\begin{proof}
+	\begin{enumerate}[label=(\roman*)]
+		\item We show the existence of such a linear functional. In fact, the space $T^*$ of linear functionals on $T$ is the direct sum $T_0^* \oplus (T_0^\perp)^*$ of functionals on $E_0$ and functionals on $T$ which are $0$ on $E_0$.
+		\par By the axiom of choice, we may assume there exists a Hamel basis for any normed space. Let $\left\{ e_i^0 \right\}_{i \in I}$ be a set of basis vectors for $E_0$, where $\left \lvert { I } \right \lvert = \text{Dim}(E_0)$, and let $\left\{ e_j^\perp \right\}_{j \in J}$ be a set of basis vectors for $E$ which completes the basis $e_i^0$ to be a basis for $E$.
+		\par Define a linear functional $T$ as follows: $T$ acts on the basis elements of $E_0$ the same way that $T_0$ does, taking $e_i^0 \mapsto T_0(e_i^0)$, and it sends all other basis elements $e_j^\perp$ to $0$. Then this can be extended to a linear functional on the whole of $E$, as every element $x \in E$ may be written as a finite sum of basis elements, $x = \sum_I r_i e_i^0 + \sum_J r_j e_j^\perp$, where only a finite number of the $r_i$ and $r_j$s are nonzero. We can define the action of $T$ on $x$:
+		\begin{align*}
+			T(x) &= T \left( \sum_{I}r_ie_i^0 + \sum_{J}r_je_j^\perp \right)\\
+			&= (\sum_{I} r_iT(e_i^0)) + \left( \sum_{J}r_jT(e_j^\perp) \right)\\
+			&= (\sum_{I}r_i T_0(e_i^0)) + 0\\
+			&= T_0(\sum_{I}r_ie_i^0)
+		\end{align*}
+		\par Because the sum $\sum_{I} r_i e_i^0$ is an element of the linear subspace $E_0$, it is an element of $E_0$, and the value of $T_0$ on this element is well-defined; therefore, the value of $T$ on $x$ is also well-defined and the two are equal. It is also clear that, if $x$ was in $E_0$ to begin with, then $T(x) = T_0(x)$. Thus we have a functional $T$ which is equal to $T_0$ when restricted to the subspace $E_0$.
+	\item We now use this fact to show that there exists a discontinuous functional on any infinite-dimensional normed vector space. Let $V$ be an infinite dimensional vector space, and let $\{e_i\}_{i \in I}$ be a Hamel basis for $V$. Let $\{e_n\}_{n \in \N}$ be a countably infinite subset of this basis. We define a functional $T_0$ on the span of these basis vectors, $V_0$, by sending $e_n \mapsto n$. This is a well-defined functional, as every element of $V_0$ is a finite linear combination of vectors in this basis. And, by the preceding argument, there exists some functional $T$ on $V$ which agrees with $T$ when restricted to $V_0$. 
+	\par We see that $T$ is unbounded on the unit sphere, and that it is therefore discontinuous. This is because there is a sequence of vectors $\frac{e_n}{\lVert e_n \rVert}$ with norm $1$ whose value under $T$ diverges:
+	\[
+	\lim_{n\to\infty} \left \lvert T\left ( \frac{e_n}{\lVert e_n \rVert}\right )  \right \rvert = \infty
+	\]
+	\end{enumerate}
+	Therefore, every infinite-dimensional real vector space admits a discontinuous linear functional.
+\end{proof}
+\begin{thebibliography}{}
+\bibitem{convex}{
+user147263, Prove Minkowski's inequality directly in finite dimensions, URL (version: 2014-06-14): https://math.stackexchange.com/q/833502
+}
+
+
+\end{thebibliography}
+
+\end{document}

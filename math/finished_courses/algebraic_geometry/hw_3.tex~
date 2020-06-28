@@ -1,0 +1,97 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem,hyperref,tikz-cd}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 3}
+\author{Andrew Tindall
+\\ Algebraic Geometry}
+ 
+\maketitle
+\begin{problem}{1}
+	Let $X$ be a (quasi-projective) algenraic variety and let $p \in X$. Show that $\mathcal{O}_{p,X}$ is an integral domain if and only if $p$ belongs to a unique irreducible component of $X$. (hint: first reduce the problem to the case where $X$ is an affine variety).
+	\begin{proof}
+		First, assume that $X = \text{Spec}(A)$ is an affine variety, so that $\mathcal O_{X}= A$, and $\mathcal O_{p, X} = A_p$ for any prime ideal $p \in \text{Spec}(A)$. Irreducible components of $\text{Spec}(A)$ are the sets $V(q)$, for $q$ a minimal prime.\\
+		\par First, assume that $p$ belongs to a unique irreducible component of $\text{Spec}(A)$: that is, there is a unique minimal prime $q$ such that $q \subset p$. We want to show that $A_p$ is an integral domain. Let $x = a/b$, $y = f/g$ be two elements of $A_p$ such that $xy = 0$. By definition, this is equivalent to the existence of some $h \in A \backslash p$ such that $h(ga - bf) = 0$.
+	\end{proof}
+\end{problem}
+\begin{problem}{2}
+	Recall that the field of rational functions $k(X)$ of an irreducible, quasi-projective, algebraic variety $X$, is the collection of all rational functions on $X$.A rational function is a regular function $f$ on some non-empty open subset $U \subset X$ (up to the equivalence that $(f,U) \simeq (g, V)$ if $f = g$ on $U \cap V$).
+	\begin{enumerate}[label=(\alph*)]
+		\item Verify that any two open subsets in $X$ intersect and hence the field operations on $k(X)$ are well-defined. Then show that $k(X)$ is in fact a field.
+			\begin{proof}
+				<++>
+			\end{proof}
+		\item Show that if $X$ is an affine variety, then its field of rational functions coincides (is naturally isomorphic to) the field of fractions of its coordinate ring $k[X]$.
+			\begin{proof}
+				<++>
+			\end{proof}
+	\end{enumerate}
+\end{problem}
+\begin{problem}{3}
+	Show that any two smooth quadrics in $\mathbb P^n$ are isomorphic. Recall that a quadric (in $\mathbb P^n$) is a subvariety defined by a (homogeneous) quadratic polynomial.
+	\begin{proof}
+		<++>
+	\end{proof}
+\end{problem}
+\begin{problem}{4}
+	Consider the affine curves $C$ in $\mathbb A^2$ below. Find the points at infinity on these curves (that is, points in the closure of $C$ in $\mathbb P^2$ that are not in $\mathbb A^2$). Decide for each point at infinity if it is singular or non-singular and find its tangent space and tangent cone.
+	\begin{enumerate}
+		\item $y^2 = x^3 + ax + b$
+			\begin{proof}
+				The homogenization of this polynomial is $y^2z = x^3 + axz^2 + bz^3$. Points at infinity correspond to tuples $(x,y,0)$, where $x$ and $y$ are not both $0$, which satisfy the equation
+				\begin{align*}
+					y^2 \cdot 0 &= x^3 + ax \cdot 0 + b \cdot 0\\
+					0 &= x^3
+				\end{align*}
+				So, the point $(0,1,0)$ is the unique point at infinity on any elliptic curve.
+				\par To find the tangent space at this point, we find the projective closure of the tangent space in $\mathbb A^2$ of the intersection of $X$ with a chart of $\mathbb P^2$ containing $(0,1,0)$. The only such chart is $E_1: \mathbb A \to \mathbb P^2$, defined by taking $(x,z) \mapsto (x:1:z)$, and the restriction of $X$ to this chart is the variety defined by the equation
+				\[z = x^3 + axz^2 + bz^3\]
+				The tangent space at $(0,0)$ is defined by the linearization of this equation, which is $z = 0$. This polynomial is homogenous, so its projective closure has no extra points: the tangent space of $X$ at $(0,1,0)$ is the algebraic variety $V(z)$.
+			\end{proof}
+		\item $y = x^3$
+			\begin{proof}
+				<++>
+			\end{proof}
+		\item $x^3 + x^2y - y = 0$
+			\begin{proof}
+				<++>
+			\end{proof}
+	\end{enumerate}
+\end{problem}
+\end{document}

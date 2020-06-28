@@ -1,0 +1,93 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem,hyperref}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 6}
+\author{Andrew Tindall\\ Topology II}
+\maketitle
+\begin{problem}{1}
+	Let $\mathbb H$ be the Hamilton Quaternions, with its standard $\R$-basis $\left\{ 1, i, j, k \right\}$. Draw an isomorphism of $\R$-vector spaces $\mathbb H \simeq \R^{\oplus 4}$ using this basis. COnsider $S^3$ to be a subspace of $\mathbb H$ under this isomorphism. Let $Q_8 := \left\{ \pm 1, \pm i, \pm j, \pm k \right\}$ be the quaternion subgroup of the group of units $\mathbb H^\times$ of $\mathbb H$. 
+	\begin{enumerate}[label=(\alph*)]
+		\item Prove that the natural left action of $Q_8$ on $\mathbb H^\times$ by left multiplication induces a left action on $S^3$ which is a ``covering space action.''
+			\begin{proof}
+				We first define the left action $Q_8 \curvearrowright S^3$. Under the identification of $\mathbb H$ with $\R^{\oplus 4}$, the definition of $S^3$ as unit vectors in $\R^{\oplus 4}$ embeds $S^3$ as a subset of $\mathbb H$. Specifically, $S^3$ can be identified with the set
+				\[ \left\{ a + bi + cj + dk \mid a^2 + b^2 + c^2 + d^2 = 1 \right\}.\]
+				We show that any of the elements of $Q_8$ preserve the magnitude of any unit element in $\mathbb H$. Let $x = a + bi + cj + dk$ be an arbitrary element of $S^3 \subset \mathbb H$. Then the actions of the $8$ elements of $Q_8$ on $x$ are as follows:
+				\begin{align*}
+					1\cdot x &= a + bi + cj + dk & (-1)\cdot x = -a - bi - cj - dk\\
+					i \cdot x &= -b + ai - dj + ck & (-i) \cdot x = b - ai + dj - ck\\
+					j \cdot x &= -c + di + aj - bk & (-j) \cdot x = c - di - aj + bk\\
+					k \cdot x &= - d - ci + bj + ak &(-k) \cdot x = d + ci - bj - ak
+				\end{align*}
+				In each case, we see that the sum of squares  of the coefficients of $g \cdot x$ are preserved, meaning that $g \cdot x \in S^3$ as well, and so the action $Q_8 \curvearrowright \mathbb H$ does indeed induce an action $Q_8 \curvearrowright S^3$.
+				\par Now, we want to show that this action is a covering space action. Given some $x \in S^3 \subset \mathbb H$, we want to find some open set $U$ containing $x$ such that the $g \cdot U$ are disjoint for each $g \in Q_8$. 
+                \par First, we can show that a free action of a finite group on a Hausdorff space is always a covering space action. Let  $G$ be a finite group, $X$ a Hausdorff space, and $ \rho: G \hookrightarrow \text{Aut}(x)$ a free group action, i.e. an action such that for each $g \in G$, $\rho(g)(x) \neq x$. We write $g \cdot x$ for $\rho(g)(x)$.
+                \par Since $X$ is Hausdorff, there exist open sets $U_1 \ni x$, $U_2 \ni g \cdot x$ such that $U_1 \cap U_2 = \emptyset$.  Then the set $U_g :=  U_1 \cap g^{-1} \cdot U_2$ contains $x$, and is a subset of $U_1$, while $g \cdot U_g = g \cdot (U_1 \cap g^{-1} \cdot U_2)$ is a subset of $U_2$, and so it is disjoint from $U_g$. Since $G$ is finite, the intersection
+				\[U_x = \bigcap_{g \in G}U_g\]
+				is an open set, which contains $x$, and is disjoint from each of its translates under the action of $G$. Therefore, $G \curvearrowright X$ is a covering space action.
+				\par Since $Q_8$ is finite, $S^3$ is Hausdorff, and $Q_8 \curvearrowright S^3$ is free, it must be a covering space action.
+			\end{proof}
+		\item Write down all of the isomorphism classes of covers of the orbit space $S^3 / Q_8$, using the fact that $S^3$ is simply connected.
+			\begin{proof}
+				Since the group action of $Q_8$ on $S^3$ is a covering space action, by Hatcher 1.40 we see that
+				\[Q_8 \simeq \pi_1(S^3/Q_8) / p_*(\pi_1(S^3)).\]
+				But, since $S^3$ is simply connected, the group $\pi_1(S^3)$ is trivial, and so $Q_8 \simeq \pi_1(S^3 / Q_8)$. Thus the set of isomorphism classes of covering spaces of $S^3 / Q_8$ corresponds exactly to the set of subgroups of $Q_8$. There are $4$ nontrivial subgroups of $Q_8$: three copies of $\Z_4$:
+				\begin{align*}
+					\left\{ 1, i, -1, -i \right\}\\
+					\left\{ 1, j, -1, -j \right\}\\
+					\left\{ 1, k, -1, -k \right\}
+				\end{align*}
+				and one copy of $\Z_2$, the center of $Q_8$, which is $\left\{1, -1 \right\}$. Thus there are $6$ total isomorphism classes of covering spaces,$4$ of them corresponding to these $4$ subgroups:				\begin{align*}
+				(S^3 / \Z_4)_1 \to S^3 / Q_8,\\
+				(S^3 / \Z_4)_2 \to S^3 / Q_8,\\
+				(S^3 / \Z_4)_3 \to S^3 / Q_8,\\
+					S^3 / \Z_2 \to S^3 / Q_8,
+				\end{align*} where the three numbered covers are different, corresponding to the actions of $i$, $j$, and $k$ on $S^3$ under multiplication in $\mathbb H$. These $4$, along with the trivial cover $S^3 / Q_8 \to S^3 / Q_8$, which corresponds to the subgroup $\left\{ 1 \right\} \leq Q_8$l and the universal cover $S^3 \to S^3 / Q_8$, which corresponds to the whole subgroup $Q_8 \leq Q_8$, exhaust all of the isomorphism classes of covers of $S^3 /Q_8$.
+\end{proof}
+	\end{enumerate}
+\end{problem}
+\begin{problem}{2}
+	Using example 1.48 as a starting point, write down all of the path-connected covering spaces of the wedge sum $\R \mathbb P^2 \times \R \vee \mathbb P^2$, up to isomorphism.
+	\begin{proof}
+		\par We will show that the path-connected covering spaces of the space $\R\mathbb P^2 \vee \R \mathbb \P^2$ are even-numbered rings of spheres, and even-numbered chains of 2-spheres with a copy of $\R \mathbb P^2 $ wedged at either end. 
+		\textit{incomplete} 
+	\end{proof}
+\end{problem}
+\maketitle
+\end{document}

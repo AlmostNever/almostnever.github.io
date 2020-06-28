@@ -1,0 +1,146 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem, tikz-cd}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 2}
+\author{Andrew Tindall\\
+	Algebra II}
+ 
+\maketitle
+\begin{section}{Problems}
+	\begin{problem}{1}
+	Let $R$ be a commutative ring and let $S$ be an $R$-algebra. Let $M$ be a left $S$-module. We know that it follows that any left $S$-module is also naturally an $R$ module.
+	\begin{enumerate}[label=(\alph*)]
+		\item Write doesn the natural $R$-module structure on $M$
+		\item Write down the natural $R$-module structure on $S$.
+		\item Assume that $S$ is finitely generated as an $R$-module. Prove that $M$ is a finitely generated left $S$-module if and only if it is finitely generated as an $R$-module.
+	\end{enumerate}
+\end{problem}
+\begin{proof}
+	\begin{enumerate}[label=(\alph*)]
+		\item We define the $R$-module structure on $M$:
+			\par This is really immediate. An $S$-module $M$ is a ring homomorphism $S \to \text{End}(M)$, and the structure of $S$ as an $R$-module is a certain kind of ring homomorphism $R \to S$, so by composing these maps we have an $R$-module $R \to \text{End}(M)$.
+			\par More explicitly, let $\phi: R \to S$ be the map defining $S$ as an $R$-algebra, and let $\cdot_S$ be the left action of $S$ on $M$. We define a left action $\cdot_R$ of $R$ on $M$ by $r \cdot_R m = \phi(r) \cdot_S m$. This satisfies the axioms of a left action:
+			\begin{itemize}
+				\item $(r_1 + r_2) \cdot_R x = r_1 \cdot_R x + r_2 \cdot_R x$: It inherits this distributivity from $S$ through $\phi$.
+				\item $r \cdot_R (x+y) = r\cdot_R x + r\cdot_R y$: This, too, is implied by the distributivity of the $S$-action
+				\item $(r_1r_2) \cdot_R x = r_1\cdot_R (r_2 \cdot_R x)$: Associativity of the $S$-action
+				\item $1_R \cdot_R x = x$: Identity property of the $S$-action, along with the fact that our homomorphisms take units to units.
+			\end{itemize}
+		\item We now define the $R$-module structure on $S$. Again, this is implied by composition of maps: any ring is a module over itself, so we have a map of rings $S \to \text{End}(S)$. Composition with $\phi$ gives an $R$-module structure. In fact, the module axioms are satisfied without use of the $R$-algebra structure of $S$; $R$ could simply be a subring - not even necessarily a commutative one - and $S$ would still be an $R$-module.
+			\par Explicitly, the $R$-module structure on $S$ is defined by $r \cdot s= rs$, where $rs$ is just multiplication in the ring $S$. The axioms of an $R$-module are immediate from the axioms of a ring.
+		\item We now assume that $S$ is finitely generated as an $R$-module, and show that $M$ is finitely generated as an $S$ module is and only if it is finitely generated as an $R$-module.
+			\par In one direction, this is immediate. Again, let $\phi$ be the map taking $R$ into the center of $S$. If $M$ is finitely generated as an $R$-module, say by $n$ elements $\left\{ m_i \right\}_{i = 1}^n$, then any element written as a sum $\sum_{i=1}^n r_i m_i$ can also be written as a finite sum  $\sum_{i=1}^n \phi(r_i) m_i$ of generators with coefficients in $S$.
+			\par Now, assume that $M$ is finitely generated as an $S$ module by $n$ elements $\left\{ s_i \right\}_{i=1}^n$, and that $S$ is finitely generated as an $R$ module by $m$ elements, $\left\{ s_j \right\}_{j=1}^m$. We show that the set ${\left\{ s_j m_i \right\}_{i = 1}^n}_{j=1}^m$ of $mn$ elements of $M$ generates $M$ as an $R$ module.
+			\par Let $a$ be an arbitrary element of $M$. By assumption, $a$ may be written as $a = \sum_{i=1}^n s_i m_i$, for some coefficients $s_i$ in $S$. Now, each $s_i$ may also, by assumption, be written as a sum $s_i = \sum_{j=1}^m r_{ij} s_j$, for some coefficients $r_{ij}$ in $R$. Therefore,
+			\begin{align*}
+				a &= \sum_{i=1}^n s_i m_i\\
+			&= \sum_{i=1}^n (\sum_{j=1}^m r_{ij} s_j) m_i\\
+			&= \sum_{i=1}^n \sum_{j=1}^m r_{ij} (s_j m_i)
+			\end{align*}
+			Thus our element can be written as a sum of $mn$ generators, times $mn$ elements of $R$, making $M$ a finitely generated $R$-module.
+	\end{enumerate} 
+\end{proof}
+\begin{problem}{2}
+	Let $R$ be a ring. Let the free object functor $\mathcal{F} : \mathbf{Sets} \to \mathbf{R-mod}$ be defined on objects by sending a set $X$ to the $R$-module $R^{\oplus X}$. Let the forgetful functor $\mathcal{G} : \mathbf{R-mod} \to \mathbf{Sets}$ be defined by sending an $R$-module to its underlying set.
+	\begin{enumerate}[label=(\alph*)]
+		\item Write down what the free object functor $\mathcal{F}$ does to morphisms.
+		\item Write down what the forgetful functor $\mathcal{G}$ does to morphisms.
+		\item Prove that $\mathcal{F}$ and $\mathcal{G}$ are a pair of adjoint functors.
+	\end{enumerate}
+\end{problem}
+\begin{proof}
+	\begin{enumerate}[label=(\alph*)]
+		\item Let the basis elements of the free $R$-module $R^{\oplus X}$ be written $e_x$, indexed over $X$, where $e_x$ is the element with a $1$ in the $x$-th place and $0$s elsewhere. 
+		\par Let $\phi$ be a morphism $X \to Y$ in $\mathbf{Sets}$. We define a morphism $\mathcal{F}(\phi)$ by taking an element $\sum_{X} r_x e_x$ of $R^{\oplus X}$ to the element $\sum_{X} r_x e_{\phi(x)}$ of $R^{\oplus Y}$. This is a valid morphism, since composition with another morphism $\mathcal{F}(\psi)$ gives $\sum_{X} r_x e_{(\psi \circ \phi)(x)}$.
+	\item Let $\phi$ be a morphism in $\mathbf{R-mod}$. Then the forgetful functor $\mathcal{G}$ takes $\phi$ to the underlying set-map, which is the same function element-wise but has ``forgotten'' the fact that it is a homomorphism of $R$-modules.
+	\item In order to show that $\mathcal{F} \vdash \mathcal{G}$, we form the unit and counit natural transformations $\varepsilon :  \mathcal{FG} \Rightarrow 1$ and $\eta : 1 \Rightarrow \mathcal{GF}$. 
+		\par let $X$ be an object of $\mathbf{R-mod}$, and let $\mathcal{FG}(X)$ be the free $R$-module generated by the set of elements of $X$. An element $a $ of $\mathcal{FG}(X)$ is a finite sum of basis elements:
+		\[a = \sum_{\mathcal{G}(X)} r_x e_x\]
+		\par Now, for each $x \in \mathcal{G}(X)$, there is an overlying $x \in X$, which is the ``same'' element, but as an element of the $R$-module $X$. Therefore, the sum 
+		\[\varepsilon_X(a) = \sum_{X}r_x \cdot x\]
+		is a valid element of $X$, and we may define the maps $\varepsilon_X$ by taking elements of $\mathcal{FG}(X)$ to the corresponding elements of $X$. These maps assemble into a natural transformation $\varepsilon : \mathcal{FG} \Rightarrow 1$, as they act reasonably on morphisms- the following square commutes:
+		\[ \begin{tikzcd}&\mathcal{FG}(X) \arrow[r, "\varepsilon_X"] \arrow[d, "\mathcal{FG}(\phi)"] & X \arrow[d, "\phi"]\\&\mathcal{FG(Y)} \arrow[r, "\varepsilon_Y"] & Y\end{tikzcd}\]
+		This is because the sum of elements $\sum r_x \phi(x)$ is equal to $\phi\left( \sum r_x x \right)$, by the fact that $\phi$ is a module morphism.
+		\par In the opposite direction, let $A$ be an arbitrary set, and let $\mathcal{GF}(A)$ be the underlying set of the free $R$-module on $A$. For any element $a \in A$, there is a unique element $1_R \cdot a$ in the free module; we let $\eta_A(a) = 1_R \cdot a$, taken as an element of the underlying set of the free $R$-module. These maps $\eta_A$ also assemble into a natural transformation, as we see that the following square commutes:
+		\[ \begin{tikzcd}&A \arrow[r, "\eta_A"] \arrow[d, "\psi"] & \mathcal{GF}(A) \arrow[d, "\mathcal{GF}(\psi)"]\\& B \arrow[r, "\eta_B"] & \mathcal{GF}(B)\end{tikzcd}\]
+		The commutativity comes from the fact that the element $1 \cdot_R a$ is taken to $1 \cdot_R \psi(a)$along the right side, and that the element $\psi(a)$ is taken to $1 \cdot_R \psi(a)$ along the bottom. 
+		\par Therefore there is a unit-counit pair of natural transformations $\mathcal{FG} \Rightarrow 1$ and $1 \Rightarrow \mathcal{GF}$. We finally need to see that the compositions 
+	\[		
+		\begin{tikzcd}
+				&\mathcal{F} \arrow[r, "\mathcal{F}\eta"] &\mathcal{FGF} \arrow[r, "\varepsilon\mathcal{F}"] &\mathcal{F}
+	\end{tikzcd}
+\]
+\[ \begin{tikzcd}
+				&\mathcal{G} \arrow[r, "\eta\mathcal{G}"] &\mathcal{GFG} \arrow[r, "\mathcal{G}\varepsilon"] &\mathcal{G}
+		\end{tikzcd}\]
+		Are both the identity functors on $\mathcal{F}$ and $\mathcal{G}$. They are, and in fact I wrote a proof of it, but at this point this solution is getting kind of hairy and categorical and I regret not just using the $\text{Hom}(\mathcal{F}(X), Y) \simeq \text{Hom}(X, \mathcal{G}(Y))$ definition of adjunction (although there is still a naturality proof involved).
+	\end{enumerate}
+\end{proof}
+\end{section}
+\begin{section}{Extra Stuff}
+	\begin{problem}{2}
+		Give an example of another pair of adjoint functors.
+	\end{problem}
+	\begin{proof}
+		In the categories $\mathcal{L}(x_1, \dots x_n)$ of formal sentences in a language $\mathcal{L}$ with at most $n$ variables free, we have three functors: 
+		\begin{itemize}
+			\item $\exists : \mathcal{L}(x_1, \dots x_n, y) \to \mathcal{L}(x_1, \dots x_n)$ which takes a sentence with $n+1$ free variables and ``quantifies out'' the last variable by adding an $\exists y$ to the beginning of the sentence.
+			\item $* : \mathcal{L}(x_1, \dots x_n) \to \mathcal{L}(x_1, \dots x_n, y)$, the weakening functor, which takes a sentence with at most $n$ variables and simply considers it to have at most $n+1$ variables.
+			\item $\forall : \mathcal{L}(x_1, \dots x_n, y) \to \mathcal{L}(x_1, \dots x_n)$, which does the same as $\exists$, except that it adds a $\forall y$ instead of an $\exists y$.
+		\end{itemize}
+		These three functors form two adjunctions, $\exists \vdash * \vdash \forall$. The first adjunction essentially says that if $\exists y.(A) \Rightarrow B$, then it does not matter what $y$ we choose, since it does not show up in $B$ and only its existence is needed in $A$. Therefore, $A \Rightarrow *(B)$, if we let $y$ be free in both sentences.
+		\par the second adjunction says that, if $*(A) \Rightarrow B$, where $A$ is a sentence which does not contain $y$, and $B$ might contain $y$, then this implication holds no matter what value $y$ has: $A \Rightarrow \forall y.(B)$.
+	\end{proof}
+	\begin{problem}{3}
+		Think about how the category of $k\left[ x,y \right]$-modules is the same as the category of $k$-vector spaces with \textit{commuting} endomorphisms.
+	\end{problem}
+	\begin{proof}
+		The reason that commutativity matters is that we want the elements $xy$ and $yx$ to be the same element - considered as endomorphisms, we wans $A \circ B$ to be the same as $B \circ A$, where $A$ corresponds to $x$ and $B$ to $y$. This commutation is enough to have a $k[x,y]$-module structure, as any polynomial in $A$ and $B$ with scalars from $k$ is a valid endomorphism of the vector space, and multiplying the polynomials is the same as composing transfmormations. 
+		If $A$ and $B$ do not commute, we can work in the sub-category of $k\langle x,y\rangle$-modules, where $k\langle x, y\rangle$ is the free $k$-algebra on two variables. In this category, $xy$ and $yx$ are separate elements, so we do not need $AB$ and $BA$ to be the same. 
+	\end{proof}
+	\begin{problem}{4}
+		Work out whether injections of $R$-modules are monomorphisms, and if surjections are epimorphisms.
+	\end{problem}
+	\begin{proof}
+		Because the morphisms of $R$-mod have underlying set maps, we can use surjectivity of the maps to right-cancel, and injectivity to left-cancel without any knowledge of the structure of the category; therefore, every surjective map of $R$-modules is an epimorphism, and every injective map is a monomorphism.
+		\par We can also show that epimorphisms and surjective maps are exactly the same in $R$-mod, and that the same holds for monomorphisms and injective maps. First, let some map $f: X \to Y$ of left $R$-modules be an epimorphism. Then $f$ is right-cancellable, i.e. for any $g_1, g_2$, if $g_1 \circ f = g_2 \circ f$, then $g_1 = g_2$. Now, because $\text{Im}(f)$ is a submodule of $Y$, we may form the quotient module $Y / \text{Im}(f)$. Let $g_1$ be the projection map taking an element of $Y$ to its coset in the quotient, and let $g_2$ be the zero map from $Y$ to $Y/\text{Im}(f)$. Then composing both $g_1$ and $g_2$ with $f$ gives zero; by the property of epimorphisms, $g_1$ and $g_2$ must both be the zero map. But then $\text{Im}(f) = Y$, making it surjective as a set-map.
+		\par Assume now that $h: X \to Y$ is some monomorphism in $R$-mod. Let $x_1, x_2$ be elements of $X$ such that $h(x_1) = h(x_2)$. We show that $x_1 = x_2$, and that therefore $h$ is an injective set-map. 
+		\par Let $g_1 : R \to X$ be the map from the free module on one generator, which take $1$ to $x_1$, and $g_2 : R \to X$ be the map taking $1$ to $x_2$. Then $h \circ g_1$ and $h \circ g_2$ are equal on the generator of $R$, which by the universal property of the free module means that $h \circ g_1 = h \circ g_2$. By the universal property of monomorphisms, this means that $g_1 = g_2$, in particular that $x_1 = g_1(1) = g_2(1) = x_2$. Therefore $h$ is injective.
+	\end{proof}
+\end{section}
+
+\end{document}

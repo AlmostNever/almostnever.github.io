@@ -1,0 +1,140 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 10}
+\author{Andrew Tindall\\
+Analysis I}
+ 
+\maketitle
+\begin{problem}{1}
+	Let $f: [0,1] \to \R$ be a continuous function. For each $c \in \R$ denote the number of solution of the equation $f(x) = c$. Prove that the function $\R \to \R_+$ is Lebesgue measurable.
+	\begin{proof}
+		We show that the inverse $n^{-1}(a,b)$ of any open interval in $\R_+$ is Lebesgue measurable. Because the image of $n$ is contained in $\N \cup \left\{ \infty \right\}$, we need only look at the inverse images of finite sets of natural numbers $\left\{ n_1, \dots n_m \right\}$, infinite sets of the form $\left\{ n \in \N; n_1 \leq n < \infty \right\}$, and infinite sets of the form $\left\{ n \in \N; n_1 \leq n \leq \infty \right\}$.
+		\begin{itemize}
+			\item In the case of a finite set, $n^{-1}\left\{ n_1, \dots n_2 \right\}$ is the finite union
+				\[ \bigcup_{n_1 \leq i \leq n_2} n^{-1}(\left\{ i \right\}),\]
+			\item In the case of an infinite set, not including $\infty$, $n^{-1}({n_1, \dots })$ is equal to the countable union
+				\[\bigcup_{n_1 \leq i} n^{-1}(\left\{ i \right\}),\]
+			\item In the case of an infinite set including $\infty$, $n^{-1}\left( \left\{ n_1, \dots \right\} \cup \left\{ \infty \right\} \right)$ is the countable union
+				\[\left( \bigcup_{n_1 \leq i} n^{-1}(\left\{ i \right\}) \right) \cup n^{-1}(\left\{ \infty \right\})\]
+		\end{itemize}
+		So, it suffices to show that the set $n^{-1}(i)$ is measurable, for any $i \in \N\cup \left\{ \infty \right\} $.
+		\par First, let $i = 0$. The set $n^{-1}$ is the set of all numbers $y$ in $\R$ which have no solutions $f(x) = y$, for $x \in [0,1]$. Because $f$ is continuous with compact domain, it attains a maximum value $M$ on $[0,1]$, as well as a minimum value $m$. Because $m \leq f(x) \leq M$ for all $ x \in [0,1]$, $n^{-1}(0)$ contains the intervals $(-\infty, m)$ and $(M, \infty)$. Further, by the intermediate value theorem, $f$ attains all values in the interval $[m, M]$, so $n^{-1}(0)$ is dis joint from $[m, M]$. This means that 
+		\[n^{-1}(0) = (-\infty, m) \cup (M, \infty),\]
+		which is measurable.
+		\par \;\par The rest of this proof is incomplete.
+	\end{proof}
+\end{problem}
+\begin{problem}{2}
+	Prove that every Lebesgue measurable function $f: [0,1] \to \R$ is a limit almost everywhere of a sequence $\left\{ f_n \right\}$ of continuous functions. Is it always possible to choose this sequence to be monotone?
+	\begin{proof}
+		We take as given that every Lebesgue measurable function $f: [0,1] \to \R$ is a limit almost everywhere of a sequence $s_i$ of simple functions. Let $\varepsilon > 0$; we wish to construct a sequence of continuous functions $f_i$ such that $f_i \to f$ on a set $X \subset [0,1]$ of measure $\mu(X)\geq 1-\varepsilon$.
+		\par There must be a set $X'$ of measure $\mu(X) \geq 1 - \varepsilon/2$, on which $s_i \to f$. For each $s_i$, because $s_i$ is a simple function on a compact set, there must be a finite number $n_i$ of intervals $I \subset [0,1]$, on each of which $s_i$ is constant. 
+		\par Between any two successive intervals there is a jump discontinuity; by covering the point of discontinuity with an interval $[a,b]$ of length $b-a = \varepsilon / (2n_i \cdot 2^{-i})^{-1}$, and connecting the two constant functions with a line segment from $(a, s_i(a))$ to $(b, s_i(b))$, we can construct a continuous function $f_i$ which is equal to $s_i$ outside of the intervals covering the jump discontinuities. 
+	\par The total lengths of these intervals is at most
+	\[\sum_{j=1}^{n_i}\frac{\varepsilon}{2n_1\cdot 2^{i}} = \frac{\varepsilon}{2^{i + 1}}.\]
+	\par The $f_i$ converge pointwise to $f$ on the relative complement $X' \bs \cup I_{i,j}$ of the domain of convergence of the $s_i$s with the union of all of these intervals. The total area of the union of all the intervals is at most
+	\[\sum_{i = 1}^\infty \frac{\varepsilon}{2^{i+1}} = \frac{\varepsilon}{2}.\]
+	\par Therefore, the $f_i$ converge to $f$ on a set of measure \[\mu(X' \bs \cup I_{i,j}) \geq \mu(X') - \mu(\cup I_{i,j}) \geq 1 - \varepsilon\]. Because $\varepsilon$ was arbitrary, the $f_i$ converge to $f$ almost everywhere.
+	\par It is not necessarily true that we can find a monotone sequence of continuous functions which converge to $f$. For example, let $f$ be the measurable function
+	\[f(x) = \begin{cases}
+			\frac{1}{x}& 0 < x < 1/2\\
+			\frac{-1}{1 - x} & 1/2 < x < 0\\
+			0 & x = 0, 1/2, 1
+\end{cases}\]
+The function $f$ is measurable, goes to $\infty$ as $x \to 0$, and goes to $-\infty$ as $x \to 1$. If there were a sequence of continuous functions which converged monotonically almost everywhere to $f$; say an increasing sequence $f_i$, then for each $i$, the set of $x \in [0,1]$ such that $f_i(x) > f(x)$ would need to have measure $0$.
+\par In particular, for any $\varepsilon$, for almost every $x \in [1 - \varepsilon, 1]$, the value of $f_i(x)$ would need to be less than or equal to $-\frac{1}{\varepsilon}$. This means that we can find a sequence $x_j$ such that $f_i(x_j) < -\frac{1}{2^j}$. Thus $f_i(x_j ) \to -\infty$ as $j \to \infty$, which is impossible because $f_i$ is a continuous function on a compact set, and cannot be unbounded.
+	\end{proof}
+
+\end{problem}
+\begin{problem}{3}
+	Let $U$ be a bounded open subset of $\R^n$ and let $f: (a, b)\times U \to \R$ be a continuous function such that for each $(t, x) \in (a,b)\times U$ the partial derivative $\partial f/ \partial t (t, x)$ exists and satisfies $\left \lVert { \partial f / \partial t(t, x) } \right \lVert \leq g(x)$ for some integrable function $g: U \to \R$. Define the function: $F(t) := \int_U f(t, \cdot) d\mu_n$. Prove that $F$ is differentiable and that:
+	\[F'(t) = \int_U \frac{\partial f}{\partial t}(t, \cdot ) d \mu_n.\]
+	\begin{proof}
+		We investigate how $F(t)$ acts when we perturb $t$ by an infinitesimal amount $\delta t$:
+		\begin{align*}
+			F(t + \delta t) &= \int_U f(t + \delta t, \cdot ) d \mu_n\\
+		&=\int_{U} \left (f(t, \cdot) + \delta \frac{\partial f}{\partial t}(t, \cdot) + R(\delta^2)) \right ) d\mu_n\\
+		&= \int_{U} f(t, \cdot )d\mu_n + \delta \int_{U} \frac{\partial f}{\partial t}(t, \cdot) d\mu_n + R(\delta^2)\\
+		&= F(t) + \delta \int_{U} \frac{\partial f}{\partial t}(t, \cdot )d \mu_n + R(\delta^2)
+		\end{align*}
+	Note that the integral $\int_U R(\delta^2)$ is again proportional to $\delta^2$, because the size of $U$ is bounded.
+	\par Therefore, if the function $\int_U \frac{\partial f}{\partial t}(t, \cdot)d\mu_n$ is continuous, it is the derivative of $F$. It is, by virtue of the fact that $\frac{\partial f}{\partial t}(t, \cdot)$ is bounded by the integrable function $\left \lvert { (g(x)) } \right \lvert $, and therefore the norm
+	\[\left \lVert { \int_U } \right \lVert \frac{\partial f}{\partial t}(t, \cdot )d \mu_n\]
+	is bounded by the value
+	\[\int_U \left \lVert { g(x) } \right \lVert d\mu_n.\]
+	\end{proof}
+\end{problem}
+\begin{problem}{4}
+	Prove that $\mathcal{L}_{n+m}$ is the smallest $\sigma$-algebra of subsets of $\R^{n+m}$, containing the product $\sigma$-algebra $\mathcal{L}_n \otimes \mathcal{L}_m$, and all sets of zero outer measure.
+	\begin{proof}
+		\textit{incomplete}
+	\end{proof}
+
+\end{problem}
+\begin{problem}{5}
+	Let $(X, M, \mu)$ be a finite measure space, so that $\mu(X)< \infty$. We say that a sequence of real-valued, integrable functions $f_n$ on $X$ is \textit{uniformly integrable}, if $\sup_n\left\{ \int_X \left \lvert { f_n } \right \lvert d\mu \right\}< \infty$ and:
+	\[\forall \varepsilon > 0 \quad \exists \delta > 0 \qquad \mu(A)< \delta \Rightarrow \forall n \qquad \int_A \left \lvert { f_n } \right \lvert d\mu < \varepsilon.\]
+	Prove that a sequence $f_n$ satisfies $\int_X \left \lvert { f_n - f } \right \lvert  d\mu \to 0$ if and only if both $f_n$ converges to $f$ in measure and the $f_n$ are uniformly integrable.
+	\begin{proof}
+		First, assume that $f_n$ converges to $f$ in measure and that $f_n$ are uniformly integrable. This implies that the set $\left\{ f_i \right\}_{i \geq 1} \cup \left\{ f \right\}$ is also uniformly integrable. Let $\varepsilon > 0$; we want to show that there exists $N\in \N$ such that, for all $n > N$,
+		\[ \int_X \left \lvert { f_n - f } \right \lvert d\mu < \varepsilon.\]
+		\par By uniform integrability, there exists some $\delta > 0$ such that, for all $A$ such that $\mu(A) < \delta$, $\int_A \left \lvert { f_n } \right \lvert < \frac{\varepsilon}{4}$, and the same is true for $f$. 
+		\par By convergence in measure, there exists some $N \in \N$ such that, for all $n \geq N$, the subset $X_\varepsilon$ of $X$ on which $\left \lvert {  f_n - f } \right \lvert \geq \frac{\varepsilon}{2\mu(X)}$ has measure $\mu(X_\varepsilon) < \delta$. Therefore, for all $n \geq N$,
+		\begin{align*}
+			\int_X \left \lvert { f_n - f } \right \lvert d\mu &= \int_{X_\varepsilon} \left \lvert { f_n - f } \right \lvert + \int_{X_\varepsilon^c} \left \lvert { f_n - f } \right \lvert d\mu\\
+			&\leq \int_{X_\varepsilon} \left \lvert { f_n } \right \lvert  d\mu + \int_{X_\varepsilon} \left \lvert { f } \right \lvert d\mu + \int_{X_\varepsilon^c} \left \lvert { f_n - f } \right \lvert \\
+			&< \frac{\varepsilon}{4} + \frac{\varepsilon}{4} + \mu(X_\varepsilon^c) \frac{\varepsilon}{2\mu(X)}\\
+			&\leq \frac{\varepsilon}{4} + \frac{\varepsilon}{4 } + \mu(X) \frac{\varepsilon}{2\mu(X)}\\
+			&= \varepsilon
+		\end{align*}
+		Therefore, $\int_X \left \lvert { f_n - f } \right \lvert d\mu$ goes to $0$ as $n \to \infty$.
+		\par Now, assume that $\int_X \left \lvert { f_n - f } \right \lvert  \to 0$ as $n \to \infty$. We frist want to show that $f_n \to f$ in measure. Let $\varepsilon > 0$; we want to find that 
+		\[\mu(\left\{ x \in X; \left \lvert { f_n(x) - f(x) } \right \lvert > \varepsilon \right\}) \to 0\]
+		as $n \to \infty$. If this were not true, then there would be some $\delta > 0$ such that
+		\[\mu(\left\{ x \in X; \left \lvert { f_n(x) - f(x) } \right \lvert > \varepsilon \right\}) \geq \delta\]
+		for all $n \in \N$; this would imply that
+		\begin{align*}\int_X \left \lvert { f_n - f } \right \lvert d\mu &\geq \int_{x \in X; \left \lvert { f_n(x) - f(x) > \varepsilon } \right \lvert } \left \lvert { f_n - f } \right \lvert d\mu\\
+		&\geq \varepsilon \delta\end{align*}
+		For all $n \in \N$. However, this integral goes to $0$ as $n \to \infty$ by assumption. Therefore, $f_n$ must converge to $f$ in measure. 
+		\par Now, we want to show that the $f_n$ are uniformly integrable. Let $\varepsilon > 0$; we want to find a $\delta > 0$ such that for all $\mu(A) < \delta$, the integral $\int_A \left \lvert { f_i } \right \lvert d\mu$ is less than $\varepsilon$. 
+		\par \;\\ \par The rest of this proof is incomplete.
+	\end{proof}
+\end{problem}
+\end{document}

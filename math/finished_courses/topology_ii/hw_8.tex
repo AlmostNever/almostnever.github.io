@@ -1,0 +1,73 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem, mathabx, graphicx}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 8}
+\author{Andrew Tindall\\
+Topology II}
+ 
+\maketitle
+\begin{problem}{1}
+	Write down a chain complex of abelian groups \[(C_\circle, \delta) = (C_i, \delta_i: C_i \to C_{i-1})_{i \in \Z}\]
+	such that
+	\begin{itemize}
+		\item $C_i \neq 0$ if and only if $i \in \left\{ 0, 1, 2 \right\}$
+		\item $C_i$ is a finitely generated free abelian group, i.e. $C_i \simeq \Z^{n_i}$ as abelian groups, for some $n_i \in \N$, for all $i \in \Z$
+		\item The homology $H_i$ of this complex has torsion. That is, there should exist some $i \in \Z$ such that the abelian group $H_i$ has non-zero finite subgroup. Calculate this $H_i$ precisely.
+		\end{itemize}
+			\begin{proof}
+				We want to define the maps $\delta_i$ as homomorphisms of free $\Z$-modules, so therefore every map can be defined as a matrix with coefficients in $\Z$. 
+				\par Because both the image and kernel of a linear map of free $\Z$-modules are free $\Z$-submodules themselves, we want to find two free $\Z$-modules $A, B$ such that their quotient $A/B$ has torsion. This occurs, in the simplest case, when $A= \Z$ and $B = 2\Z$; their quotient is $\Z/2\Z$. A chain complex with this homology group is
+				\[0 \to \Z \to^{\delta_2} \Z \to^\delta_1 \Z \to^{\delta_0} 0\]
+				where $\delta_2(x) = 2x$ and $\delta_1(x) = 0$. This is a chain complex, since $\delta_0\circ \delta_1$ and $\delta_1 \circ \delta_2$ are both the zero maps. The homology groups above $2$ are all $0$, since the higher maps and groups are trivial; as is the group $H_0$, since $\text{ker}(\delta_0) = \text{im}(\delta_1) = \Z$, and the group $H_2$, since $\delta_2$ is an isomorphism and its kernel is trivial. 
+				\par The only nontrivial homology group for this complex is $H_1$: the kernel of $\delta_1$ is the whole group $\Z$, since $\delta_1$ is the zero map, while the image of $\delta_2$ is $2\Z$. Therefore, $H_1 = \Z/2\Z$.
+			\end{proof}
+\end{problem}
+\begin{problem}
+	Let $g \in \Z_{\geq 0}$. Using a simplicial decomposition of the genus $g$ closed $2$-manifold $\Sigma_g$ as in the picture at the start of Section $2.1$ of the textbook, calculate the simplicial homology of this simplicial complex. 	\begin{proof}
+		The picture given in Hatcher is a genus $2$ surface; the general construction is as follows: $1$ zero-simplex, $6g-3$ one-simpices, and $4g-2$ two simplices. The boundary of each one-simplex is $0$, since there is only one zero-simplex, and the boundaries of the two-simplices are defined along the lines of the image - I tried to write out an explicit formula for the boundaries of the two-simplices, but it is a bit too complex. However, the important thing is that the set of boundaries of the two-simplices is a sub-$\Z$-module of the space $C_1 \simeq \Z^{6g-3}$, and that its kernel is the one-dimensional submodule spanned by the sum $A_0 + A_1 + \dots + A_{4g-3}$ of all two-simplices; therefore, its image is a $4g-3$-dimensional sub-$\Z$-module of $\Z^{6g-3}$. The map $\delta_1$ is trivial, since each one-simplex has trivial boundary, so our complex is 
+		\[0 \to \Z^{4g-2} \to^{\delta_2} \Z^{6g-3} \to^{\delta_1} \Z \to 0\]
+		\begin{itemize}
+			\item The kernel of  $\delta_0$ is all of $\Z$, while the image of $\delta_1$ is trivial, so $H_0 \simeq \Z$.
+			\item The kernel of $\delta_1$ is all of $\Z^{6g-3}$, and the image of $\delta_2$ is isomorhic to $\Z^{4g-3}$. The free rank of $\text{ker}(\delta_1)/ \text{im}(\delta_2)$ is therefore $(6g - 3) - (4g - 3) = 2g$; we say without proof that there is no torsion. Thus, the group $H_1$ is isomorphic to $\Z^{2g}$. 
+			\item The kernel of $\delta_2$ is a one-dimensional free $\Z$-module, and the image of $\delta_3$ is trivial, so the homology group $H_2$ is isomorphic to $\Z$. 
+	\end{itemize}
+	\end{proof}
+\end{problem}
+\end{document}

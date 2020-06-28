@@ -1,0 +1,96 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+\setlist{
+	listparindent=\parindent,
+parsep=0pt,}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 4}
+\author{Andrew Tindall\\
+	Algebra II}
+ 
+\maketitle
+\begin{section}{Problems}
+\begin{problem}{1}
+For each of the following, give specific rings $R \subset S$ and explicit ideals in these rings that exhibit the specified relation:
+\begin{enumerate}[label=(\alph*)]
+    \item An ideal $I$ of $R$ such that $I \neq SI \cap R$ - so the contraction of the extension of an ideal $I$ need not equal $I$.
+    \item A prime ideal $P$ of $R$ such that there is no prime ideal $Q$ of $S$ with $P = Q \cap R$
+    \item A maximal ideal $M$ of $S$ such that $M \cap R$ is not maximal in $R$
+    \item A prime ideal $P$ of $R$ whose extension $PS$ to $S$ is not a prime ideal in $S$
+    \item An ideal $J$ of $S$ such that $J \neq (J \cap R)S$ - so the extension of the contraction of an ideal $J$ need not equal $J$.
+\end{enumerate}
+\end{problem}
+\begin{proof}
+\begin{enumerate}[label=(\alph*)]
+    \item Say $R$ is any integral domain, and $S$ is its field of fractions. Then $R \subset S$, and for any nontrivial ideal $I \subset R$ (that is, $I \neq \{0\}$ and $I \neq R$),  the extension $IS$ is equal to $S$; so $IS \cap R = S \cap R = R$. Specific examples abound: take $R = \Z$, $S = \Q$, $I = 2\Z$. Then $IS \cap R = \Z$.
+    \item By the above, say $I$ is any nontrivial prime ideal in an integral domain $R$. Then $I$ cannot be the contraction of any ideal in the field of fractions of $R$, because there are very few ideals in this field to begin with.
+	    \par In fact, if $R \subset S$, and $I \subset R$ is prime, then $I$ is the contraction of a prime ideal $J$ if and only if  $I S \cap R = J$. (The proof I found of this theorem relies on some subtler facts about how localizations behave under homomorphisms).
+    \par For a specific example, again let $R = \Z$, $S = \Q$, and $I = 2\Z$. Then $I \neq J \cap R$ for any ideal $J \subset S$. In particular, no prime lies over $I$.
+    \item Once again, the inclusion of an integral domain into its field of fractions provides an example. If $S$ is the field of fractions of a domain $R$, then $0 \subset S$ is maximal, but $0 \subset R$ is not necessarily so. (It is maximal if and only if $R$ is itself a field). In particular, $0$ is maximal in $\Q$ but not in $\Z$.
+    \item Once again! Let $R$ be any integral domain, $S$ its field of fractions, and $I$ a nonzero prime ideal of $R$. Then $IS = S$, which is not prime. In particular, $2\Z\Q = \Q$.
+    \item Let $R = k[x]$, $S = k[x,y]$, and $J = (x,y)$. Then the contraction of $J$ is $(x) \subset k[x]$, and the extension of this ideal is $(x) \subset k[x,y]$, which is not equal to the original ideal $(x,y)$. Any polynomial in $y$ alone, for instance, is in $(x,y)$ but not in $(x)$.
+\end{enumerate}
+\end{proof}
+\begin{problem}{2}
+	Prove that if $s_1, \dots s_n \in S$ are integral over $R$, then the ring $R[s_1, \dots s_n]$ is a finitely generated $R$-module.
+\end{problem}
+\begin{proof}
+	We induct on $n$ - looking at the chain of inclusions
+	\[R \hookrightarrow R[s_1] \hookrightarrow R[s_1, s_2] \hookrightarrow \dots \hookrightarrow R[s_1, \dots s_n] \hookrightarrow S,\]
+	and the fact that if $s_i$ is integral over $R$ then it is integral over $R[s_1, \dots s_{i-1}]$, we will see inductively that each $R[s_1, \dots s_i]$ is a finitely generated $R[s_1, \dots s_{i-1}]$ module. Then, applying a result from a previous homework, we see that $R[s_1, \dots s_n]$ must be a finitely generated $R$-module.
+	\par Now, the meat of this solution is that, if $s_i \in S$ is integral over $R' \subset S$, then $R'[s_i]$ is a finitely generated $R'$-module. Let $s_i$ be a zero of the monic polynomial 
+	\[f(x) = x^n + \sum_{j= 0}^{n-1}r_jx^j,\]
+	With coefficients $r_i \in R'$. Then $s_i$ satisfies the relation 
+	\[s_i^n = -\sum_{j=0}^{n-1}r_js_i^j.\]
+	We show that the elements $1, s_i, s_i^2, \dots s_i^{n-1}$ generate $R'[s_i]$ as an $R'$-module. Any element $x$ of $R'[s_i]$ may be written as a (possibly nonunique) finite sum
+	$x = \sum_{j = 0}^{m}r_js_i^j$. If the highest term is $s_i^m$, with $m \geq n$, then we may rewrite this term as $r_m(s_i^n)s_i^{m-n}$, which, in the ring $S$, satisfies the relation
+	\[r_m(s_i^n)s_i^{m-n} = r_m \left (\sum_{j = 0}^{n-1}r_js^j\right )s^{m-n}.\]
+	The highest degree of $s_i$ in this term is $m-1$, which is strictly less than $m$, so we have found a new representation of $x$ as
+	\[x = \sum_{j = 0}^{m-1}r_js_i^j.\]
+	Repeating this process, we may continue until we have written $x$ as a sum of terms $r_js_i^j$, with $j$ running from $0$ to $n-1$. Thus, $R'[s_i]$ is generated as an $R'$-module by $\left\{ 1, s_i, \dots s_i^{n-1} \right\}$.
+	\par 	Now, each subring $R[s_1, \dots s_{i-1}, s_i]$ of $S$ can be identified with $(R[s_1, \dots s_{i-1}])[s_i]$. Since $s_i$ is finitely generated over $R$, it is also finitely generated over $R[s_1, \dots s_{i-1}]$, and by the above argument, it is finitely generated as an $R[s_1, \dots s_{i-1}]$-algebra. Therefore we have a chain of subrings of $S$, each of which is finitely generated as a module over the last:
+	\[R \hookrightarrow R[s_i] \hookrightarrow R[s_1, s_2] \hookrightarrow \dots \hookrightarrow R[s_1, \dots s_n].\]
+	By an argument in a previous homework assignment, this implies that $R[s_1, \dots s_n]$ is finitely generated as an $R$-module.	
+\end{proof}
+\end{section}
+\begin{thebibliography}{}
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,93 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem,hyperref,tikz-cd}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+	\title{The Lefschetz Fixed Point Theorem}
+\author{Andrew Tindall\\
+Topology 2}
+ 
+\maketitle
+The Lefschetz Fixed Point Theorem is, in some ways, a broad generalization of the Brouwer Fixed Point Theorem: it offers a sufficient, but not necessary, condition to tell whether a map from a space to itself has a fixed point.
+\begin{section}{Setup}
+	\begin{definition}
+	We recall that the \textbf{trace} of a square matrix is the sum of its diagonal entries: $\text{tr}(m_{ij}) = \sum_{i= 1}^n m_{ii} $. Any linear endomorphism $\varphi: X \to X$ of a free $\Z$-module $X$ of rank $n$, with chosen basis, is determined by a square matrix $[a_{ij}]$. In fact, it is a theorem of linear algebra that the trace is invariant under conjugation - in particular, a change of basis for $X$ - so we can define the trace of an endomorphism $\varphi: X \to X$ to be the trace of its corresponding matrix, for any arbitrary basis of $X$.
+	\[\text{tr}(\varphi) = \text{tr}(a_{ij})\]
+	\par We can generalize this definition to endomorphisms of arbitrary finitely generated abelian groups. Any finitely generated abelian group $A$ can be written uniquely in the form $A \simeq A_{\text{free}} \oplus A_{\text{torsion}}$ - we have
+	\[A / A_{\text{torsion}} \simeq A_{\text{free}}.\]
+	Any endomorphism $\varphi: A \to A$ restricts to an endomorphism $\tilde \varphi: A_{\text{free}} \to A_{\text{free}}$. So, we define the trace of an arbitrary map $\varphi: A \to A$ as
+	\[\text{tr}(\varphi) = \text{tr}(\tilde \varphi).\]
+\end{definition}
+We also want to state the \textit{Simplicial Approximation Theorem}.
+\begin{definition}
+	If $K$ and $L$ are simplicial complexes, then a \textbf{simplicial map} $f: K \to L$ is one which takes each simplex of $K$ to a simplex of $L$ by a linear map which takes vertices to vertices.
+\end{definition}
+\begin{definition}
+	Given some simplicial complex $L$, the \textbf{open star} $\text{st}(\sigma)$ around a simplex $\sigma \subset L$ is the union of the interiors of all simplices in $L$ containing $\sigma$. An open star is an open set, and the union of the open stars around all vertices of $L$ is an open cover of $L$:
+	\[L = \bigcup_{v \in L} \text{st}(v) \]
+	Similarly, the \textbf{ closed star}, $\text{St}(w)$, around a vertex $w$ is the union of all simplices containing that vertex, not just their interiors.
+\end{definition}
+Now, we can state a theorem which will allow us to work with only simplicial maps in the proof of the Lefschetz Fixed Point Theorem, without losing its applicability to any continuous map.
+\begin{theorem}	
+	If $K$ is a finite simplicial complex, and $L$ is an arbitrary simplicial complex, then any map $f: K \to L$ is homotopic to a map $g: K \to L$, which is simplicial with respect to some barycentric subdivision of $f$.
+	\par The proof of this theorem rests on covering the barycentric subdivision of $K$ into small enough simplices, so that the image of the closed star around each vertex of $K$ under $f$ is totally contained within an open star around some vertex of $L$: for each vertex $w$ of $K$, $f(\text{St}(w)) \in \text{st}(v)$, for some vertex $v$ of $L$. This is possible because the process of Barycentric subdivision of $K$ progressively shrinks the diameters of the simplices, so that eventually each \textit{must} be wholly within some open set $f^{-1}(\text{st}(v))$.
+	\par Once this barycentric subdivision has been fixed, the map $g$, which takes each vertex $w$ to the vertex $v$ defined above, can be extended to a simplicial map, which is homotopic to $f$.
+\end{theorem}
+	Now, we can state the Fixed Point Theorem, and outline its proof.
+\end{section}
+\begin{section}{The Fixed Point Theorem}
+	Let $X$ be a finite simplicial complex, and let $f: X \to X$ be a map such that $\tau(f) = 0$, where $\tau(f)$ is the Lefschetz number of $f$, defined as follows:
+	\[\tau(f) = \sum_{n} (-1)^{n} \text{tr}(f_*: H_n(X) \to H_n(x))\]
+	If $\tau(f) \neq 0$, then $f$ has a fixed point.
+	\begin{proof}
+		Suppose that $f$ has no fixed points. We will use this fact to construct a map $g: X \to X$ which is simplicial with respect to some barycentric subdivision of $X$, and so that $g(\sigma) \cap \varphi = \emptyset$ for every $\sigma$ in the subdivision.
+		\par We can choose a metric $d$ on $X$ which restricts to the Euclidean metric on each simplex of $X$. Because $X$ is a finite simplicial complex, it is in particular \textit{compact}, and so we can find some $\varepsilon > 0$ such that $d(x,f(x)) > \varepsilon$ for each $x \in X$. Now, we can find a barycentric subdivision $K$ of $X$ so that the star of each simplex of $L$ has diameter less than $\varepsilon/2$. And, by the Simplicial Approximation Theorem, there is another, finer, subdivision $L$ of $K$, and a simplicial map $g: K \to L$ which is homotopic to $f$. By the actual construction of the map in the Simplical Approximation Theorem, $g$ has the property that $f(\sigma) \subset g(\sigma)$ for each simplex $\sigma$ of $K$. But this means, by combining our assumption that $d(f(x), x) > \varepsilon$ with the construction of $g$ so that the stars of its simplices have diameter less than $\varepsilon/2$, that $g(\sigma) \cap \sigma = \emptyset$ for each simplex $\sigma$ of $K$. We have found the map we were looking for.
+		\par As $g$ is homotopic to $f$, and the formula for $\tau$ depends only on the induced maps $f_*$, which are invariant for homotopic maps, we know that $\tau(g) = \tau(f)$. Now, since $g$ is simplicial, it takes the $n$-skeleton $K^n$ to the $n$-skeleton $L^n$, which contains $K^n$, so it takes $K^n$ to itself, and induces a chain map $g_*$ of the chain complex $\left\{ H_n(K^n, K^{n-1}) \right\}$ to itself. The important part here is that the maps $g_*$ are endomorphisms of the \textit{free} $\Z$-modules $H_n(K^n, K^{n-1}$, so they can be represented by matrices.
+			\par Now, if we look at the diagonal elements of the matrix of $g_*$, they correspond to simplices $\sigma$ of $K$ such that $\sigma \subset g(\sigma)$. But by construction, there are none of these simplices! So, $\text{tr}(g_*) = 0$ for each $g_*$, and the whole trace formula $\tau(g)$ must be $0$. So, $\tau(f) = 0$, and any map $X \to X$ with no fixed points has $\tau(f) = 0$. By the contrapositive, any map with $\tau(f) \neq 0$ must have a fixed point.
+	\end{proof}
+	This theorem extends to any retract of a finite simplicial complex. Since any compact, locally contractible space that can be embedded in some $\R^n$ is a retract of a finite simplicial complex, we can apply the Lefschetz Fixed Point Theorem to a large class of spaces.
+\end{section}
+\begin{section}{Examples}
+	We can illustrate the application of this formula with a few examples. First, take $X$ to be the genus $3$ surface, as illustrated, and let $f: X \to X$ be the map which rotates $X$ around the axis of the middle hole. This map has no fixed points, so we should calculate $\text{tr}(f) = 0$.
+	Since $X$ is path-connected, the map $f_*$ is simply the identity on the one-dimensional space $H_0(X) \simeq \Z$, so it has trace $1$. The map $f_*: H_1(X) \to H_1(X)$ is slightly more complex. The group $H_1(X)$ is generated by the six loops $\alpha_i$, and $\beta_i$. The loops $\alpha_1$ and $\alpha_3$ are interchanged, and so are $\beta_1$ and $\beta_3$, while $\beta_2$ is taken to itself, and $\alpha_2$ is taken to the loop $\alpha_2'$, which is in fact homologous to $\alpha_2$. So, the diagonal of the map $f_*: H_1(X) \to H_1(X)$ has two $1$s, and the trace of the map is $2$.
+	\par Finally, we have the group $H_2(X) \simeq \Z$. In fact, $f_*$ is the identity on this group, which can be proven by removing one point $x$ of $X$ and retracting both $X \backslash \left\{ x \right\}$  and $X \backslash \left\{ f(x) \right\}$ to the one-skeleton of $X$, which, along with the long exact sequence for the triple $(X, X \backslash \left\{ x \right\}, X^1)$ allows us to state that the following diagram commutes:
+	\[\begin{tikzcd}&H_2(X) \arrow[r, "f_*"] \arrow[d] &H_2(X) \arrow[d]\\& H_x(X, X \backslash \left\{ x \right\}) \arrow[r, "f_*"] & H_x(X, X \backslash \left\{ x \right\})\end{tikzcd}\]
+	And further that the two vertical maps are isomorphisms. The conclusion is that $f_* : H_2(X) \to H_2(X)$ is the identity map $\Z \to \Z$, and so 
+\end{section}<++>
+\end{document}

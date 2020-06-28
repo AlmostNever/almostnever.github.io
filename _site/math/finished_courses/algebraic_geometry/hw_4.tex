@@ -1,0 +1,123 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem,hyperref,tikz-cd}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 4}
+\author{Andrew Tindall\\ Algebraic Geometry}
+ 
+\maketitle
+\begin{problem}{1}
+	Let $C \subset \mathbb A^2$ be the curve defined by the irreducible polynomial 
+	\[x^6 + y^6 - xy = 0\]
+		\begin{enumerate}
+			\item Show that $C$ is not a normal variety.
+				\begin{proof}
+					A normal variety is one in which the local ring $\mathcal{O}_{p, C}$ is integrally closed in its field of fractions, for each point $p \in C$. Therefore, to show that $C$ is not normal, we want to find one point $p$ whose local ring is not integrally closed. We would expect this to be the nonsingular point $o = (0,0)$, and in fact we will see that this is the case.
+					\par The local ring $R$ at  $o$ is the localization of the coordinate ring of $C$ at the ideal $\langle x, y\rangle$:
+					\[R = (k[x,y]/ \langle x^6 + y^6 - xy\rangle)_{\langle x, y\rangle}.\]
+					Thus, in $R$, the condition $x^6 + y^6 - xy$ holds, and all elements of $k[x,y]/ \langle x^6 + y^6 - xy\rangle$ which are not in $\langle x, y\rangle$, i.e. which have a nonzero constant term, are invertible. 
+					\par We want to find an element of the field of fractions of $R$ which is integral over $R$, but is not an element of $R$ itself. The element $xy/(x^3 - y^3)$ is not in $R$, since $x^3 - y^3$ is not invertible in $R$, but we see that
+					\begin{align*}
+						\left( \frac{xy}{x^3 - y^3} \right)^2 &= \frac{x^2y^2}{x^6 + y^6 - x^3y^3}\\
+						&= \frac{x^2y^2}{-xy - x^3y^3}\\
+						&= - \frac{xy}{x^2y^2 + 1}
+					\end{align*}
+					The element $x^2y^2 + 1$ is not in $\langle x, y\rangle$, so it is invertible in $R$; therefore the element $xy / (x^3 - y^3)$ satisfies the monic polynomial $t^2 + \frac{xy}{x^2y^2 +1} \in R[t]$, even though it is not in $R$. So, $R$ is not integrally closed, and $C$ is not a normal variety.
+				\end{proof}
+			\item Show that the maximal ideal of the origin $o \in C$ is not a principal ideal.
+				\begin{proof}
+					We want to see that the ideal $\langle x, y\rangle$ is not principal in $k[x,y]/ \langle x^6 + y^6 - xy\rangle$. For the sake of contradiction, assume that it is: then there is some $g \in k[x,y] / \langle x^6 + y^6 - xy\rangle$  such that $\langle x, y\rangle = \langle g\rangle$. This implies that $x = fg$ for some $f \in k[x,y] / \langle x^6 + y^6 - xy\rangle$. 
+					\par Lifting to the ring $k[x,y]$, there must be some $h \in k[x,y]$ such that
+					\begin{align*}
+						x = fg + h(x^6 + y^6 - xy)\\
+					\end{align*}
+					Because the degree of $x^6 + y^6 - xy$ is greater than the degree of $x$, it must be true that $h = 0$. So, $x = fg$ holds in $k[x,y]$. 
+					\par Up to associates, there are only two factors of $x$ in $k[x,y]$; $x$ itself, and $1$. So, either $\langle x,y \rangle = \langle x\rangle$ or $\langle x, y\rangle = \langle 1\rangle$. 
+					\par If the first were true, then $y = f'x$ must hold for some $f' \in k[x,y]/ \langle x^6 + y^6 - xy\rangle$; lifting to $k[x,y]$, there must be some $h \in k[x,y]$ such that 
+					\[ y = f'x + h'(x^6 + y^6 - xy).\]
+					Again, by degree, $h'$ must be zero. But then $x$ would be a factor of $y$ in $k[x,y]$, which does not hold.
+					\par On the other hand, if $\langle x, y\rangle = \langle 1\rangle$, then there would be some $a, b \in k[x,y] / \langle x^6 + y^6 - xy\rangle$ such that $ax + by = 1$; lifting to $k[x,y]$, there would be some $c \in k[x,y]$ such that
+					\[1 = ax + by + c(x^6 + y^6 - xy).\]
+					The right side must have zero constant term, while the left has constant term $1$, so this relation cannot hold. So, $\langle x, y\rangle$ cannot be principal.
+				\end{proof}
+			\item Let $\varphi: \text{Bl}_o(\mathbb A^2) \to \mathbb A^2$ be the blow-up of $\mathbb A^2$ at the origin $o$. Let $\widetilde C$ be the strict transform of $C$, i.e. $\widetilde C = \overline{\varphi^{-1}(C \backslash \left\{ o \right\})}$. Describe the points in $\widetilde C$ which lie above $o$.
+				\begin{proof}
+					When graphing $C$ over $\mathbb R^2$, we note that the singular point at the origin is a double point, with a vertical and a horizontal tangent. Therefore we expect that blowing up $C$ at the origin will give two points, and indeed it does.
+					\par We recall that the blowup of $\mathbb A^2$ at the origin can be described by 
+					\[\left\{ (x,\ell) \in \mathbb A^2 \times \mathbb P^1 \;\mid\; x \in \ell \right\},\]
+					where $\mathbb P^1$ has been identified with lines through the origin in $\mathbb A^2$, and $\varphi$ is the projection map $(x,\ell )\mapsto x$. The inverse image $\varphi^{-1}(C \backslash 0)$ is the set of points
+					\[\left\{ ( (x,y), \ell) \;\mid\; (x,y) \in \ell, (x,y) \neq 0, x^6 + y^6 - xy = 0 \right\}.\]
+					\par Using projective coordinates $\ell = [s:t]$,
+					\[\varphi^{-1}(C \backslash \left\{ 0 \right\}) = \left\{ ( (x,y), [s:t]) \;\mid\; xt - ys = 0, (x,y) \neq 0, x^6 + y^6 - xy = 0 \right\}.  \]
+					Now, we can take the intersection with an affine chart. Using $\left\{ [1:t] \;\mid\; t \in k \right\} \simeq \mathbb A^1$, we have $\overline{\mathbb A^1} = \mathbb P^1$, so passing to this chart does not affect the closure:
+					\begin{align*}
+						\overline{\varphi^{-1}(C \backslash \left\{ 0 \right\})} &= \overline{ \varphi^{-1}(C \backslash \left\{ 0 \right\}) \cap \mathbb A^2 \times \mathbb A^1}\\
+						&= \overline{ \left\{ ( (x,y), [1:t]) \; \mid \; xt - y = 0, (x,y) \neq 0, x^6 + y^6 - xy = 0\right \}}
+					\end{align*}
+					Now, we can use the first identity to rewrite $y = xt$:
+					\[\overline{\varphi^{-1}(C \backslash \left\{ 0 \right\})} = \overline { \left\{ (x, xt), [1:t]\;\mid \; (x,xt) \neq 0, x^6 + t^6x^6 -tx^2 = 0 \right\}}\]
+					\par Since we have $x \neq 0$ on the domain of the variety, we can divide by $x^2$ in the defining polynomial:
+					\[\overline{\varphi^{-1}(C \backslash \left\{ 0 \right\})} = \overline { \left\{ (x, xt t)\; \mid \; x \neq 0,  x^4 + t^6x^4 - t = 0 \right\}}.\]
+					Closing this variety in $\mathbb A \times \mathbb A$ gives
+					\[\overline{\varphi^{-1}(C \backslash \left\{ 0 \right\})} = \overline { \left\{ (x, xt, t)\; \mid \;  x^4 + t^6x^4 - t = 0 \right\}}\]
+					Now, the right side is the closure of an affine variety on a chart of $\mathbb A^2 \times \mathbb P$. By symmetry of the polynomial in $x$ and $y$, we know that the intersection of ${\varphi^{-1}(C \backslash \left\{ 0 \right\})}$ with the other chart of $\mathbb A^2 \times \mathbb P$ is
+					\[ \left\{ (ys, s, s) \;\mid\; (ys, y) \neq 0, s^6y^4 +y^4 - s = 0 \right\},\]
+					and so the closure of $\varphi^{-1}(C \backslash \left\{ 0 \right\})$ is the union of the closures of its intersection with these two charts:
+					\[\overline\left\{ \varphi^{-1}(C \backslash \left\{ 0 \right\}) \right\} = \left\{ (x,xt), [1,t] \;\mid\; x^4 + t^6 x^4 - t = 0 \right\} \cup \left\{ (ys, y), [s,1] \;\mid\; s^6^4 + y^4 - s = 0 \right\}.\]
+					Each of the two sets on the right contains a distinct point over $(x,y) = (0,0)$, one corresponding to $x = t = 0$, and the other to $y = s = 0$. These two points lie over the origin in the blowup of $C$, and correspond to the two tangent lines to $C$ at $(0,0)$.
+				\end{proof}
+	\end{enumerate}
+\end{problem}
+\begin{problem}{2}
+	Consider the circle $C = V(x^2 + y^2 -1)$ and the line $L = V(y-1)$. Consider the point $p = (0,1)$ which lies on both $C$ and $L$ and let $R = \mathcal O_{p, C}$ and $R' = \mathcal O_{p, L}$ be local rings of $C$ and $L$ at $p$ respectively. Verify the Cohen Structure Theorem directly by showing that the completions $\hat R$ and $\hat R'$ are both isomorphic (as $k$-algebras) to formal power series ring in one variable.
+	\begin{proof}
+		<++>
+	\end{proof}
+\end{problem}
+\begin{problem}{3}
+	For simplicity let $k = \mathbb C$. Consider the affine curves $C$ below (in $\mathbb A^2$) with given points on them. 
+	\begin{enumerate}
+		\item If $p$ is a non-singular point, verify directly that the maximal ideal in the corresponding local ring is principal by finding a single generator for it.
+			\begin{proof}
+				<++>
+			\end{proof}
+		\item If $p$ is a singular point, verify directly that the corresponding local ring is not integrally closed.
+	\end{enumerate}
+\end{problem}
+\end{document}

@@ -1,0 +1,71 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 3}
+\author{Andrew Tindall\\
+Analysis I}
+ 
+\maketitle
+\begin{problem}{1}
+	Prove that every metric space is paracompact; that is, every open covering admits a locally finite refinement.
+\end{problem}
+\begin{proof}
+	This was proven first by A.H. Stone in 1948, in \cite{stone}. The following proof follows a 2010 proof by Akhil Mathew, from \cite{mathew}.
+	\par Let $(E, d)$ be a metric space, and let $\left\{ U_i \right\}_{i \in I}$ be an open covering of $E$ in the metric topology. We show that there is a covering $\left\{ V_j \right\}_{j \in J}$, such that 
+	\begin{itemize}
+		\item $\bigcup_{j \in J} V_j = E$
+		\item For each $j \in J$, there is some $i \in I$ such that $V_j \subset U_i$
+		\item For each $x \in E$, the collection of all $V_j$ such that $x \in V_j$ is finite.
+	\end{itemize}
+	Our open cover $\left\{ U_i \right\}_{i\in I}$ is not necessarily countable, as our metric space is not necessarily second countable (on a metric space, this is equivalent with being separable). However, by taking the axiom of choice, we may assume that the set $I$ is well-ordered. 
+	\par Now, for each $U_i$ we define a sequence of sets $V_i^n = \left\{ x \in U_i\mid d(x, E \bs U_i) \geq 2^-n \right\}$. A point in $V_i^n$ is a point of $U_i$ which is not too close to the boundary of $U_i$. Taking the union of $V_i^n$ over all $n \in \N$ gives us $U_i$ again. 
+	\par Now, for each $i \in I$, define the set
+	\[ W_i^n = V_i^n - \bigcup_{j < i}V_j^{n+1}\]
+	This gets rid of redundancies while still covering $E$: For each point $x$, there is some $U_i$ which contains $x$. Because $U_i$ is open, the distance from $x$ to the exterior of $U_i$ must be positive, so it must be greater than some $2^{-n}$. Therefore, $x$ is contained in $V_i^m$ for all $m \geq n$, and not in any $V_j^{m+1}$ for any $j < i$. Therefore, $x \in W_i^m$ for all $m \geq n$. It is also not in any $W_k^m$ for $k > i$, $m \geq n$. 
+	\par However, the $W_i^m$ are not necessarily open. We can take a small neighborhood of each; 
+	\[ Z_i^n = \left\{ x \in E \mid d(x, W_i^{n}) < 2^{-n-3} \right\} \]
+	These are open sets, and like the $W_i^n$s, each $x$ is contained in only one $Z_i^n$ for large enough $n$. Further, because the radius $2^{-n-3}$ around $W_i^n$ is strictly smaller than $2^{-n}$, each $Z_i^n$ is contained in $U_i$, so the collection $\left\{ Z_i^n \right\}_{i\in I}_{n=1}^\infty$ is a refinement of $\left\{ U_i \right\}$.
+
+\end{proof}
+
+\begin{thebibliography}{}
+	\bibitem{stone}{Stone, A.H. Paracompactness and Product Spaces. Bulletin of the AMS, Vol 54, Number 10, 1948.}
+	\bibitem{mathew}{Mathew, Akhil. A Metric Space is Paracompact. Climbing Mount Bourbaki https://amathew.wordpress.com/2010/08/19/a-metric-space-is-paracompact/  August 19, 2010.}
+\end{thebibliography}
+\end{document}

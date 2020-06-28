@@ -1,0 +1,208 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 6}
+\author{Andrew Tindall\\
+Analysis I}
+ 
+\maketitle
+\begin{problem}{1}
+	Let $\left\{ f_n \right\}_{n=1}^\infty$ be a sequence of $C^1$ maps from an open subset $U$ of a Banach space $E$ into a Banach space $F$. Assume that $\left\{ f_n \right\}$ converges pointwise to a map $f: U \to F$	and that the sequence of derivatives $\left\{ f'_n \right\}$ converges uniformly to a mapping $g: U \to \mathcal{L}(E,F)$. Prove that $f$ is $C^1$ and that $f' = g$.
+	\begin{proof}
+		First, we see that $g$ is continuous, from the uniform limit theorem: the uniform limit of any sequence of continuous functions, such as the sequence $\left\{ f'_n \right\}$, is itself continuous. We now show that $g = f'$. By the definition of the derivative, this is equivalent to showing that, for any point $x \in U$, the following limit converges and is equal to $0$:
+		\[\lim_{\left \lVert { h } \right \lVert  \to 0}\frac{f(x + h) - f(x) - g(x)(h)}{\left \lVert { h } \right \lVert } = 0\]
+		By the limit definitions of $f$ and $g$, this is equal to 
+		\[ \lim_{\left \lVert {  h } \right \lVert  \to 0} \frac{\lim_{m \to \infty}f_m(x + h) - \lim_{n \to \infty}f_n(x) - \lim_{k \to \infty} f_k'(x)(h)}{\left \lVert {  h } \right \lVert }.\]
+		Because all three limits exist, we may take the simultaneous limit over all three of $m, n, k$:
+		\[ \lim_{\left \lVert { h } \right \lVert  \to 0} \frac{\lim_{m,n,k \to \infty}\left( f_m(x + h) - f_n(x) - f_k'(h) \right)}{\left \lVert { h } \right \lVert }\]
+		Finally, because the space is Banach, convergence to $0$ is equivalent to convergence in norm to $0$, so we need only for the norm of this limit to go to $0$. By continuity of the norm and completeness of the space, we can take $\left \lVert {  \cdot } \right \lVert $ inside the limits. So, we want for the following limit to exist and be equal to $0$:
+		\[ \lim_{\left \lVert { h } \right \lVert \to 0} \frac{\lim_{m,n,k \to \infty} \left \lVert { f_m(x + h) - f_n(x) - f_k'(h) } \right \lVert }{\left \lVert { h } \right \lVert }.\]
+		Let $\varepsilon > 0$. By convergence of $\left\{ f_i \right\}$ at $x + h$, we can find some $N_1$ such that, for $n, m \geq N_1$,
+		\[\left \lVert { f_m(x + h) - f_n(x + h) } \right \lVert < \varepsilon\left \lVert { h } \right \lVert /3.\]
+		Here $h$ was fixed and $\left \lVert {  h } \right \lVert $ was a constant. By convergence of $f_k'$, there exists some $N_2$ such that, for $n, k \geq N_2$,
+		\[ \left \lVert { f_k'(x) - f_n'(x) } \right \lVert < \varepsilon/3,\]
+		which implies that 
+		\[\left \lVert { f_k'(x)(h) - f_n'(x)(h) } \right \lVert < \varepsilon \left \lVert { h } \right \lVert / 3. \]
+		Finally, by the definition of $f_n'$, there exists some $N_3$ such that, for $n \geq N_3$,
+		\[\left \lVert { f_n(x+h) - f_n(x) - f_n'(x)(h) } \right \lVert < \varepsilon \left \lVert { h } \right \lVert / 3.\]
+		Let $N = \max\left\{ N_1, N_2, N_3 \right\}$. Then, for $m,n,k \geq N$,
+		\begin{align*}
+			&\,\left \lVert { f_m(x+h) - f_n(x) - f_k'(x)(h) } \right \lVert\\
+			&= \left \lVert { f_m(x + h) - f_n(x + h) + f_n(x+h) - f_n(x) - f_n'(x)(h) + f_n'(x)(h) - f_k'(x)(h) } \right \lVert \\
+			&\leq \left \lVert { f_m(x+h) - f_n(x+h) } \right \lVert + \left \lVert { f_n(x+h) - f_n(x) + f_n'(x)(h) } \right \lVert + \left \lVert { f_k'(x)(h) - f_n'(x)(h) } \right \lVert \\
+			&< \varepsilon \left \lVert { h } \right \lVert /3 + \varepsilon \left \lVert { h } \right \lVert / 3 + \varepsilon\left \lVert { h } \right \lVert /3\\
+			&= \varepsilon \left \lVert { h } \right \lVert .
+		\end{align*}
+		Therefore, we see that
+		\begin{align*}
+			\lim_{\left \lVert { h } \right \lVert \to 0} \frac{\lim_{m,n,k \to \infty} \left \lVert { f_m(x+h) - f_n(x) - f_k'(x)(h) } \right \lVert }{\left \lVert { h } \right \lVert } &\leq \lim_{\left \lVert { h } \right \lVert \to 0} \frac{\varepsilon\left \lVert { h } \right \lVert }{\left \lVert { h } \right \lVert }\\
+			&= \varepsilon
+		\end{align*}
+		Because $\varepsilon$ was arbitrary, we see that the original limit does indeed go to $0$, showing that $g$ is the derivative of $f$ everywhere. Because $g$ is continuous, this implies that $f$ is $C^1$.
+		\par Now, I notice that I have not used the uniform convergence of $f_k'$ to $g$, only its pointwise convergence. I figure that at one step I assumed something converged too easily, or that limits commuted when they didn't.
+	\end{proof}
+\end{problem}
+\begin{problem}{2}
+    Let $f \in \mathcal{C}^k(U,F)$, where $U$ is an open subset of a Banach space $E$ and $F$ is another Banach space. Let $x_0 \in U$ and $v \in E$ be such that $x_0 + tv \in U$, for every $t \in [0,1]$. Prove the Taylor's formula:
+    \[
+    f(x_0 + v) = f(x_0) + \left ( \sum_{i = 1}^k \frac{1}{i!} D^i f(x_0)(v, \dots , v) \right ) + R_k(x_0, v)
+    \]\
+    where $\lVert R_k(x_0, v) \rVert / \lVert v \rVert^k \to 0$ as $v \to 0$.
+    \begin{proof}
+	    \textit{incomplete} 
+    \end{proof}
+\end{problem}
+\begin{problem}{3}
+Let $E$ be a Banach space. Show that the mapping $\text{Inv}: \mathcal{GL}(E,E) \to \mathcal{GL}(E,E)$ given by $\text{Inv}(T) = T^{-1}$ is differentiable and find its derivative.
+\begin{proof}
+	\par 	First, we prove the following lemma: for any continuous (i.e. bounded) map $A \in \mathcal{GL}(E,E)$, the map $A^* : L(E,E) \to L(E,E)$ defined by $B \mapsto AB$ is also continuous. Because $A^*$ is linear (it takes 0 to 0, distributes over sums, and commutes with scalars), it suffices to prove boundedness; we show that $\left \lVert { A^* } \right \lVert \leq \left \lVert { A } \right \lVert $.
+	\par Let $\left \lVert { B } \right \lVert = 1$. Then
+	\begin{align*}
+		\left \lVert { A^*B } \right \lVert &= \sup\left\{ \left \lVert { ABx } \right \lVert ; x \in E \right\}\\
+		&\leq \left \lVert { A } \right \lVert \sup\left\{ \left \lVert { Bx } \right \lVert ; x \in E \right\}\\
+		&= \left \lVert { A } \right \lVert 
+	\end{align*}
+	Therefore, the function $A^*: \mathcal{GL}(L(E,E), L(E,E))$ is continuous.
+\par We show that the derivative of $\text{Inv}$ at any point $T \in \mathcal{GL}(E,E)$ is the map $D\text{Inv}(T): L(E,E) \to L(E,E)$ given by sending $B$ to $-T^{-1}BT^{-1}$:
+\begin{align*}
+    &\;\lim_{\lVert B \rVert \to 0} \frac{\text{Inv}(T + B) - \text{Inv}(T) + T^{-1}BT^{-1}}{\lVert B \rVert} \\
+    &= \lim_{\lVert B \rVert \to 0} \frac{(T + B)^{-1} - T^{-1} + T^{-1}BT^{-1}}{\lVert B \rVert}\\
+    &= \lim_{\lVert B \rVert \to 0} \frac{(T + B)^{-1}I - IT^{-1} + T^{-1}BT^{-1}}{\lVert B \rVert}\\
+    &= \lim_{\lVert B \rVert \to 0} \frac{(T + B)^{-1}(TT^{-1}) - ((T+B)^{-1}(T+B))T^{-1} + T^{-1}BT^{-1}}{\lVert B \rVert}\\
+    &= \lim_{\lVert B \rVert \to 0} \frac{(T + B)^{-1}\left [(TT^{-1}) - (T+B)T^{-1} \right ] + T^{-1}BT^{-1}}{\lVert B \rVert}\\
+    &= \lim_{\lVert B \rVert \to 0} \frac{(T + B)^{-1} [(T - (T+B)]T^{-1}  + T^{-1}BT^{-1}}{\lVert B \rVert}\\
+    &= \lim_{\lVert B \rVert \to 0} \frac{(T + B)^{-1} [-B]T^{-1}  + T^{-1}BT^{-1}}{\lVert B \rVert}\\
+    &= \lim_{\lVert B \rVert \to 0} \frac{((T + B)^{-1} [-B]  + T^{-1}B)T^{-1}}{\lVert B \rVert}\\
+    &= \lim_{\lVert B \rVert \to 0} \frac{(T^{-1} - (T + B)^{-1})BT^{-1}}{\lVert B \rVert}\\
+    &= \left ( \lim_{\lVert B \rVert \to 0} \frac{(T^{-1} - (T + B)^{-1})B}{\lVert B \rVert} \right )T^{-1}
+    \end{align*}
+    The boundedness of the function ${T^{-1}}^*: B \mapsto T^{-1}B$  says precisely that the last limit goes to $0$. Therefore the defining limit of the derivative of $\text{Inv}$ at $T$ goes to zero, so $D\text{Inv}(T)$ is the function $B \mapsto T^{-1}BT^{-1}$. This function is continuous in both $T$ and $B$, so $\text{Inv}$ is $C^1$.
+\end{proof}
+\end{problem}
+\begin{problem}{4}
+Let $U$ be an open subset of a Banach space $E$. Given a function $g \in C^1(U, \R)$, define the mapping
+\[
+S_g : C([0,1], U) \longrightarrow \R, \quad S_g(f) = \int_0^1 g(f(s)) ds
+\]
+Show that $S_g$ is $C^1$ and find its derivative.
+\begin{proof}
+First, to find what the derivative of $S_g$ should be, we do some infinitesimal perturbation and see what happens. Let $f, v \in C([0,1],U)$, $ \delta \in \R$, and assume $\delta^2 \approx 0$. We want to see what the value of $S_g(f + \delta v) - S_g(f)$ is, to a first-order approximation. We write $R_2(\delta)$ for a term which includes a factor of $\delta^2$.
+\begin{align*}
+    S_g(f + \delta v) - S_g(f) &= \int_0^1 g(f(s) + \delta v(s)) ds - \int_0^1 g(f(s)) ds\\
+    &= \int_0^1 \left ( g(f(s)) + \delta Dg(f(s))(v(s)) + R_2(\delta) \right ) ds - \int_0^1 g(f(s)) ds\\
+    &= \delta \int_0^1 Dg(f(s))( v(s)) ds + R_2(\delta)\\
+    &\approx \delta \int_0^1 Dg(f(s))( v(s)) ds
+\end{align*}
+ So, we expect the derivative of $S_g$ to be the map $DS_g : C([0,1], U) \to C(C([0,1], U), \R)$, defined by 
+ \[
+ DS_g(f)(v) = \int_0^1 Dg(f(s))(v(s)) ds
+ \]
+ We first show that this function is continuous in $f$ and linear in $v$.
+ \par Fixing $f$, $DS_g(f)(v)$ is linear in $v$ by virtue of the facts that $Dg(f(s))$ is linear, and that the integral operator is linear. We can see that the axioms of linearity hold:
+ \begin{itemize}
+	 \item $DS_g(f)(\alpha x) = \alpha DS_g(f)(x)$: 
+		 \begin{align*}
+			 DS_g(f)(\alpha x) &= \int_0^1 Dg(f(s))(\alpha x(s)) ds\\
+			 &= \int_0^1 \alpha Dg(f(s))(x(s))ds\\
+			 &= \alpha \int_0^1 Dg(f(s))(x(s))ds\\
+			 &= \alpha Ds_g(f)(x)
+		 \end{align*}
+	 \item $DS_g(f)(x + y) = DS_g(f)(x) + DS_g(f)(y)$:
+		 \begin{align*}
+			 DS_g(f)(x + y) &= \int_0^1 Dg(f(s))(x(s) + y(s))ds\\
+			 &= \int_0^1 (Dg(f(s))(x(s)) + Dg(f(s))(y(s)))ds\\
+			 &= \int_0^1 Dg(f(s))(x(s))ds + \int_0^1 Dg(f(s))(y(s))ds\\
+			 &= DS_g(f)(x) + DS_g(f)(y)
+		 \end{align*}
+		 
+ \end{itemize}\par Therefore, the function $DS_g(f)$ is a linear map. 
+ \par Now, we show that $DS_g(f)$ is continuous in $f$. Let $f_n \to f$ as $n \to \infty$. We want to see that $DS_g(f_n) \to DS_g(f)$. As we are working in Banach spaces, we can equivalently check that $\lVert DS_g(f - f_n) \rVert \to 0$. Let $v$ be an arbitrary element of $C([0,1], U)$ with norm $1$. Because $Dg$ is continuous, and therefore bounded on $C([0,1],U)$, we see:
+ \begin{align*}
+	 \lim_{n\to\infty} \lVert DS_g(f - f_n)(v)\rVert &= \lim_{n \to \infty } \lVert \int_0^1 Dg(f(s) - f_n(s))(v(s))ds \rVert\\
+	 &\leq \lim_{n\to\infty}\int_0^1 \left \lVert { Dg(f(s) - f_n(s))(v(s)) } \right \lVert ds\\
+	 &\leq \lim_{n\to\infty}\int_0^1 \left \lVert { Dg(f(s) - f_n(s)) } \right \lVert  \left \lVert { v(s) } \right \lVert ds\\
+	 &\leq \lim_{n\to\infty} \int_0^1 \left \lVert { Dg } \right \lVert  \left \lVert { f(s) - f_n(s) } \right \lVert ds\\
+	 &\leq \lim_{n\to\infty}\left \lVert { Dg } \right \lVert\cdot \sup\{ \left \lVert { f(s) - f_n(s) } \right \lVert ; s \in [0,1] \}\\
+	 &= 0
+ \end{align*} 
+ So, $DS_g$ is continuous. Therefore, $S_g$ is continuously differentiable, and its derivative is $DS_g$.
+\end{proof}
+\end{problem}
+\begin{problem}{5}
+Let $M$ be some $\sigma$-algebra of subsets of $X$, let $N$ be some $\sigma$-algebra of subsets of $Y$. Given is a function $f: X \to Y$. Which of the following families is a $\sigma$-algebra? Give a proof or a counterexample.
+\begin{enumerate}[label=\alph*)]
+    \item $\{B \subset Y; f^{-1}(B) \in M\}$,
+    \item $\{f(A); A \in M\}$
+    \item $\{A \subset X; f(A) \in N\}$,
+    \item $\{f^{-1}(B); B \in N\}$
+\end{enumerate}
+\begin{proof}
+	The three axioms of a $\sigma$-algebra $\Omega$ on a set $X$ that we use are:
+	\begin{itemize}
+		\item $\emptyset \in \Omega$
+		\item $X \in \Omega$
+		\item $\Omega$ is closed under countable unions
+	\end{itemize}
+\begin{enumerate}[label=\alph*)]
+\item This is a $\sigma$-algebra.
+	    \begin{itemize}
+		    \item It must contain the empty set $\emptyset_Y \subset Y$, because $\emptyset_X \subset X$  must lie in $M$, as $M$ is a $\sigma$-algebra, and $\emptyset_X = f^{-1}(\emptyset_Y)$.
+		    \item It also contains $Y$, because $f^{-1}(Y) = X,$, and $X \in M$, as $M$ is a $\sigma$-algebra.
+		    \item It is closed under countable unions, because the inverse-image map respects unions: if 	$f^{-1}(A_i) \in M$ for all $i$ in some countable indexing set $I$, then 
+			    \begin{align*}
+				    f^{-1}\left( \bigcup_i A_i \right) &= \bigcup_i f^{-1}(A_i),
+			    \end{align*}
+			    which is in $M$ because $M$ is closed under countable unions.
+		    \end{itemize}
+		    \item This is not a $\sigma$-algebra, because it might fail to contain the whole set $Y$. This occurs if and only if $f$ is not surjective; for instance, the function $x \mapsto x^2$, $\R \to \R$, does not generate a $\sigma$-algebra on $\R$, because each set in its image is contained in $[0, \infty)$.
+			    \par If $f$ is surjective, then this is a $\sigma$-algebra, as $\emptyset = f(\emptyset), Y = f(X)$, and $\bigcup f(A_i) = f\left( \bigcup A_i \right)$.
+		    \item This is not a $\sigma$-algebra, as it might not contain the whole set $X$; this occurs if and only if $f(X) \notin N$. For instance, if $N$ is the trivial $\sigma$-algebra $\left\{ \empty, \R \right\}$ on $R$, and $f$ is again $x \mapsto x^2$, then $f(X) = [0, \infty)$, which is not in $N$.
+		    \item This is a $\sigma$-algebra. \begin{itemize}
+		    \item It contains $\emptyset$, because $\emptyset = f^{-1}(\emptyset)$, and $\emptyset \in N$.
+		    \item It contains $X$, because $X = f^{-1}(Y)$, and $Y \in N$.
+		    \item It is closed under countable unions, because $\bigcup_i f^{-1}(A_i) = f^{-1}\left( \bigcup_i A_i \right)$. \end{itemize}
+		    
+\end{enumerate}
+\par We conclude that the inverse image functor is more well-behaved than the direct image functor, as usual.
+\end{proof}
+\end{problem}
+\begin{thebibliography}{}
+\bibitem{lax}{Lax, P. Linear Algebra. Wiley, 1997.}
+\end{thebibliography}
+\end{document}

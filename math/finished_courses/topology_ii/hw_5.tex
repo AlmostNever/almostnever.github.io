@@ -1,0 +1,88 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem, mathabx, mathtools}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 3}
+\author{Andrew Tindall\\
+Topology II}
+ 
+\maketitle
+\begin{problem}{1}
+    Let $n \in \Z_{\geq 1}$. Prove that the natural map $\rho:S^n \to \R\mathbb P^n$ discussed in class is a covering map. 
+    \begin{proof}
+	    Recall that the map is defined by taking $(x_0, \dots, x_n)$ to $[x_0:\cdots :x_n]$. This map is $2-to-1$; for example the preimage of the point
+	     \[ x = [x_0 : x_1 : \dots : x_n]\] is the pair of points
+         \[\left\{ \pm \langle\frac{x_0}{m_x}, \dots , \frac{x_n}{m_x}\rangle \right\},\]
+         where $m_x = \sqrt{x_0^2+\cdots+x_n^2}$ is the magnitude of the vector $\langle x_0, \dots , x_n\rangle$ chosen to represent $x$. 
+         \par We show that this map is a covering map. First of all, it is a local homeomorphism: it is locally $1$-to-$1$, as the preimage of any point is a pair of separated points; and it has a continuous local inverse near any point. This can be seen by taking a point $\langle y_0, \dots , y_n\rangle \in S^n$: $y$ must have some nonzero component, say $y_i$. Let $\sigma(y_i) = \frac{y_i}{\left \lvert { y_i } \right \lvert }$ be the sign of $y_i$. The function 
+         \[\varphi: [x_0:\dots x_n] \mapsto (\sigma(x_i)\sigma(y_i))\langle x_0, \dots , x_n\rangle\]
+         is a continuous function on the open neighborhood $U_i = \left\{ x \mid x_i \neq 0 \right\}$ of $\rho(y)$, and is a right-inverse to $\rho$, as $\rho \circ \varphi \equiv \text{Id}\lvert_{U_i}$.
+ \par Finally, we see that each point has an open neighborhood which is evenly covered by $\rho$. Let $x = [x_0:\dots x_n]$ be an arbitrary point of $\mathbb P^n$. $x$ must have some nonzero component, say $x_j$. Then the open set $U_j = \left\{ y \mid y_j \neq 0 \right\}$ contains $x$, and the preimage of $U_j$ is the disjoint union 
+ \[\left\{ y \in S^n \mid y_j>0 \right\} \coprod \left\{ z \in S^n \mid z_j < 0 \right\}\]
+ And we have seen that the map $\rho$ is a homeomorphism when restricted to either of these domains.
+    \end{proof}
+\end{problem}
+\begin{problem}
+	Using $(1,0) \in S^1$ as a base point,
+	\begin{enumerate}[label=(\alph*)]
+		\item Write down all of the path-connected covers of $S^1$, up to isomorphism.
+			\begin{proof}
+				There is of course the universal cover $\R \to S^1$. Since $\R$ is simply connected, the induced map $\pi_1(\R, 0) \hookrightarrow \pi_1(S^1, (1,0))$ corresponds to the inclusion $0 \hookrightarrow \Z$.
+				\par Since $\R$ is the maximal connected cover, any other cover $X \to S^1$ must also be covered by $\R$, so that the composition $\R \to X \to S^1$ is the identity. And, because $\R$ is the unique simply connected cover, any other cover $X$ must have a nontrivial $1$st homotopy group. The inclusion $p_*$ of this group in $\pi_{1}(S^1, (1,0))$ gives the sequence
+				\begin{align*}\pi_1(\R, 0) &\hookrightarrow  \pi_1(X, x_0)\hookrightarrow \pi_1(S^1, (1,0))\\
+					0 \hookrightarrow \pi_1(X,x_0) \hookrightarrow  \Z,
+				\end{align*}
+				which shows that $\pi_1(X, x_0)$ must be a nontrivial subgroup of $\Z$. The only nontrivial subgroups of a cyclic group are cyclic groups, so this shows that $\pi_1(X, x_0) \simeq \Z$ itself, with the image of $\pi_1(X, x_0)$ in $\Z$ being the subgroup $n\Z$ for some $n$. 
+				\par Given some $n$, one way to construct a cover $S^1 \to S^1$ with $\rho_*(\pi_1(S^1, (1,0))) = n\Z$ is by the map 
+				\[\rho_n : e^{2\pi i\theta} \mapsto e^{2\pi n i\theta},\]
+				which does indeed give $(\rho_n)_*(\pi_1(S^1, (1,0))) = n\Z \leq \Z$, which we can see by the fact that the generator $[f]$ goes to $n[f]$ - i.e. a path which winds around the source $S^1$ once is mapped to apath which winds around the destination $S^1$ $n$ times. 
+				\par By Theorem 1.37 of Hatcher, any two path-connected covering spaces with $\rho_*(X_1, x_1) = \rho_*(X_2, x_2)$ - not just isomorphism, but equality - must be homeomorphic. Since the groups $0$ and $\left\{ n\Z \right\}_{n \in \N_+}$ exhast all of the subgroups of $\Z$, we see that the only path-connected covering spaces of $S^1$ are $\R$ and $S^1$ itself, with the latter giving a distinct cover $(S^1, \rho_n)$ for every $n \in \N_+$.
+			\end{proof}
+		\item For each cover $\rho: \bar X \to S^1$, write down formulas for every deck transformation of $\bar X$.
+			\begin{proof}
+				We have seen that the only covers are $(\R, \rho_0)$, where $\rho$ maps $\theta \in \R$ to $e^{2 \pi i\theta}$, and $(S^1, \rho_n)$, where $\rho_n$ maps $e^{2\pi i \theta}$ to $e^{2\pi i n \theta}$.
+				\par A deck transformation $\mathcal{ T}$ of a path-connected cover is determined by how it acts on a fiber $\rho^{-1}(x)$, by uniqueness of path lifting - let $x_1, x_2 \in \rho^{-1}(\left\{ x \right\})$ and $y_1, y_2 \in \rho^{-1}(\left\{ y \right\})$. If $\mathcal{ T}$ maps $x_1$ to $x_2$, then it will map a path-lift $x \sim y$ from some path $x_1 \sim y_1$ to some path $x_2 \sim y_2$, and so it must map $y_1$ to $y_2$. So, any deck transformation is determined entirely by how it acts on the preimage of, say, the base point.
+				\par In the case of $\R$, the preimage $\rho^{-1} ( \left\{ (1,0) \right\})$ is exactly $\Z$, and the only transformations of $\R$ which preserve $\rho$ are orientation-preserving euclidean transformations which take $\Z$ to $\Z$; these are exactly the translations of $\R$ by integer lengths. Each of these is determined by the image of $0$, which can go to any other element $z \in \Z$, and the composition of two deck transformations $\mathcal{ T}_1 : 0 \mapsto z_1$ and $\mathcal{T}_2 : 0 \mapsto z_2$ is a transformation $\mathcal{T}_1 \circ \mathcal{T}_2 : 0 \mapsto z_1 + z_2$; thus the group of deck transformations is exactly the integers $\Z$, with each transformation $\mathcal{T}_z$ being given by
+				\[r \mapsto r + z.\]
+				\par In the case of $(S, \rho_n)$, a deck transformation of $S$ is an orientation-preserving isometry of $S$ which preserves the points in $\rho_n^{-1}(\left\{ (1,0) \right\})$, which is the set of $n$th roots of unity; therefore, each deck transformation is a rotation by some integer multiple of $2\pi/n$, and the composition of two transformations is equal to rotation by the sum of their corresponding angles; therefore the set of deck transformations is equal to some subgroup $G \leq \text{SO}_1(\R)$. Since one of these transformations is determined by where it takes $(1,0)$, and there are $n$ possible destinations for this point, the group of deck transformations must be a subgroup of order $n$ in $\text{SO}_1(\R)$; i.e. it must be $\Z_n$. Using the identification of the $n$th roots of unity with $\Z_n$, the deck transformation $\mathcal{T}_{\xi}$ corresponding to each root is given by
+				\[s \mapsto \xi \cdot s. \]
+			\end{proof}
+	\end{enumerate}
+\end{problem}
+\end{document}

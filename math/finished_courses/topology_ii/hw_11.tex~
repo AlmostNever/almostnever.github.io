@@ -1,0 +1,61 @@
+% --------------------------------------------------------------
+% Andrew Tindall
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem,hyperref,tikz-cd}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\bs}{\backslash}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\Sp}{\text{Sp}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\Lie}{\text{Lie}}
+\newcommand{\rec}[1]{\frac{1}{#1}}
+\newcommand{\toinf}{\rightarrow \infty}
+
+
+\theoremstyle{definition}
+\newtheorem{proofpart}{Part}
+\newtheorem{theorem}{Theorem}
+\makeatletter
+\@addtoreset{proofpart}{theorem}
+\makeatother
+
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework 11}
+\author{Andrew Tindall \\
+Topology 2}
+\maketitle
+\begin{problem}{1}
+	Let $k \in \Z_{\geq 2}$ and let $X$ be a path-connexted $k$-dimensional manifold. Let $x \in X$. For what $n \in \Z_{\geq 0}$ is the natural map $H_n(H \backslash \left\{ x \right\}) \to H_n(X)$ neceessarily an isomorphism? Your answer should discuss \textit{all} $n \in \Z_{\geq 0}$.
+	\begin{proof}
+		\par Let $1 \leq n \leq k - 1$. Because $X$ is a $k$-dimensional manifold, the point $x$ lies in a neighborhood $A$ that is isomorphic to $\R^k$. Write By the excision theorem, the inclusion map $(X \backslash \left\{ x \right\}, A \backslash \left\{ x \right\}) \hookrightarrow (X, A)$ induces an isomorphism $H_n(X,A) \simeq H_n(X \backslash \left\{ x \right\}, A \backslash \left\{ x \right\})$.
+		\par As shown in Hatcher, the short exact sequence of the singular chain complexes \[0 \to C_\bullet(A) \to C_\bullet(X) \to C_\bullet(X, A)\]
+		induces a long exact sequence of homology groups
+		\[ \cdots \to H_n(A) \to H_n(X) \to H_n(X, A) \to H_{n-1}(A) \to \cdots.\]
+		Further, this exact sequence is natural, meaning that the map $\iota: (X\backslash \left\{ x \right\}, A \backslash \left\{ x \right\}) \to (X, A)$ induces a commutative diagram
+		\[\begin{tikzcd}\cdots \arrow[r] & H_n(A \backslash \left\{ x \right\}) \arrow[d, "\iota_*"] \arrow [r] & H_n(X \backslash \left\{ x \right\}) \arrow[d, "\iota_*"] \arrow[r] & H_n(X \backslash \left\{ x \right\}, A \backslash \left\{ x \right\}) \arrow[d, "\iota_*"] \arrow[r] & H_{n-1}(A \backslash \left\{ x \right\}) \arrow[d, "\iota_*"] \arrow[r] & \cdots\\
+		\cdots \arrow[r] &H_n(A) \arrow[r] &H_n(X) \arrow[r] & H_n(X,A) \arrow[r] & H_{n-1}(A) \arrow[r] & \cdots \end{tikzcd}\]
+		Now, by the fact that $1 \leq n \leq k-1$, and $A \simeq \R^k$, both groups $H_n(A \backslash \left\{ x \right\})$ and $H_n(A)$ are trivial, and the groups $H_{n-1}(A\backslash \left\{ x \right\} )$ and $H_{n-1}(A)$ are either both $\Z$, if $n = 1$, or $0$ otherwise, and either way the induced map $\iota_*$ is an isomorphism. Finally, by excision, the map $\iota_*: H_n(X \backslash \left\{ x \right\}, A \backslash \left\{ x \right\}) \to H_n(X, A)$ is an isomorphism for each $n$. So, we have the following diagram, with exact rows:
+		\[\begin{tikzcd} H_{n+1}(X, A) \arrow[d, "\iota_*"]\arrow[r] & 0 \arrow[d] \arrow [r] & H_n(X \backslash \left\{ x \right\}) \arrow[d, "\iota_*"] \arrow[r] & H_n(X, A) \arrow[d, "\iota_*"] \arrow[r] & H_{n-1}(A \backslash \left\{ x \right\}) \arrow[d, "\iota_*"]\\
+		H_{n+1}(X,A) \arrow[r] &H_n(A) \arrow[r] &H_n(X) \arrow[r] & H_n(X,A) \arrow[r] & H_{n-1}(A) \arrow[r] & \cdots \end{tikzcd}\]
+
+	\end{proof}
+\end{problem}
+\end{document}
