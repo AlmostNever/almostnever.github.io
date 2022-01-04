@@ -1,4 +1,4 @@
-I graduated the University of Pittsburgh with a BS in mathematics in 2018, and returned to the same department in August 2019 to start the PhD program. I have done some work in formalization and logic, and my current research interest is in arithmetic geometry. I also program a little - mostly hobbyist stuff in Python or Scheme.
+I graduated from the University of Pittsburgh with a BS in mathematics in 2018, and returned to the same department in August 2019 to start the PhD program. I have done some work in formalization and logic, and my current research interest is in arithmetic geometry. I also program a little - mostly hobbyist stuff in Python or Scheme.
 
 [Math](./math.html)
 
