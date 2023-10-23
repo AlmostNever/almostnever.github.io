@@ -8,4 +8,4 @@ Did you know that, without fee waivers or publication waivers, it costs around $
 
 [Math](./math.html)
 
-[Email](mailto:ajt66@pitt.edu), [GitHub]( https://almostnever.github.com), [Twitter](https://twitter.com/turngod), [LinkedIn](https://www.linkedin.com/in/andrew-tindall-74768812a/), [Nethack](http://www.alt.org/nethack/player-all.php?player=AlmostNever&sort=1)
+[Email](mailto:ajt66@pitt.edu), [GitHub]( https://almostnever.github.com), [LinkedIn](https://www.linkedin.com/in/andrew-tindall-74768812a/)
