@@ -1,6 +1,6 @@
-**I am a prospective law student with a strong focus on public interest law.**
+**I am a law student with a strong focus on public interest law.**
 
-I completed a BS in Math at the University of Pittsburgh in 2018, and I plan to complete an MS in Math at the University of Pittsburgh in 2024. I'll start law school in fall 2024, and am currently looking for public-interest internships.
+I am a first-year law student at Duquesne University and am currently looking for public-interest internships.
 
 **I am also a trans woman.** 
 
