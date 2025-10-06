@@ -1,6 +1,6 @@
 **I am a law student with a strong focus on public interest law.**
 
-I am a first-year law student at Duquesne University and am currently looking for public-interest internships.
+I am a second-year law student at Duquesne University and am currently looking for public-interest internships.
 
 **I am also a trans woman.** 
 
